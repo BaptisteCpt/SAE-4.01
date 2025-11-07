@@ -1,0 +1,52 @@
+.Nav {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #0d1117;
+    padding: 15px 30px;
+    align-items: center;
+}
+  
+.Nav a,
+.activemenuboutton {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.activemenuboutton:hover {
+    color: #58a6ff;
+}
+  
+.menuderoulant {
+    position: relative;
+    display: inline-block;
+}
+  
+.menuderoulantcontent {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: #1e1e1e;
+    min-width: 160px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 10px 0;
+    border-radius: 8px;
+    z-index: 1;
+}
+  
+.menuderoulantcontent a {
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+  
+.menuderoulantcontent a:hover {
+    background-color: #2b2b2b;
+}
+  
+
+  
