@@ -21,6 +21,34 @@ export default function LoginForm() {
         setSuccess(true)
     }
 
+    async function check() {
+        if(login.length == 0 || mdp.length == 0)
+            {
+                setError("Veuillez entrer un Login ou Mot de passe");
+                return;
+            }
+      
+        try {
+          const res = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ login, mot_de_passe: mdp }),
+          });
+      
+          const data = await res.json();
+      
+          if (!res.ok) {
+            setError(data.error || 'Erreur de connexion');
+            return;
+          }
+      
+          setError('');
+          setSuccess(true);
+        } catch (err) {
+          setError('Erreur serveur');
+        }
+      }
+
     useEffect(() => { /* ici on evite le warning car next à le temps de charger le composants sans regarder le router.push */
         if (success) {
           router.push('/acceuil');
@@ -36,19 +64,13 @@ export default function LoginForm() {
 
                 <input onChange={(e)=>setmdp(e.target.value)} type="password" name="mdp" placeholder="Mot de passe" required/>
 
-                <pre>
-                    {login}
-                    <br/>
-                    {mdp}
-                </pre>
-
+                <button onClick={()=>{check()}}>
+                    Envoi
+                </button>
                 {
                     error &&
                     <h1>{error}</h1>
                 }
-                <button onClick={()=>{check()}}>
-                    Envoi
-                </button>
             </form>
         }
     </>
