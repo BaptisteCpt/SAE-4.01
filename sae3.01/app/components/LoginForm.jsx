@@ -12,15 +12,6 @@ export default function LoginForm() {
     const [success,setSuccess] = useState(false)
     const router = useRouter()
 
-    function check(){
-        if(login.length == 0 || mdp.length == 0)
-        {
-            setError("Veuillez entrer un Login ou Mot de passe");
-            return;
-        }
-        setSuccess(true)
-    }
-
     async function check() {
         if(login.length == 0 || mdp.length == 0)
             {
