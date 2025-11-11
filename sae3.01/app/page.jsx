@@ -2,13 +2,12 @@
 
 import Image from "next/image";
 import styles from "./page.module.css";
-import Nav from "./components/nav"
+import LoginForm from "./components/LoginForm"; 
 
 export default function Home() {
   return (
-    <>
-        <Nav/>
-        <h1>Ilyess Tatjer</h1>
-    </>
+    <div className="Main">
+        <LoginForm/>
+    </div>
   );
 }

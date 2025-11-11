@@ -3,37 +3,21 @@ import styles from "../css/navLogin.css";
 import {useState} from 'react'
 
 
-export default function nav() {
+export default function Nav() {
     const [openMenu, setOpenMenu] = useState(null);
-    const [pageOne,setPage1] = useState("Page1 ▾")
-    const [pageTwo,setPage2] = useState("Page2 ▾")
-
-    const page1 = document.getElementById('page1')
-    const page2 = document.getElementById('page2')
-
-    /*page1.addEventListener("click",()=>{
-
-        if (pageOne === "Page1 ▾"){
-            setPage1("Page1 ")
-        }
-        else{
-            setPage1("Page1 ▾")
-        }
-    })*/
-
-    /*page2.addEventListener("click",()=>{
-
-        if (pageTwo === "Page2 ▾"){
-            setPage2("Page2 ")
-        }
-        else{
-            setPage2("Page2 ▾")
-        }
-    })*/
-
+    const [pageOne,setPage1] = useState("Page1 ▼")
+    const [pageTwo,setPage2] = useState("Page2 ▼")
 
     function toggleMenu(menu) {
         setOpenMenu(openMenu === menu ? null : menu);
+        switch(menu){
+          case "page1" : 
+            setPage1(pageOne === "Page1 ▼" ? "Page1 ▲" : "Page1 ▼")
+            break;
+          case "page2" : 
+            setPage2(pageTwo === "Page2 ▼" ? "Page2 ▲" : "Page2 ▼")
+            break;
+        }
       }      
 
     return (
