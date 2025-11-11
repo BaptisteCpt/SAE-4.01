@@ -1,20 +1,31 @@
+'use client'
+
 import React from 'react'
 import {useState} from 'react'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function LoginForm() {
     const [login,setlogin] = useState("")
     const [error,setError] = useState()
     const [mdp,setmdp] = useState("")
     const [success,setSuccess] = useState(false)
+    const router = useRouter()
 
     function check(){
         if(login.length == 0 || mdp.length == 0)
         {
-            setError("c'est vide");
+            setError("Veuillez entrer un Login ou Mot de passe");
             return;
         }
         setSuccess(true)
     }
+
+    useEffect(() => { /* ici on evite le warning car next à le temps de charger le composants sans regarder le router.push */
+        if (success) {
+          router.push('/acceuil');
+        }
+      }, [success, router]); /* execute le useEffect à chauqe modif d'une de ces variables */
 
   return (
     <>
@@ -39,10 +50,6 @@ export default function LoginForm() {
                     Envoi
                 </button>
             </form>
-        }
-        {
-            success&&
-            <h1>Logged</h1>
         }
     </>
   )
