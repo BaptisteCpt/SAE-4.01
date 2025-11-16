@@ -1,7 +1,7 @@
-# SAE S3
+SAE S3
 
-## Coupat Baptiste
-## Tajer Ilyess
-## Doisy Noa
-## Rachidi Adem
-## Scanu Esteban
+ Coupat Baptiste
+ Tajer Ilyess
+ Doisy Noa
+ Rachidi Adem
+ Scanu Esteban
