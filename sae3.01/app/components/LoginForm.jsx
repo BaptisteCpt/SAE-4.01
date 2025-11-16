@@ -4,6 +4,7 @@ import React from 'react'
 import {useState} from 'react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import '../css/login.css'
 
 export default function LoginForm() {
     const [login,setlogin] = useState("")
@@ -50,19 +51,42 @@ export default function LoginForm() {
     <>
         {
             !success &&
-            <form onSubmit={(e)=>{e.preventDefault()}}>
-                <input onChange={(e)=>setlogin(e.target.value)} type="text" name="login" placeholder="Login"/>
+            <div className="login-container">
+                <h1 className="auth-title">Authentification</h1>
+                
+                <form className="login-form" onSubmit={(e)=>{e.preventDefault()}}>
+                    <div className="form-group">
+                        <label htmlFor="login">Identifiant</label>
+                        <input 
+                            id="login"
+                            onChange={(e)=>setlogin(e.target.value)} 
+                            type="text" 
+                            name="login" 
+                            placeholder="Votre Identifiant..."
+                        />
+                    </div>
 
-                <input onChange={(e)=>setmdp(e.target.value)} type="password" name="mdp" placeholder="Mot de passe" required/>
+                    <div className="form-group">
+                        <label htmlFor="mdp">Mot de passe</label>
+                        <input 
+                            id="mdp"
+                            onChange={(e)=>setmdp(e.target.value)} 
+                            type="password" 
+                            name="mdp" 
+                            placeholder="Votre mot de passe..." 
+                            required
+                        />
+                    </div>
 
-                <button onClick={()=>{check()}}>
-                    Envoi
-                </button>
-                {
-                    error &&
-                    <h1>{error}</h1>
-                }
-            </form>
+                    <button className="login-button" onClick={()=>{check()}}>
+                        Connexion
+                    </button>
+                    {
+                        error &&
+                        <div className="error-message">{error}</div>
+                    }
+                </form>
+            </div>
         }
     </>
   )
