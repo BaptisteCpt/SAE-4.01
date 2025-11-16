@@ -4,6 +4,7 @@ import React from 'react'
 import {useState} from 'react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import Image from 'next/image'
 import '../css/login.css'
 
 export default function LoginForm() {
@@ -34,7 +35,7 @@ export default function LoginForm() {
             return;
           }
       
-          setError('');
+          setError('Login et mot de passe incorrects');
           setSuccess(true);
         } catch (err) {
           setError('Erreur serveur');
@@ -52,6 +53,16 @@ export default function LoginForm() {
         {
             !success &&
             <div className="login-container">
+                <div className="logo-container">
+                    <Image 
+                        src="/img/logo.png" 
+                        alt="Bâti'Parti" 
+                        width={300} 
+                        height={200}
+                        className="logo-image"
+                        priority
+                    />
+                </div>
                 <h1 className="auth-title">Authentification</h1>
                 
                 <form className="login-form" onSubmit={(e)=>{e.preventDefault()}}>
