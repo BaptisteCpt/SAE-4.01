@@ -35,10 +35,9 @@ export default function LoginForm() {
             return;
           }
       
-          setError('Login et mot de passe incorrects');
           setSuccess(true);
         } catch (err) {
-          setError('Erreur serveur');
+          setError('Erreur Server');
         }
       }
 
@@ -54,13 +53,10 @@ export default function LoginForm() {
             !success &&
             <div className="login-container">
                 <div className="logo-container">
-                    <Image 
+                    <img 
                         src="/img/logo.png" 
                         alt="Bâti'Parti" 
-                        width={300} 
-                        height={200}
                         className="logo-image"
-                        priority
                     />
                 </div>
                 <h1 className="auth-title">Authentification</h1>

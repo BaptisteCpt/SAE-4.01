@@ -20,11 +20,11 @@
 }
 
 .logo-image {
-  width: auto;
-  height: auto;
-  max-width: 200px;
-  max-height: 150px;
-  object-fit: contain;
+  width: 200px;
+  height: 200px;
+  position: fixed;
+  top: 0px;
+  left: 5px;
 }
 
 /* Titre Authentification */
