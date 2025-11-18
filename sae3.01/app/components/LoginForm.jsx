@@ -34,6 +34,11 @@ export default function LoginForm() {
             setError(data.error || 'Erreur de connexion');
             return;
           }
+
+          if (res.ok) {
+            localStorage.setItem("login", login);
+            setSuccess(true);
+          }
       
           setSuccess(true);
         } catch (err) {

@@ -1,0 +1,12 @@
+#accueil_body {
+    background-color: #1d2329;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+}

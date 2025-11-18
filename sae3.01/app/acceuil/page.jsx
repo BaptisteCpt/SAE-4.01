@@ -1,13 +1,23 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Nav from '../components/Nav'
+import styles from '../css/accueil.css'
 
 export default function page() {
+  const [role, setRole] = useState("")
+
+  useEffect(() => {
+    const loginStored = localStorage.getItem("login")
+    setRole(loginStored || "")
+  }, [])
+
   return (
     <>
-        <Nav/>
-        <h1>Bienvenue </h1>
+      <Nav/>
+      <div id="accueil_body">
+        <h1>Bonjour { role }</h1>
+      </div>
     </>
   )
 }
