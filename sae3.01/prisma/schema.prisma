@@ -1,12 +1,13 @@
 generator client {
   provider        = "prisma-client-js"
   output          = "../app/generated/prisma"
-  previewFeatures = ["driverAdapters"]
+  previewFeatures = ["driverAdapters", "multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["Bati_Parti", "SAE3_01_Users", "public"]
 }
 
 model User {
@@ -14,4 +15,165 @@ model User {
   login        String @unique
   mot_de_passe String
   role         String
+
+  @@map("User")
+  @@schema("SAE3_01_Users")
+}
+
+model modele {
+  nomodele          Int          @id
+  nommodele         String       @db.Char(40)
+  descriptionmodele String?      @db.VarChar(250)
+  chantier          chantier[]
+  construire        construire[]
+
+  @@map("modele")
+  @@schema("Bati_Parti")
+}
+
+model Bati_Parti_User {
+  id           Int    @id @default(autoincrement())
+  login        String @unique
+  mot_de_passe String
+  role         String
+
+  @@map("User")
+  @@schema("Bati_Parti")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model appel {
+  nochantier    Int
+  noappel       Int
+  dateappel     DateTime? @db.Date
+  montantappel  Decimal   @db.Decimal(8, 2)
+  datereglappel DateTime? @db.Date
+  chantier      chantier  @relation(fields: [nochantier], references: [nochantier], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([nochantier, noappel])
+  @@schema("Bati_Parti")
+}
+
+model artisan {
+  noartisan          Int                  @id
+  nomartisan         String               @db.Char(50)
+  prenomartisan      String?              @db.Char(50)
+  adresseartisan     String?              @db.Char(50)
+  cpartisan          String?              @db.Char(5)
+  villeartisan       String?              @db.Char(50)
+  etape_chantier     etape_chantier[]
+  etre_qualifie_pour etre_qualifie_pour[]
+
+  @@schema("Bati_Parti")
+}
+
+model chantier {
+  nochantier      Int              @id
+  adressechantier String           @db.Char(50)
+  cpchantier      String           @db.Char(5)
+  villechantier   String           @db.Char(50)
+  datecreation    DateTime         @default(dbgenerated("CURRENT_DATE")) @db.Date
+  nomoe           Int
+  noclient        Int
+  nomodele        Int
+  appel           appel[]
+  client          client           @relation(fields: [noclient], references: [noclient], onDelete: NoAction, onUpdate: NoAction)
+  modele          modele           @relation(fields: [nomodele], references: [nomodele], onDelete: NoAction, onUpdate: NoAction)
+  maitre_oeuvre   maitre_oeuvre    @relation(fields: [nomoe], references: [nomoe], onDelete: NoAction, onUpdate: NoAction)
+  etape_chantier  etape_chantier[]
+
+  @@schema("Bati_Parti")
+}
+
+model client {
+  noclient      Int        @id
+  nomclient     String     @db.Char(50)
+  prenomclient  String?    @db.Char(50)
+  adresseclient String     @db.Char(50)
+  cpclient      String     @db.Char(5)
+  villeclient   String     @db.Char(50)
+  chantier      chantier[]
+
+  @@schema("Bati_Parti")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model construire {
+  nomodele           Int
+  noetape            Int
+  montantfacture     Decimal @db.Decimal(8, 2)
+  coutsoustraitant   Decimal @db.Decimal(8, 2)
+  nbjoursrealisation Int
+  etape              etape   @relation(fields: [noetape], references: [noetape], onDelete: NoAction, onUpdate: NoAction)
+  modele             modele  @relation(fields: [nomodele], references: [nomodele], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([nomodele, noetape])
+  @@schema("Bati_Parti")
+}
+
+model etape {
+  noetape            Int                  @id
+  nometape           String               @db.Char(20)
+  reservable         Boolean              @default(false)
+  construire         construire[]
+  etape_chantier     etape_chantier[]
+  etre_qualifie_pour etre_qualifie_pour[]
+
+  @@schema("Bati_Parti")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model etape_chantier {
+  nochantier              Int
+  noetape                 Int
+  montanttheoriquefacture Decimal          @db.Decimal(8, 2)
+  reservee                Boolean          @default(false)
+  reducsuppl              Decimal          @default(0) @db.Decimal(8, 2)
+  descriptionreducsuppl   String?          @db.VarChar(250)
+  datedebuttheorique      DateTime?        @db.Date
+  datedebut               DateTime?        @db.Date
+  datefin                 DateTime?        @db.Date
+  noartisan               Int?
+  artisan                 artisan?         @relation(fields: [noartisan], references: [noartisan], onDelete: NoAction, onUpdate: NoAction)
+  chantier                chantier         @relation(fields: [nochantier], references: [nochantier], onDelete: NoAction, onUpdate: NoAction)
+  etape                   etape            @relation(fields: [noetape], references: [noetape], onDelete: NoAction, onUpdate: NoAction)
+  facture_artisan         facture_artisan?
+
+  @@id([nochantier, noetape])
+  @@schema("Bati_Parti")
+}
+
+model etre_qualifie_pour {
+  noetape   Int
+  noartisan Int
+  artisan   artisan @relation(fields: [noartisan], references: [noartisan], onDelete: NoAction, onUpdate: NoAction)
+  etape     etape   @relation(fields: [noetape], references: [noetape], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([noetape, noartisan])
+  @@schema("Bati_Parti")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model facture_artisan {
+  nofacture       Int            @id
+  datefacture     DateTime       @db.Date
+  montantfacture  Decimal        @db.Decimal(8, 2)
+  nbjourstravail  Int
+  datereglfacture DateTime?      @db.Date
+  nochantier      Int
+  noetape         Int
+  etape_chantier  etape_chantier @relation(fields: [nochantier, noetape], references: [nochantier, noetape], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([nochantier, noetape])
+  @@schema("Bati_Parti")
+}
+
+model maitre_oeuvre {
+  nomoe     Int        @id
+  nommoe    String     @db.Char(50)
+  prenommoe String?    @db.Char(50)
+  login     String?
+  chantier  chantier[]
+
+  @@schema("Bati_Parti")
 }
