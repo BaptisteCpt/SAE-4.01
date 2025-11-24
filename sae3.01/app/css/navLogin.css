@@ -4,6 +4,7 @@
     background-color: White;
     padding: 15px 30px;
     align-items: center;
+    height: 70px;
 }
   
 .Nav a,
@@ -45,8 +46,9 @@
 }
   
 .menuderoulantcontent a:hover {
-    background-color: rgb(50, 50, 50);
+    background-color: rbg(50, 50, 50);
 }
-  
 
-  
+.logo-image {
+    height: 50px;
+}

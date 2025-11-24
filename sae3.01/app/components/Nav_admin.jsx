@@ -22,34 +22,18 @@ export default function Nav() {
 
     return (
     <nav className="Nav">
+      <div className="logo-container">
+        <img src="/img/logo.png" alt="Bâti'Parti" className="logo-image"/>
+      </div>
+
       <a href="#">Home</a>
 
-      <div className="menuderoulant">
-        <button id='page1' className="activemenuboutton" onClick={() => toggleMenu("page1")}>
-          {pageOne}
-        </button>
-        {openMenu === "page1" && 
-          <div className="menuderoulantcontent">
-            <a href="#">A</a>
-            <a href="#">B</a>
-            <a href="#">C</a>
-          </div>
-        }
+      <a href="#">Administrer</a>
+
+      <div className="logo-container">
+        <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-image"/>
       </div>
 
-      <div className="menuderoulant">
-        <button id='page2' className="activemenuboutton" onClick={() => toggleMenu("page2")}>
-          {pageTwo}
-        </button>
-        {openMenu === "page2" && (
-          <div className="menuderoulantcontent">
-            <a href="#">A</a>
-            <a href="#">B</a>
-          </div>
-        )}
-      </div>
-
-      <a href="#">Page3</a>
     </nav>
   );
 }
