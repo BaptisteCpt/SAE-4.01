@@ -7,13 +7,9 @@ import Nav_maitreO from '../components/Nav_maitreO'
 import styles from '../css/accueil.css'
 
 export default function page() {
-  const [role, setRole] = useState("")
+  const role = localStorage.getItem("role");
+  const nom = localStorage.getItem("nom");
   let nav = null;
-
-  useEffect(() => {
-    const loginStored = localStorage.getItem("login")
-    setRole(loginStored || "")
-  }, [])
 
   if(role == "admin") {
     nav = <Nav_admin />
@@ -23,7 +19,7 @@ export default function page() {
     nav = <Nav_commercial/>
   }
 
-  if(role == "maitreO") {
+  if(role == "maitre Oeuvre") {
     nav = <Nav_maitreO/>
   }
 
@@ -31,7 +27,7 @@ export default function page() {
     <>
       { nav }
       <div id="accueil_body">
-        <h1>Bonjour { role }</h1>
+        <h1>Bonjour { nom }</h1>
       </div>
     </>
   )

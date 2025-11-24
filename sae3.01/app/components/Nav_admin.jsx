@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from "../css/navLogin.css";
-import {useState} from 'react'
+import {useState} from 'react' 
 
 
 export default function Nav() {
@@ -30,8 +30,9 @@ export default function Nav() {
 
       <a href="#">Administrer</a>
 
-      <div className="logo-container">
+      <div className="profil-container">
         <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-image"/>
+        <input type='text' value="Admin" className='input-role' readOnly/>
       </div>
 
     </nav>

@@ -22,34 +22,31 @@ export default function Nav() {
 
     return (
     <nav className="Nav">
+      <div className="logo-container">
+        <img src="/img/logo.png" alt="Bâti'Parti" className="logo-image"/>
+      </div>
+
       <a href="#">Home</a>
 
       <div className="menuderoulant">
-        <button id='page1' className="activemenuboutton" onClick={() => toggleMenu("page1")}>
+        <button id='Chantier' className="activemenuboutton" onClick={() => toggleMenu("page1")}>
           {pageOne}
         </button>
-        {openMenu === "page1" && 
+        {openMenu === "Chantier" && 
           <div className="menuderoulantcontent">
-            <a href="#">A</a>
-            <a href="#">B</a>
-            <a href="#">C</a>
+            <a href="#">Voir un Chantier</a>
+            <a href="#">Création d'un chantier</a>
           </div>
         }
       </div>
 
-      <div className="menuderoulant">
-        <button id='page2' className="activemenuboutton" onClick={() => toggleMenu("page2")}>
-          {pageTwo}
-        </button>
-        {openMenu === "page2" && (
-          <div className="menuderoulantcontent">
-            <a href="#">A</a>
-            <a href="#">B</a>
-          </div>
-        )}
+      <a href="#">Catalogue</a>
+
+      <div className="profil-container">
+        <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-image"/>
+        <input type='text' value="Admin" className='input-role' readOnly/>
       </div>
 
-      <a href="#">Page3</a>
     </nav>
   );
 }

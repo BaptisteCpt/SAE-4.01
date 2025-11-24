@@ -12,5 +12,5 @@ export async function POST(request) { /*Creation de la fonction POST prenant en 
     return NextResponse.json({ error: 'Identifiants invalides' }, { status: 401 });/*Renvoi une reponse JSON Erreur si la condition est verifie*/
   }
 
-  return NextResponse.json({ success: true }); /* Renvoi d'une reponse JSON de Succes*/
+  return NextResponse.json({ success: true, user: user }); /* Renvoi d'une reponse JSON de Succes*/
 }
