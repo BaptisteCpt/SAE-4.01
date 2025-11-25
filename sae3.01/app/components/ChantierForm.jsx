@@ -5,7 +5,6 @@ import {useState} from 'react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import Image from 'next/image'
-import '../css/login.css'
 import { useChantier } from '../../context/ChantierContext'
 
 export default function ChantierForm() {
@@ -24,22 +23,25 @@ export default function ChantierForm() {
     const [error,setError] = useState()
     const [success,setSuccess] = useState(false)
 
-    useEffect(() => {
-        async function fetchModele(){
-            try {
-                const res =  await fetch('/api/modele');
-                const model = await res.json();
-                setModeles(model)
-            } catch (err){
-                console.error('Erreur lors de la récuperation des Modèles', err)
-            }
+   
+    async function fetchModele(){
+        try {
+            const res =  await fetch('/api/modele_maison');
+            const model = await res.json();
+            setModeles(model)
+        } catch (err){
+            console.error('Erreur lors de la récuperation des Modèles', err)
         }
+    }
 
-        fetchModele();
+    useEffect(() => {
+    fetchModele();
     }, []);
 
+    
+
     async function finalise_chantier(){
-            if(!date || maitre_doeuvre.trim() == 0 || adresse_du_chantier.trim() == 0 || villechantier.trim() == 0 || code_postal_chantier.trim() == 0 || !modele_maison){
+            if(!date || maitre_doeuvre.length == 0 || adresse_du_chantier.length == 0 || villechantier.length == 0 || code_postal_chantier.length == 0 || !modele_maison){
                 setError("Veuillez compléter les champs manquants");
                 return;
             }

@@ -5,7 +5,7 @@ import {useState} from 'react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import Image from 'next/image'
-import '../css/login.css'
+
 
 export default function LoginForm() {
     const [login,setlogin] = useState("")

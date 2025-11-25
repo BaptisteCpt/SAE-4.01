@@ -5,7 +5,6 @@ import {useState} from 'react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import Image from 'next/image'
-import '../css/login.css'
 import { useChantier } from '../../context/ChantierContext'
 
 
@@ -58,7 +57,7 @@ export default function ClientForm() {
 
     useEffect(() => {
             if (success) {
-              router.push("/creation_de_chantier/page_creation_de_chantier");
+              router.push("/creation_de_chantier/crea_chantier");
             }
           }, [success, router]);
 
@@ -71,27 +70,27 @@ export default function ClientForm() {
         <form>
             <label>
                 Nom:
-                <input type="text" name="Nom" value={nom} onChange={(e) => setNom(e.target.value)}/>
+                <input type="text" name="Nom" placeholder="Nom..." value={nom} onChange={(e) => setNom(e.target.value)}/>
             </label>
             <br />
             <label>
                 Prénom:
-                <input type="text" name="Prenom" value={prenom} onChange={(e) => setPrenom(e.target.value)}/>
+                <input type="text" name="Prenom" placeholder="Prénom..." value={prenom} onChange={(e) => setPrenom(e.target.value)}/>
             </label>
             <br />
             <label>
                 Adresse:
-                <input type="text" name="Adresse" value={adresse} onChange={(e) => setAdresse(e.target.value)}/>
+                <input type="text" name="Adresse" placeholder="Adresse..."value={adresse} onChange={(e) => setAdresse(e.target.value)}/>
             </label>
             <br />
             <label>
                 Ville:
-                <input type="text" name="Ville" value={ville} onChange={(e) => setVille(e.target.value)}/>
+                <input type="text" name="Ville" placeholder="Ville..." value={ville} onChange={(e) => setVille(e.target.value)}/>
             </label>
             <br />
             <label>
                 Code Postal:
-                <input type="text" name="CodePostal" value={code_postal} onChange={(e) => setCodePostal(e.target.value)}/>
+                <input type="text" name="CodePostal" placeholder="Code Postal..." value={code_postal} onChange={(e) => setCodePostal(e.target.value)}/>
             </label>
             <br />
             <button type="button" onClick={next_page}>Continuer</button>

@@ -1,7 +1,7 @@
 'use client'
 
 import Image from "next/image";
-import styles from "./page.module.css";
+import styles from "./css/login.css";
 import LoginForm from "./components/LoginForm"; 
 
 export default function Home() {
