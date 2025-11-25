@@ -36,7 +36,9 @@ export default function LoginForm() {
           }
 
           if (res.ok) {
-            localStorage.setItem("login", login);
+            localStorage.setItem("role", data.user.role);
+            localStorage.setItem("nom", data.user.login);
+
             setSuccess(true);
           }
       

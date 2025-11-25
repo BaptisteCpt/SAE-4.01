@@ -22,6 +22,10 @@ export default function Nav() {
 
     return (
     <nav className="Nav">
+      <div className="logo-container">
+        <img src="/img/logo.png" alt="Bâti'Parti" className="logo-image"/>
+      </div>
+
       <a href="#">Home</a>
 
       <div className="menuderoulant">
@@ -49,7 +53,11 @@ export default function Nav() {
         )}
       </div>
 
-      <a href="#">Page3</a>
+      <div className="profil-container">
+        <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-image"/>
+        <input type='text' value="Admin" className='input-role' readOnly/>
+      </div>
+      
     </nav>
   );
 }

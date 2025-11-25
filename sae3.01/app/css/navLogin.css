@@ -1,54 +1,93 @@
 .Nav {
     display: flex;
-    justify-content: space-evenly;
-    background-color: White;
-    padding: 15px 30px;
+    justify-content: space-between;
     align-items: center;
+    background-color: white;
+    padding: 0 30px;
     height: 70px;
+    gap: 20px;
 }
-  
+
 .Nav a,
 .activemenuboutton {
     color: black;
     text-decoration: none;
     font-weight: 500;
+    font-size: 17px;
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 16px;
 }
 
+.Nav a:hover,
 .activemenuboutton:hover {
     color: #58a6ff;
 }
-  
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-image {
+    height: 55px;
+    width: auto;
+}
+
+.Nav > a {
+    margin: 0 10px;
+}
+
+.profil-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profil-image {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.input-role {
+    background-color: rgb(212, 212, 212) ;
+    color: black;
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 7px;
+    text-align: center;
+    width: 120px;
+    border: 1.5px solid #000000;
+    padding: 4px 6px;
+    cursor: default;
+
+}
+
 .menuderoulant {
     position: relative;
     display: inline-block;
 }
-  
+
 .menuderoulantcontent {
     display: flex;
     flex-direction: column;
     position: absolute;
     background-color: white;
     min-width: 160px;
-    box-shadow: 0 4px 8px rbg(50, 50, 50);
+    box-shadow: 0 4px 8px rgb(50, 50, 50);
     padding: 10px 0;
     border-radius: 8px;
     z-index: 10;
 }
-  
+
 .menuderoulantcontent a {
-    color: black;
     padding: 8px 16px;
+    color: black;
     text-decoration: none;
 }
-  
-.menuderoulantcontent a:hover {
-    background-color: rbg(50, 50, 50);
-}
 
-.logo-image {
-    height: 50px;
+.menuderoulantcontent a:hover {
+    background-color: rgb(230, 230, 230);
 }
