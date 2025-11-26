@@ -4,5 +4,9 @@ LoginForm :
 Nav : 
     Ce composant définit une structure de navigation simple. Il permet de dialoguer entre les pages rapidement.
 
-Creation de chantier : 
+ChantierForm : 
     Ce composant représente une page dédiée à la création d’un chantier. Il affiche une interface structurée autour d’un formulaire contenant plusieurs champs permettant de saisir différentes informations liées au chantier. Certains éléments sont destinés à être remplis automatiquement ou alimentés dynamiquement. La page inclut également une barre de navigation. Le code définit la structure générale de la page et son organisation, sans encore intégrer la logique de traitement, de validation ou de gestion des données saisies.
+
+
+ClientForm : 
+    Ce composant représente une page dédiée à la création d’un client. Il affiche une interface structurée autour d’un formulaire contenant plusieurs champs permettant de saisir différentes informations liees au chantier. Certains éléments sont destinés à être remplis automatiquement ou alimentés dynamiquement. La page inclut également une barre de navigation. Le code définit la structure générale de la page et son organisation, sans enore intégrer la logique de traitement, de validation ou de gestion des données saisies.
