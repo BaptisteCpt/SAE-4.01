@@ -135,7 +135,7 @@ export default function ClientForm() {
                 <button type="button" onClick={next_page}>Continuer</button>
             </form>
             
-            {error && <p style={{color:'red'}}>{error}</p>}
+            {error && <p>{error}</p>}
         </div>
     )
 }

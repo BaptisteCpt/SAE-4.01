@@ -89,7 +89,7 @@ export default function ChantierForm() {
     
         useEffect(() => {
             if (success) {
-                router.push("/accueil/page");
+                router.push("../accueil/page");
             }
         }, [success, router]);
 
@@ -149,7 +149,7 @@ export default function ChantierForm() {
             <button type="button" onClick={finalise_chantier}>Finaliser la Création</button>
         </form>
         
-        {error && <p style={{color: 'red', marginTop: '10px'}}>{error}</p>}
+        {error && <p>{error}</p>}
     </div>
   )
 }
