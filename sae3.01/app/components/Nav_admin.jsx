@@ -1,12 +1,14 @@
 import React from 'react'
 import styles from "../css/navLogin.css";
 import {useState} from 'react' 
+import { useRouter } from 'next/navigation'
 
 
 export default function Nav() {
     const [openMenu, setOpenMenu] = useState(null);
     const [pageOne,setPage1] = useState("Page1 ▼")
     const [pageTwo,setPage2] = useState("Page2 ▼")
+    const router = useRouter()
 
     function toggleMenu(menu) {
         setOpenMenu(openMenu === menu ? null : menu);
@@ -18,23 +20,32 @@ export default function Nav() {
             setPage2(pageTwo === "Page2 ▼" ? "Page2 ▲" : "Page2 ▼")
             break;
         }
-      }      
+      }   
+      
+      async function logout() {
+        localStorage.clear()
+        router.push('/');
+        }
+      
 
     return (
     <nav className="Nav">
-      <div className="logo-container">
-        <img src="/img/logo.png" alt="Bâti'Parti" className="logo-image"/>
+      <div className="logo-div">
+        <img src="/img/logo.png" alt="Bâti'Parti" className="logo-img"/>
       </div>
 
       <a href="#">Home</a>
 
       <a href="#">Administrer</a>
 
-      <div className="profil-container">
-        <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-image"/>
+      <div className="profil-div">
+        <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
         <input type='text' value="Admin" className='input-role' readOnly/>
       </div>
 
+      <div className='logout-div'>
+        <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>
+      </div>
     </nav>
   );
 }

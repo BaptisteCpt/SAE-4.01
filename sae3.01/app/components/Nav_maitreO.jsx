@@ -1,61 +1,62 @@
 import React from 'react'
 import styles from "../css/navLogin.css";
-import {useState} from 'react'
+import {useState} from 'react' 
+import { useRouter } from 'next/navigation'
 
 
 export default function Nav() {
     const [openMenu, setOpenMenu] = useState(null);
-    const [pageOne,setPage1] = useState("Page1 ▼")
+    const [pageOne,setPage1] = useState("Chantier ▼")
     const [pageTwo,setPage2] = useState("Page2 ▼")
+    const router = useRouter()
 
     function toggleMenu(menu) {
         setOpenMenu(openMenu === menu ? null : menu);
         switch(menu){
-          case "page1" : 
-            setPage1(pageOne === "Page1 ▼" ? "Page1 ▲" : "Page1 ▼")
+          case "Chantier" : 
+            setPage1(pageOne === "Chantier ▼" ? "Chantier ▲" : "Chantier ▼")
             break;
           case "page2" : 
             setPage2(pageTwo === "Page2 ▼" ? "Page2 ▲" : "Page2 ▼")
             break;
         }
-      }      
+      }   
+      
+      async function logout() {
+        localStorage.clear()
+        router.push('/');
+        }    
 
     return (
     <nav className="Nav">
-      <div className="logo-container">
-        <img src="/img/logo.png" alt="Bâti'Parti" className="logo-image"/>
+      <div className="logo-div">
+        <img src="/img/logo.png" alt="Bâti'Parti" className="logo-img"/>
       </div>
 
       <a href="#">Home</a>
 
       <div className="menuderoulant">
-        <button id='page1' className="activemenuboutton" onClick={() => toggleMenu("page1")}>
+        <button id='Chantier' className="activemenuboutton" onClick={() => toggleMenu("Chantier")}>
           {pageOne}
         </button>
-        {openMenu === "page1" && 
+        {openMenu === "Chantier" && 
           <div className="menuderoulantcontent">
-            <a href="#">A</a>
-            <a href="#">B</a>
-            <a href="#">C</a>
+            <a href="#">Suivie</a>
+            <a href="#">Personnalisation</a>
+            <a href="#">Artisant</a>
           </div>
         }
       </div>
 
-      <div className="menuderoulant">
-        <button id='page2' className="activemenuboutton" onClick={() => toggleMenu("page2")}>
-          {pageTwo}
-        </button>
-        {openMenu === "page2" && (
-          <div className="menuderoulantcontent">
-            <a href="#">A</a>
-            <a href="#">B</a>
-          </div>
-        )}
+      <a href="#">Appel de fond</a>
+
+      <div className="profil-div">
+        <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
+        <input type='text' value="MaitreO" className='input-role' readOnly/>
       </div>
 
-      <div className="profil-container">
-        <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-image"/>
-        <input type='text' value="Admin" className='input-role' readOnly/>
+      <div className='logout-div'>
+        <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>
       </div>
       
     </nav>

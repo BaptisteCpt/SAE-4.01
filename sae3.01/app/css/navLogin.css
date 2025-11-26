@@ -24,12 +24,12 @@
     color: #58a6ff;
 }
 
-.logo-container {
+.logo-div {
     display: flex;
     align-items: center;
 }
 
-.logo-image {
+.logo-img {
     height: 55px;
     width: auto;
 }
@@ -38,15 +38,15 @@
     margin: 0 10px;
 }
 
-.profil-container {
+.profil-div {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.profil-image {
+.profil-img {
     height: 50px;
-    width: 50px;
+    width: auto;
     border-radius: 50%;
     object-fit: cover;
 }
@@ -63,6 +63,19 @@
     padding: 4px 6px;
     cursor: default;
 
+}
+
+.logout-div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logout-img {
+    height: 40px;
+    width: auto;
+    object-fit: cover;
+    cursor: pointer
 }
 
 .menuderoulant {
