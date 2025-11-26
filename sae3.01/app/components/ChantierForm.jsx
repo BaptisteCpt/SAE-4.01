@@ -89,7 +89,7 @@ export default function ChantierForm() {
     
         useEffect(() => {
             if (success) {
-                router.push("../accueil/page");
+                router.push("../accueil");
             }
         }, [success, router]);
 
