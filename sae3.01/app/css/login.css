@@ -22,7 +22,7 @@
 /* Dimention Logo*/
 .logo-image {
   width: 200px;
-  height: 200px;
+  height: auto;
   position: fixed;
   top: 0px;
   left: 5px;
