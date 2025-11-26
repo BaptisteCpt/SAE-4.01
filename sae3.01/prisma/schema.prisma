@@ -1,13 +1,14 @@
 generator client {
   provider        = "prisma-client-js"
   output          = "../app/generated/prisma"
-  previewFeatures = ["driverAdapters", "multiSchema"]
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
   schemas  = ["Bati_Parti"]
+<<<<<<< HEAD
 }
 
 model User {
@@ -17,6 +18,8 @@ model User {
   role         String
 
   @@schema("Bati_Parti")
+=======
+>>>>>>> 884725d (Erreur api a corriger)
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -166,3 +169,15 @@ model modele {
 
   @@schema("Bati_Parti")
 }
+<<<<<<< HEAD
+=======
+
+model User {
+  id           Int    @id @default(autoincrement())
+  login        String @unique
+  mot_de_passe String
+  role         String
+
+  @@schema("Bati_Parti")
+}
+>>>>>>> 884725d (Erreur api a corriger)
