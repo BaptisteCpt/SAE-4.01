@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import prismaBati from '../../lib/prisma'; // Ajustez le nombre de ../ selon la profondeur
+import prismaBati from '../../lib/prisma'; 
 
 export async function GET() {
   try {

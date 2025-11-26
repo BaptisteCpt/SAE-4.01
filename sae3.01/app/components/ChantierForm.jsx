@@ -24,18 +24,23 @@ export default function ChantierForm() {
     const [success,setSuccess] = useState(false)
 
    
+    useEffect(() => {
     async function fetchModele(){
         try {
-            const res =  await fetch('/api/modele_maison');
-            const model = await res.json();
-            setModeles(model)
+            const res = await fetch('/api/modele_maison'); 
+            const info = await res.json();
+            
+            if (Array.isArray(info)) {
+                setModeles(info);
+            } else {
+                console.error("L'API a renvoyé une erreur :", info);
+                setModeles([]); // On met un tableau vide par sécurité
+            }
         } catch (err){
-            console.error('Erreur lors de la récuperation des Modèles', err)
+            console.error('Erreur Fetch', err);
         }
-    }
-
-    useEffect(() => {
-    fetchModele();
+      }
+      fetchModele();
     }, []);
 
     
@@ -88,32 +93,34 @@ export default function ChantierForm() {
 
             <label>
                 Maître d'oeuvre:
-                <input type="text" name="maitre_doeuvre" value={maitre_doeuvre} onChange={(e) => setMaitre_oeuvre(e.target.value)}/>
+                <input type="text" name="maitre_doeuvre" placeholder="Nom du maitre d'oeuvre..." value={maitre_doeuvre} onChange={(e) => setMaitre_oeuvre(e.target.value)}/>
             </label>
             <br />
             <label>
                 Modèle de maison:
                 <select name="modele_maison" value={modele_maison} onChange={e => setModeleMaison(e.target.value)}>
-                        <option value="">-- Choisir un modèle --</option>
-                            {modeles.map((modele) => (
-                                <option key={modele.nomodele} value={modele.nommodele}>{modele.nommodele}</option>
-                                ))}
+                        <option value="" hidden> Choisir un modèle</option>
+                        {modeles.map((modele) => (
+                            <option key={modele.nomodele} value={modele.nomodele}>
+                                {modele.nommodele}
+                            </option>
+                        ))}
                 </select>
             </label>
             <br />
             <label>
                 Adresse du Chantier:
-                <input type="text" name="Adresse_du_chantier" value={adresse_du_chantier} onChange={(e) => setAdresseDuChantier(e.target.value)}/>
+                <input type="text" placeholder="Adresse..." name="Adresse_du_chantier" value={adresse_du_chantier} onChange={(e) => setAdresseDuChantier(e.target.value)}/>
             </label>
             <br />
             <label>
                 Ville:
-                <input type="text" name="villechantier" value={villechantier} onChange={(e) => setVilleChantier(e.target.value)} />
+                <input type="text" placeholder="Vile..." name="villechantier" value={villechantier} onChange={(e) => setVilleChantier(e.target.value)} />
             </label>
             <br />
             <label>
                 Code Postal:
-                <input type="text" name="Code_Postal_chantier" value={code_postal_chantier} onChange={(e)=> setCodePostalChantier(e.target.value)}/>
+                <input type="text" placeholder="Code Postal..." name="Code_Postal_chantier" value={code_postal_chantier} onChange={(e)=> setCodePostalChantier(e.target.value)}/>
             </label>
             <br />
             <button type="button" onClick={finalise_chantier}>Finalisé la Création</button>
