@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import Image from 'next/image'
 
-
+/* Fonction qui construit et renvoie un formulaire, qui effectue aussi des appels au back end grace à l'Api login. */
 export default function LoginForm() {
     const [login,setlogin] = useState("")
     const [error,setError] = useState()
@@ -14,6 +14,7 @@ export default function LoginForm() {
     const [success,setSuccess] = useState(false)
     const router = useRouter()
 
+    /* Vérification du login est mot de passe, taille et présence dans la base de données */
     async function check() {
         if(login.length == 0 || mdp.length == 0)
             {
@@ -22,12 +23,13 @@ export default function LoginForm() {
             }
       
         try {
+          /* Appel à l'Api */
           const res = await fetch('/api/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ login, mot_de_passe: mdp }),
           });
-      
+          /* récupération des infos liées au login et mot de passe */
           const data = await res.json();
       
           if (!res.ok) {
@@ -35,6 +37,7 @@ export default function LoginForm() {
             return;
           }
 
+          /* Enregistrement du role et du nom prénom de l'utilisateur */
           if (res.ok) {
             localStorage.setItem("role", data.user.role);
             localStorage.setItem("nom", data.user.login);
@@ -56,7 +59,7 @@ export default function LoginForm() {
 
   return (
     <>
-        {
+        {   /* Affichage du formulaire si on n'est pas login, sinon redirige sur la page d'accueil */
             !success &&
             <div className="login-container">
                 <div className="logo-container">

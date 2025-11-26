@@ -65,7 +65,7 @@ model chantier {
 }
 
 model client {
-  noclient      Int        @id
+  noclient      Int        @id @default(autoincrement())
   nomclient     String     @db.Char(50)
   prenomclient  String?    @db.Char(50)
   adresseclient String     @db.Char(50)
