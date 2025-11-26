@@ -6,10 +6,25 @@ export async function POST(request) {
     const corps = await request.json();
     const { nom, prenom, adresse, ville, code_postal } = corps;
 
+    if (!nom || !prenom) {
+       return NextResponse.json(
+        { error: "Nom et Prénom sont requis." }, 
+      );
+    }
+    const present = await prisma.client.findFirst({
+      where: {
+        nomclient: nom,
+        prenomclient: prenom, 
+      },
+    });
 
-    if (!nom || !adresse || !ville || !code_postal) {
+    if (present) {
+      return NextResponse.json(present);
+    }
+    if (!adresse || !ville || !code_postal) {
       return NextResponse.json(
-        { error: "Veuillez remplir tous les champs obligatoires." }
+        { error: "Veuillez remplir adresse, ville et CP pour un nouveau client." },
+        { status: 400 }
       );
     }
 
@@ -34,6 +49,7 @@ export async function POST(request) {
     return NextResponse.json(nouveauClient);
 
   } catch (error) {
+    console.error(error);
     return NextResponse.json(
       { error: "Erreur serveur lors de la création du client" },
     );
