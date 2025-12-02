@@ -53,7 +53,13 @@ export default function LoginForm() {
 
     useEffect(() => { /* ici on evite le warning car next à le temps de charger le composants sans regarder le router.push */
         if (success) {
-          router.push('/acceuil');
+          if(localStorage.role == "admin"){
+            router.push('/accueil_admin');
+          }else if(localStorage.role == "commercial"){
+            router.push('/accueil_commerciale')
+          }else if(localStorage.role == "maitre Oeuvre"){
+            router.push('/accueil_maitre')
+          }
         }
       }, [success, router]); /* execute le useEffect à chauqe modif d'une de ces variables */
 

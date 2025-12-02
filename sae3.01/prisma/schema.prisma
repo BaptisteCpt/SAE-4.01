@@ -7,16 +7,15 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  schemas  = ["Bati_Parti", "SAE3_01_Users", "public"]
+  schemas  = ["Bati_Parti"]
 }
 
-model Bati_Parti_User {
+model User {
   id           Int    @id @default(autoincrement())
   login        String @unique
   mot_de_passe String
   role         String
 
-  @@map("User")
   @@schema("Bati_Parti")
 }
 
@@ -165,14 +164,4 @@ model modele {
   construire        construire[]
 
   @@schema("Bati_Parti")
-}
-
-model SAE3_01_Users_User {
-  id           Int    @id @default(autoincrement())
-  login        String @unique
-  mot_de_passe String
-  role         String
-
-  @@map("User")
-  @@schema("SAE3_01_Users")
 }
