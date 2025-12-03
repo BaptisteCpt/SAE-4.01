@@ -4,9 +4,9 @@
     import { useRouter } from 'next/navigation'
     import { useChantier } from '../../context/ChantierContext'
 
-    export default function ChantierForm() {
-
-        const { data, setData} = useChantier();
+export default function ChantierForm() {
+    // Initialisation des constantes et leurs setter
+    const { data, setData} = useChantier();
 
         const[date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
@@ -23,16 +23,17 @@
         const [error,setError] = useState()
         const [success,setSuccess] = useState(false)
 
-        useEffect(() => {
-            async function fetchMaitre(){
-                try {
-                    const res2 = await fetch('/api/liste_maitre'); 
-                    const info2 = await res2.json();
-                    if (Array.isArray(info2)) setListeMaitre(info2);
-                } catch (err){ console.error(err); }
-            }
-            fetchMaitre();
-        }, []);
+    // Au chargement de la page, on récupère tout les maitres d'oeuvres et modèles de maisons existants que l'on enregistre dans les tableaux liste_oeuvre et modeles
+    useEffect(() => {
+        async function fetchMaitre(){
+            try {
+                const res2 = await fetch('/api/liste_maitre'); 
+                const info2 = await res2.json();
+                if (Array.isArray(info2)) setListeMaitre(info2);
+            } catch (err){ console.error(err); }
+        }
+        fetchMaitre();
+    }, []);
 
         useEffect(() => {
             async function fetchModeles(){
@@ -45,7 +46,8 @@
             fetchModeles();
         }, []);
 
-        async function finalise_chantier(){
+    // Vérification que tout les champs obligatoire sont bien rempli et enregistrement dans la base de données 
+    async function finalise_chantier(){
 
                 if(!date || !maitre_doeuvre || !modele_maison || adresse_du_chantier.length === 0 || villechantier.length === 0 || code_postal_chantier.length === 0){
                     setError("Veuillez compléter les champs manquants");
@@ -57,41 +59,42 @@
                     return;
                 }
 
-                try {
-                const res = await fetch('/api/crea_chantier', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        date, 
-                        maitre_doeuvre, 
-                        modele_maison,
-                        adresse_du_chantier, 
-                        villechantier, 
-                        code_postal_chantier,
-                        noclient: data.noclient
-                    }),
-                });
-            
-                const info = await res.json();
-            
-                if (!res.ok) {
-                    setError(info.error || 'Erreur de connexion');
-                    return;
-                }
-        
-                if (res.ok) {
-                    setSuccess(true);
-                }
-                } catch (err) {
-                setError('Erreur Server');
-                }
+            try {
+              const res = await fetch('/api/crea_chantier', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    date, 
+                    maitre_doeuvre, 
+                    modele_maison,
+                    adresse_du_chantier, 
+                    villechantier, 
+                    code_postal_chantier,
+                    noclient: data.noclient
+                }),
+              });
+          
+              const info = await res.json();
+          
+              if (!res.ok) {
+                setError(info.error || 'Erreur de connexion');
+                return;
+              }
+    
+              if (res.ok) {
+                setSuccess(true);
+              }
+            } catch (err) {
+              setError('Erreur Server');
             }
+        }
         
-            useEffect(() => {
-                if (success) {
-                    router.push("../accueil");
-                }
-            }, [success, router]);
+        // au chargement de la page, si succès est à true on redirige sur la prochaine page
+        useEffect(() => {
+            if (success) {
+                router.push("../accueil");
+            }
+        }, [success, router]);
 
     return (
         <div className='BulleDuFormulaire'>

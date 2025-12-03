@@ -6,6 +6,7 @@ export async function POST(request) {
     const corps = await request.json();
     const { nom, prenom, adresse, ville, code_postal } = corps;
 
+    // Vérification des champs nom et prenom puis on regarde si le client existe deja dans la base
     if (!nom || !prenom) {
        return NextResponse.json(
         { error: "Nom et Prénom sont requis." }, 
@@ -18,9 +19,11 @@ export async function POST(request) {
       },
     });
 
+    // Si le client existe on le retourne
     if (present) {
       return NextResponse.json(present);
     }
+    // Sinon on verifie que le reste des champs sont rempli
     if (!adresse || !ville || !code_postal) {
       return NextResponse.json(
         { error: "Veuillez remplir adresse, ville et CP pour un nouveau client." },
@@ -28,13 +31,15 @@ export async function POST(request) {
       );
     }
 
+    // On récupère le prochain id de client en fonction du dernier dans la base
     const aggs = await prisma.client.aggregate({
       _max: {
         noclient: true,
       },
     });
     const nextId = (aggs._max.noclient || 0) + 1;
-
+    
+    // Création du nouveau client dans la base
     const nouveauClient = await prisma.client.create({
       data: {
         noclient: nextId,
