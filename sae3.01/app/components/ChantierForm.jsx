@@ -92,7 +92,7 @@ export default function ChantierForm() {
         // au chargement de la page, si succès est à true on redirige sur la prochaine page
         useEffect(() => {
             if (success) {
-                router.push("../accueil");
+                router.push("../accueil_commerciale");
             }
         }, [success, router]);
 
