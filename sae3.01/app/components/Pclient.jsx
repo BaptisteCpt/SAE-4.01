@@ -30,7 +30,6 @@ export default function PageClients() {
     }, []);
 
     const handleRowClick = (id) => {
-
         if (idclient === id) {
             setIdclient(null);
         } else {
@@ -38,9 +37,10 @@ export default function PageClients() {
         }
     };
 
+
     const GoCreaChantier = () => {
-        if (setIdclient) {
-            router.push(`/creation_de_chantier/crea_chantier?client_id=${setIdclient}`);
+        if (idclient) {
+            router.push(`/creation_de_chantier/crea_chantier?client_id=${idclient}`);
         }
     };
 
@@ -61,8 +61,7 @@ export default function PageClients() {
                 <tbody>
                     {clients.map((client, index) => (
                         <tr key={client.noclient || index} onClick={() => handleRowClick(client.noclient)}
-                            className={idclient === client.noclient ? "row-selected" : ""}
-                        >
+                            className={idclient === client.noclient ? "row-selected" : ""}>
                             <td>{client.nomclient}</td>
                             <td>{client.prenomclient}</td>
                             <td>{client.adresseclient}</td>

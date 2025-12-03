@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Nav_maitreO from '../components/Nav_maitreO'
+import AccMaitre from '../components/AccMaitre'
 import styles from '../css/accueil.css'
 import { useRouter } from 'next/navigation'
 
@@ -30,12 +31,7 @@ export default function PageMaitreOeuvre() {
   return (
     <>
       <Nav_maitreO />
-
-      <div id="accueil_body">
-        <div className="bulle_accueil">
-            <h1>Bonjour { nom }</h1>
-        </div>
-      </div>
+      <AccMaitre />
     </>
   )
 }
