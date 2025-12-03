@@ -72,6 +72,7 @@ model client {
   villeclient   String     @db.Char(50)
   chantier      chantier[]
 
+  @@map("client")
   @@schema("Bati_Parti")
 }
 
