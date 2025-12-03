@@ -1,0 +1,17 @@
+.bulle_accueil {
+    background-color: #21272c;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+}
+
+.boutons_accueil {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 80vh;
+}
+

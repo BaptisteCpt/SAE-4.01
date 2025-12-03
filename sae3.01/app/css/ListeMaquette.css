@@ -1,0 +1,76 @@
+
+body {
+    background-color: #21272c;
+    color: var(--couleur-texte-sombre);
+}
+
+/* --- Formulaire de Filtres (Ajouté pour le style du form vide) --- */
+/* Si vous ajoutez des filtres/recherche plus tard, ce style est prêt */
+.model_form {
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+/* --- Grille des Modèles --- */
+.grille_img {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px; 
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- Carte Individuelle du Modèle (.img_modele) --- */
+.img_modele {
+    background-color: var(--couleur-fond-carte);
+    border-radius: 8px;
+    overflow: hidden; 
+    box-shadow: var(--shadow-leger);
+    cursor: pointer;
+    transition: var(--transition-rapide);
+    border: 1px solid var(--couleur-bordure-grise);
+}
+
+.img_modele:hover {
+    transform: translateY(-7px); 
+    box-shadow: var(--shadow-survol);
+}
+
+/* --- Image du Modèle --- */
+.img-modele {
+    width: 100%;
+    height: 200px; 
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.img_modele:hover .img-modele {
+    transform: scale(1.05); 
+}
+
+/* --- Informations du Modèle --- */
+.info-modele {
+    padding: 15px;
+    text-align: center;
+}
+
+.info-modele h3 {
+    margin: 0;
+    font-size: 1.3em;
+    font-weight: 600;
+    color: var(--couleur-texte-sombre);
+    text-transform: capitalize; 
+}
+
+
+/* --- Responsive Design pour les petits écrans --- */
+@media (max-width: 768px) {
+    .grille_img {
+        grid-template-columns: 1fr; 
+        padding: 20px;
+        gap: 20px;
+    }
+}
