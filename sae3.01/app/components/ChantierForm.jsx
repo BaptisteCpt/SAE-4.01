@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useChantier } from '../../context/ChantierContext'
 
 export default function ChantierForm() {
-
+    // Initialisation des constantes et leurs setter
     const { data, setData} = useChantier();
 
     const[date, setDate] = useState(new Date().toISOString().split('T')[0]);
@@ -23,6 +23,7 @@ export default function ChantierForm() {
     const [error,setError] = useState()
     const [success,setSuccess] = useState(false)
 
+    // Au chargement de la page, on récupère tout les maitres d'oeuvres et modèles de maisons existants que l'on enregistre dans les tableaux liste_oeuvre et modeles
     useEffect(() => {
         async function fetchMaitre(){
             try {
@@ -45,6 +46,7 @@ export default function ChantierForm() {
         fetchModeles();
     }, []);
 
+    // Vérification que tout les champs obligatoire sont bien rempli et enregistrement dans la base de données 
     async function finalise_chantier(){
 
             if(!date || !maitre_doeuvre || !modele_maison || adresse_du_chantier.length === 0 || villechantier.length === 0 || code_postal_chantier.length === 0){
@@ -86,7 +88,8 @@ export default function ChantierForm() {
               setError('Erreur Server');
             }
         }
-    
+        
+        // au chargement de la page, si succès est à true on redirige sur la prochaine page
         useEffect(() => {
             if (success) {
                 router.push("../accueil");

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useChantier } from '../../context/ChantierContext'
 
 export default function ClientForm() {
-
+    // Initialisation des constantes et leurs setter
     const { data, setData } = useChantier();
 
     const [nom, setNom] = useState(data.nom || "");
@@ -21,6 +21,7 @@ export default function ClientForm() {
     const [error, setError] = useState()
     const [success, setSuccess] = useState(false)
 
+    // Au chargement de la page, on récupère tout les clients existants que l'on enregistre dans le tableau clients
     useEffect(() => {
         async function fetchClients() {
             try {
@@ -39,6 +40,7 @@ export default function ClientForm() {
         fetchClients();
     }, []);
 
+    // Récupération des infos à la selection d'un client
     const clientSelectionner = (e) => {
         const idSelectionner = parseInt(e.target.value);
         setIdClient(idSelectionner);
@@ -53,6 +55,7 @@ export default function ClientForm() {
         }
     };
 
+    // Vérification que tout les champs obligatoire sont bien rempli et enregistrement dans la base de données puis stockage de ces champs dans le tableau data
     async function next_page() {
         if (nom.length == 0 || prenom.length == 0 || adresse.length == 0 || ville.length == 0 || code_postal.length == 0) {
             setError("Veuillez compléter les champs manquants");
@@ -81,6 +84,7 @@ export default function ClientForm() {
         }
     }
 
+    // au chargement de la page, si le succès est à true on redirige sur la prochaine page
     useEffect(() => {
         if (success) {
             router.push("/creation_de_chantier/crea_chantier");
