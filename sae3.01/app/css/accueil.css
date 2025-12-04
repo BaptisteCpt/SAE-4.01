@@ -1,12 +1,73 @@
-#accueil_body {
-    background-color: #21272c;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+:root {
+  --couleur-fond-page: #2c3e50; /* Bleu Nuit */
+}
+
+.bulle_accueil {
+    background-color: var(--couleur-fond-page);
     min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    padding-top: 20px; /* Un peu d'espace en haut */
 }
 
 h1 {
     text-align: center;
     color: #ffffff;
+    font-size: 2.5rem; /* Un peu plus grand pour l'accueil */
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+.boutons_accueil {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    align-items: center;
+    min-height: 60vh; /* Ajusté pour éviter que ce soit trop bas */
+    flex-wrap: wrap; /* Important pour les petits écrans */
+    padding: 0 20px;
+}
+
+.bloc-accueil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease; /* Animation fluide sur tout le bloc */
+}
+
+/* Petit effet "Pop" quand on passe la souris sur un bloc complet */
+.bloc-accueil:hover {
+    transform: translateY(-10px);
+}
+
+img {
+    height: 250px; /* Taille harmonisée */
+    width: auto;
+    cursor: pointer;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); /* Ombre portée sur les icônes PNG */
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+/* Le bouton style "Bâti'Parti" */
+button {
+    padding: 12px 25px;
+    border: none;
+    background-color: #f39c12; /* Le Orange de la marque */
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Ombre douce */
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: #e67e22; /* Orange plus foncé (pas gris !) */
+}
+
+button:active {
+    transform: scale(0.98); /* Petit clic réaliste */
 }

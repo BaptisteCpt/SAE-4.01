@@ -1,0 +1,103 @@
+:root {
+  --couleur-fond-page: #2c3e50; /* Bleu Nuit / Dark Blue */
+}
+
+/* C'est ici que la magie opère pour le fond de la page */
+body {
+    background-color: var(--couleur-fond-page);
+    margin: 0;
+    min-height: 100vh; /* Prend toute la hauteur de l'écran */
+}
+
+/* --- Conteneur Principal (Style "Carte" de la maquette) --- */
+.liste_clients {
+    background-color: #ffffff; /* Fond blanc comme la maquette */
+    width: 90%;
+    max-width: 1000px; /* Plus large que le formulaire pour le tableau */
+    margin: 40px auto; /* Centré verticalement et horizontalement */
+    padding: 30px;
+    border-radius: 12px; /* Arrondis doux comme sur l'image */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Ombre portée pour l'effet de profondeur */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police propre sans-serif */
+}
+
+/* --- Titre --- */
+.liste_clients h1 {
+    color: #2c3e50; /* Gris foncé/Bleu nuit */
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee; /* Petite séparation discrète */
+    padding-bottom: 10px;
+}
+
+/* --- Tableau --- */
+.table_clients {
+    width: 100%;
+    border-collapse: collapse; /* Supprime les espaces entre les bordures */
+    margin-bottom: 20px;
+}
+
+/* En-têtes du tableau */
+.table_clients th {
+    background-color: #f8f9fa; /* Gris très clair */
+    color: #555;
+    font-weight: 600;
+    text-align: left;
+    padding: 15px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* Cellules du tableau */
+.table_clients td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* --- INTERACTION ET SURVOL (Ta demande spécifique) --- */
+.table_clients tbody tr {
+    cursor: pointer; /* Le curseur devient une main pour indiquer qu'on peut cliquer */
+    transition: all 0.2s ease-in-out; /* Animation fluide */
+}
+
+/* L'effet au survol de la souris */
+.table_clients tbody tr:hover {
+    background-color: #fff3e0; /* Un orange très très pâle pour rappeler la marque */
+    transform: translateX(5px); /* Petit décalage vers la droite pour le dynamisme */
+}
+
+/* L'effet quand une ligne est SÉLECTIONNÉE (cliquée) */
+.table_clients tbody tr.row-selected {
+    background-color: #ffe0b2; /* Orange un peu plus soutenu */
+    font-weight: bold;
+    border-left: 5px solid #f39c12; /* Barre orange sur le côté gauche */
+    color: #d35400;
+}
+
+/* --- Zone du bouton --- */
+.bar_selection {
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-end; /* Pousse le bouton à droite */
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+/* --- Bouton "Créer un chantier" (Style Orange) --- */
+.btn_creation {
+    background-color: #f39c12; /* Le orange de Bâti'Parti */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 6px; /* Arrondi léger comme sur la maquette */
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+}
+
+.btn_creation:hover {
+    background-color: #e67e22; /* Orange un peu plus foncé au survol du bouton */
+}

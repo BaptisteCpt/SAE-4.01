@@ -1,6 +1,6 @@
 'use client' 
 
-import "../css/commercialAccueil.css"; 
+import "../css/accueil.css"; 
 import { useState, useEffect } from 'react' 
 import { useRouter } from 'next/navigation'
 
@@ -22,7 +22,7 @@ export default function AccCommercial() {
 
     return (
         <div className="bulle_accueil">
-            <h1>{ nom }</h1> 
+            <h1>Bienvenue { nom }</h1> 
             
             <div className="boutons_accueil">
                 <table>
@@ -33,13 +33,13 @@ export default function AccCommercial() {
                         </button>
                     </td>
                     <td>
-                        <img src="/img/dossier.png" className="dossier-img" onClick={pageCliChan}/>
+                        <img src="/img/dossier.png" className="dossier-img"/>
                         <button type="button">
                             Personnalisation des etapes
                         </button>
                     </td>
                     <td>
-                        <img src="/img/client.png" className="clients-img" onClick={pageCli}/>
+                        <img src="/img/client.png" className="clients-img"/>
                         <button type="button">
                             Affectation des artisant 
                         </button>

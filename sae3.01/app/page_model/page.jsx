@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Nav_commercial from '../components/Nav_commercial'
-import Nav_admin from '../components/Nav_admin'
+import Nav_M from '../components/Nav_maitreO'
 import styles from '../css/ListeMaquette.css'
 import PModel from '../components/PModel'
 import { useRouter } from 'next/navigation'
@@ -16,8 +16,8 @@ export default function page() {
 
     if (role === "commercial") {
       setNavBar(<Nav_commercial/>);
-    } else if(role === "admin") {
-      setNavBar(<Nav_admin/>);
+    } else if(role === "maitre Oeuvre") {
+      setNavBar(<Nav_M/>);
     }
   }, []);
 

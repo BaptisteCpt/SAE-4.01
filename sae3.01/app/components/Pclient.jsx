@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import '../css/accueil.css' 
+import '../css/pclient.css' 
 
 export default function PageClients() { 
     const [clients, setClients] = useState([]); 

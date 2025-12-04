@@ -6,18 +6,14 @@ import { useRouter } from 'next/navigation'
 
 export default function Nav() {
     const [openMenu, setOpenMenu] = useState(null);
-    const [pageOne,setPage1] = useState("Chantier ▼")
-    const [pageTwo,setPage2] = useState("Page2 ▼")
+    const [pageOne,setPage1] = useState("Chantier ⮟")
     const router = useRouter()
 
     function toggleMenu(menu) {
         setOpenMenu(openMenu === menu ? null : menu);
         switch(menu){
           case "Chantier" : 
-            setPage1(pageOne === "Chantier ▼" ? "Chantier ▲" : "Chantier ▼")
-            break;
-          case "page2" : 
-            setPage2(pageTwo === "Page2 ▼" ? "Page2 ▲" : "Page2 ▼")
+            setPage1(pageOne === "Chantier ⮟" ? "Chantier ⮝" : "Chantier ⮟")
             break;
         }
       }   
@@ -25,7 +21,23 @@ export default function Nav() {
       async function logout() {
         localStorage.clear()
         router.push('/');
-        }    
+      }
+      
+      async function goAcc() {
+        router.push('/accueil_commerciale')
+      }
+
+      async function goListeClient() {
+        router.push('/page_client')
+      }
+
+      async function goStartChantier() {
+        router.push('/creation_de_chantier')
+      }
+
+      async function goModel() {
+        router.push('/page_model')
+      }
 
     return (
     <nav className="Nav">
@@ -33,7 +45,7 @@ export default function Nav() {
         <img src="/img/logo.png" alt="Bâti'Parti" className="logo-img"/>
       </div>
 
-      <a href="#">Home</a>
+      <a href="#" onClick={goAcc}>Accueil</a>
 
       <div className="menuderoulant">
         <button id='Chantier' className="activemenuboutton" onClick={() => toggleMenu("Chantier")}>
@@ -41,20 +53,17 @@ export default function Nav() {
         </button>
         {openMenu === "Chantier" && 
           <div className="menuderoulantcontent">
-            <a href="#">Voir un Chantier</a>
-            <a href="#">Création d'un chantier</a>
+            <a href="#"onClick={goListeClient}>Liste clients</a>
+            <a href="#"onClick={goStartChantier}>Création d'un chantier</a>
           </div>
         }
       </div>
 
-      <a href="#">Catalogue</a>
+      <a href="#" onClick={goModel}>Catalogue</a>
 
       <div className="profil-div">
         <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
         <input type='text' value="Commercial" className='input-role' readOnly/>
-      </div>
-
-      <div className='logout-div'>
         <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>
       </div>
 

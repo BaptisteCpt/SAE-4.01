@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import '../css/ListeMaquette.css' 
+import '../css/pmodel.css' 
 const IMAGES_MAP = {
     "Basique 1": "/img/modele1.png",
     "Standard 1": "/img/modele2.png",
@@ -36,6 +36,7 @@ export default function PageModeles() {
 
     return (
         <div>
+            <h1>Catalogue Des Modèles</h1>
             <div className="grille_img">
                 {modeles.map((modele, index) => {
                     const nom = modele.nommodele ? modele.nommodele.trim() : "Modèle Inconnu";

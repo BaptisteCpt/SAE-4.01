@@ -1,6 +1,6 @@
 'use client' 
 
-import "../css/commercialAccueil.css"; 
+import "../css/accueil.css"; 
 import { useState, useEffect } from 'react' 
 import { useRouter } from 'next/navigation'
 
@@ -29,30 +29,30 @@ export default function AccCommercial() {
     }
     return (
         <div className="bulle_accueil">
-            <h1>{ nom }</h1> 
-            
-            <div className="boutons_accueil">
-                <table>
-                    <td>
-                        <img src="/img/maison-icone.png" className="modeles-img" onClick={pageModele}/>
-                        <button type="button" onClick={pageModele}>
-                            Liste des modèles
-                        </button>
-                    </td>
-                    <td>
-                        <img src="/img/dossier.png" className="dossier-img" onClick={pageCliChan}/>
-                        <button type="button" onClick={pageCliChan}>
-                            Crée un nouveau dossier
-                        </button>
-                    </td>
-                    <td>
-                        <img src="/img/client.png" className="clients-img" onClick={pageCli}/>
-                        <button type="button" onClick={pageCli}>
-                            Liste des Clients
-                        </button>
-                    </td>
-                </table>
-            </div>
+            <h1>Bienvenue { nom }</h1> 
+        <div className="boutons_accueil">
+    <div className="bloc-accueil">
+        <img src="/img/maison-icone.png" onClick={pageModele} />
+        <button type="button" onClick={pageModele}>
+            Liste des modèles
+        </button>
+    </div>
+
+    <div className="bloc-accueil">
+        <img src="/img/dossier.png" onClick={pageCliChan} />
+        <button type="button" onClick={pageCliChan}>
+            Crée un nouveau dossier
+        </button>
+    </div>
+
+    <div className="bloc-accueil">
+            <img src="/img/client.png" onClick={pageCli} />
+            <button type="button" onClick={pageCli}>
+            Liste des Clients
+            </button>
         </div>
+    </div>
+    </div>
+
     )
 } 

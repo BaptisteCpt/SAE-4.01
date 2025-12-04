@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Nav_admin from '../components/Nav_admin'
 import styles from '../css/accueil.css'
 import { useRouter } from 'next/navigation'
+import AccAdmin from '../components/AccAdmin'
 
 export default function PageAdmin() {
   const router = useRouter();
@@ -30,10 +31,7 @@ export default function PageAdmin() {
   return (
     <>
       <Nav_admin />
-      
-      <div id="accueil_body">
-        <h1>Bonjour { nom }</h1>
-      </div>
+      <AccAdmin/>
     </>
   )
 }

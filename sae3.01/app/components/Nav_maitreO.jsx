@@ -25,7 +25,11 @@ export default function Nav() {
       async function logout() {
         localStorage.clear()
         router.push('/');
-        }    
+      }
+      
+      async function goToAccMaitre() {
+        router.push('/accueil_maitre');
+      }
 
     return (
     <nav className="Nav">
@@ -33,7 +37,7 @@ export default function Nav() {
         <img src="/img/logo.png" alt="Bâti'Parti" className="logo-img"/>
       </div>
 
-      <a href="#">Home</a>
+      <a href="#" onClick={goToAccMaitre}>Accueil</a>
 
       <div className="menuderoulant">
         <button id='Chantier' className="activemenuboutton" onClick={() => toggleMenu("Chantier")}>
@@ -53,9 +57,6 @@ export default function Nav() {
       <div className="profil-div">
         <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
         <input type='text' value="MaitreO" className='input-role' readOnly/>
-      </div>
-
-      <div className='logout-div'>
         <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>
       </div>
       

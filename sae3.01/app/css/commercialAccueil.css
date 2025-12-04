@@ -10,8 +10,36 @@ h1 {
 
 .boutons_accueil {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 80px;
     align-items: center;
     min-height: 80vh;
 }
 
+.bloc-accueil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+img {
+    height: 300px;
+    width: auto;
+    cursor: pointer;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #ffffff;
+    color: #21272c;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #dddddd;
+}
