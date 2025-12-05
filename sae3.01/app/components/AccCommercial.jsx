@@ -28,30 +28,30 @@ export default function AccCommercial() {
         router.push('page_client')
     }
     return (
-        <div className="bulle_accueil">
+    <div className="bulle_accueil">
             <h1>Bienvenue { nom }</h1> 
         <div className="boutons_accueil">
-    <div className="bloc-accueil">
-        <img src="/img/maison-icone.png" onClick={pageModele} />
-        <button type="button" onClick={pageModele}>
-            Liste des modèles
-        </button>
-    </div>
+            <div className="bloc-accueil">
+                <img src="/img/maison-icone.png" onClick={pageModele} />
+                <button className="but" type="button" onClick={pageModele}>
+                    Liste des modèles
+                </button>
+            </div>
 
-    <div className="bloc-accueil">
-        <img src="/img/dossier.png" onClick={pageCliChan} />
-        <button type="button" onClick={pageCliChan}>
-            Crée un nouveau dossier
-        </button>
-    </div>
+            <div className="bloc-accueil">
+                <img src="/img/dossier.png" onClick={pageCliChan} />
+                <button className="but" type="button" onClick={pageCliChan}>
+                    Crée un nouveau dossier
+                </button>
+            </div>
 
-    <div className="bloc-accueil">
-            <img src="/img/client.png" onClick={pageCli} />
-            <button type="button" onClick={pageCli}>
-            Liste des Clients
-            </button>
+            <div className="bloc-accueil">
+                    <img src="/img/client.png" onClick={pageCli} />
+                    <button className="but" type="button" onClick={pageCli}>
+                    Liste des Clients
+                    </button>
+            </div>
         </div>
-    </div>
     </div>
 
     )

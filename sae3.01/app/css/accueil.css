@@ -51,7 +51,7 @@ img {
 }
 
 /* Le bouton style "Bâti'Parti" */
-button {
+.but {
     padding: 12px 25px;
     border: none;
     background-color: #f39c12; /* Le Orange de la marque */
@@ -64,10 +64,11 @@ button {
     transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-button:hover {
+.but:hover {
     background-color: #e67e22; /* Orange plus foncé (pas gris !) */
 }
 
-button:active {
+.but:active {
     transform: scale(0.98); /* Petit clic réaliste */
 }
+

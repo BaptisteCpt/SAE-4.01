@@ -28,19 +28,19 @@ export default function AccCommercial() {
                 <table>
                     <td>
                         <img src="/img/maison-icone.png" className="modeles-img"/>
-                        <button type="button">
+                        <button className="but" type="button">
                             Liste des modèles
                         </button>
                     </td>
                     <td>
                         <img src="/img/dossier.png" className="dossier-img"/>
-                        <button type="button">
+                        <button className="but" type="button">
                             Liste des chantiers
                         </button>
                     </td>
                     <td>
                         <img src="/img/client.png" className="clients-img"/>
-                        <button type="button">
+                        <button className="but" type="button">
                             Liste des employés
                         </button>
                     </td>

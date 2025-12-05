@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "../css/navLogin.css";
+import "../css/navLogin.css";
 import {useState} from 'react' 
 import { useRouter } from 'next/navigation'
 
@@ -48,7 +48,7 @@ export default function Nav() {
       <a href="#" onClick={goAcc}>Accueil</a>
 
       <div className="menuderoulant">
-        <button id='Chantier' className="activemenuboutton" onClick={() => toggleMenu("Chantier")}>
+        <button className="nav-item" onClick={() => toggleMenu("Chantier")}>
           {pageOne}
         </button>
         {openMenu === "Chantier" && 

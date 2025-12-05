@@ -20,31 +20,37 @@ export default function AccCommercial() {
         router.push('/page_model');
     }
 
+    function pagePerso(){
+    //     router.push('/')
+    }
+    function pageArti(){
+    //     router.push('/')
+    }
+
     return (
         <div className="bulle_accueil">
             <h1>Bienvenue { nom }</h1> 
-            
             <div className="boutons_accueil">
-                <table>
-                    <td>
-                        <img src="/img/maison-icone.png" className="modeles-img" onClick={pageModele}/>
-                        <button type="button" onClick={pageModele}>
-                            Liste des modèles
-                        </button>
-                    </td>
-                    <td>
-                        <img src="/img/dossier.png" className="dossier-img"/>
-                        <button type="button">
-                            Personnalisation des etapes
-                        </button>
-                    </td>
-                    <td>
-                        <img src="/img/client.png" className="clients-img"/>
-                        <button type="button">
-                            Affectation des artisant 
-                        </button>
-                    </td>
-                </table>
+                <div className="bloc-accueil">
+                    <img src="/img/maison-icone.png" onClick={pageModele} />
+                    <button className="but" type="button" onClick={pageModele}>
+                        Liste des modèles
+                    </button>
+                </div>
+
+                <div className="bloc-accueil">
+                    <img src="/img/dossier.png" onClick={pagePerso} />
+                    <button className="but" type="button" onClick={pagePerso}>
+                        Personnalisation des étapes
+                    </button>
+                </div>
+
+                <div className="bloc-accueil">
+                    <img src="/img/client.png" onClick={pageArti} />
+                    <button className="but" type="button" onClick={pageArti}>
+                        Affectation des artisant
+                    </button>
+                </div>
             </div>
         </div>
     )

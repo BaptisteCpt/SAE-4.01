@@ -1,118 +1,98 @@
 .Nav {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: white;
-    padding: 0 30px;
+    justify-content: space-around; 
+    align-items: center;   
     height: 70px;
-    gap: 20px;
+    padding: 0 30px;
+    background: white;
 }
-
-.Nav a,
-.activemenuboutton {
-    color: black;
-    text-decoration: none;
-    font-size: 17px;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
-.Nav a:hover {
-    color: #58a6ff;
-}
-
-/* Le lien du milieu (bouton) NE change plus au hover */
-.activemenuboutton:hover {
-    color: black;
-}
+  
 
 .logo-div {
     display: flex;
-    align-items: center;
+    align-items: center; 
+    height: 100%;
 }
-
+  
 .logo-img {
-    height: 55px;
+    height: 50px;
     width: auto;
 }
-
-.Nav > a {
-    margin: 0 10px;
+  
+.Nav a,
+.nav-item {
+    display: flex;
+    align-items: center;
+    height: 70px; 
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 17px;
+    color: black;
+    padding: 0 10px;
+    background-color: white ;
+    border: none;
 }
+  
+.Nav a:hover,
+.nav-item:hover {
+    color: #58a6ff;
+}
+  
+
+.menuderoulant {
+    background-color: white;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 70px;
+}
+  
+
+.menuderoulantcontent {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    width: 170px;
+    padding: 8px 0;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    z-index: 20;
+}
+  
+.menuderoulantcontent a {
+    padding: 10px 15px;
+    color: black;
+}
+  
+.menuderoulantcontent a:hover {
+    background: rgb(235, 235, 235);
+}
+  
 
 .profil-div {
     display: flex;
-    align-items: center;
+    align-items: center; 
     gap: 10px;
+    height: 70px;
 }
-
-.profil-img {
-    height: 50px;
-    width: auto;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.input-role {
-    background-color: rgb(212, 212, 212);
-    color: black;
-    font-weight: 500;
-    font-size: 15px;
-    border-radius: 7px;
-    text-align: center;
-    width: 120px;
-    border: 1.5px solid #000000;
-    padding: 4px 6px;
-    cursor: default;
-}
-
-.logout-div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
+  
+.profil-img,
 .logout-img {
-    height: 40px;
+    height: 40px; 
     width: auto;
     object-fit: cover;
-    cursor: pointer;
 }
-
-/* Menu déroulant aligné correctement */
-.menuderoulant {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-}
-
-/* supprimé l'ombre */
-.menuderoulantcontent {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 70px;
-    left: 0;
-    background-color: white;
-    min-width: 160px;
-    border-radius: 8px;
-    padding: 10px 0;
-    z-index: 10;
-}
-
-/* affiche au survol */
-.menuderoulant:hover .menuderoulantcontent {
-    display: flex;
-}
-
-.menuderoulantcontent a {
-    padding: 8px 16px;
-    color: black;
-    text-decoration: none;
-}
-
-/* hover du menu interne reste */
-.menuderoulantcontent a:hover {
-    background-color: rgb(230, 230, 230);
+  
+.input-role {
+    height: 30px;
+    width: 120px;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid #222;
+    background: lightgray;
+    font-size: 15px;
+    font-weight: 500;
 }
