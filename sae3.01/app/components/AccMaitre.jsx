@@ -21,7 +21,7 @@ export default function AccCommercial() {
     }
 
     function pagePerso(){
-    //     router.push('/')
+         router.push('/personnalisation')
     }
     function pageArti(){
     //     router.push('/')
