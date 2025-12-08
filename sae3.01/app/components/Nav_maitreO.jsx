@@ -29,7 +29,7 @@ export default function Nav() {
 
       <div className="menuderoulant">
         <p className="nav-item" onClick={() => toggleMenu("Chantier")}>
-          Chantier {openMenu === "Chantier" ? "▲" : "▼"}
+          Chantier {openMenu === "Chantier" ? "⮝  " : "⮟"}
         </p>
 
         {openMenu === "Chantier" && (
@@ -44,10 +44,13 @@ export default function Nav() {
       <a href="#">Appel de fond</a>
 
       <div className="profil-div">
-        <img src="/img/photo_profil.png" alt="Profil" className="profil-img"/>
-        <input type="text" value="MaitreO" className="input-role" readOnly/>
-        <img src="/img/Logout.png" alt="Logout" className="logout-img" 
-             onClick={logout}/>
+        <div className='profil'>
+          <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
+          <input type='text' value="MaitreO" className='input-role' readOnly/>
+        </div>
+        <div className='logout'>
+          <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>
+        </div>
       </div>
     </nav>
   );
