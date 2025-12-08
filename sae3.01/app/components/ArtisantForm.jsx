@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 export default function ArtisantForm() {
     const[nom, setNom] = useState("");
@@ -12,33 +12,43 @@ export default function ArtisantForm() {
     const[numero_etape, setNumeroEtape] = useState();
     const [error,setError] = useState()
 
+    const fetchedChantiers = useRef(false);
 
-    async function fetchChantier(){
+
+    async function fetchEtapes(numero) {
         try {
-            const res =  await fetch('/api/numero_chantier');
-            const model = await res.json();
-            setChantiers(model);
-        } catch (err){
-            console.error('Erreur lors de la récuperation des chantiers', err)
+          const res = await fetch('/api/numero_etape', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ numero_chantier: numero })
+          });
+      
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+          
+          const data = await res.json();
+          setEtapes(data);
+        } catch (err) {
+          console.error('Erreur lors de la récupération des étapes', err);
+          setError("Impossible de récupérer les étapes");
         }
-    }
-    
-    async function fetchEtape(){
-        try {
-            const res =  await fetch('/api/#');
-            const model = await res.json();
-            setEtapes(model)
-        } catch (err){
-            console.error('Erreur lors de la récuperation des chantiers', err)
-        }
-    }
+      }
+      
 
     useEffect(() => {
-        fetchChantier();
-        //fetchEtape();
-    }, []);
+        if (fetchedChantiers.current) return;
+        fetchedChantiers.current = true;
 
-    console.log(Chantiers);
+        async function fetchChantier(){
+            try {
+                const res =  await fetch('/api/numero_chantier');
+                const model = await res.json();
+                setChantiers(model);
+            } catch (err){
+                console.error('Erreur lors de la récuperation des chantiers', err)
+            }
+        }
+        fetchChantier();
+    }, []);
 
   return (
     <div className='BulleDuFormulaire'>
@@ -48,11 +58,11 @@ export default function ArtisantForm() {
         <form>
             <label>
                 Chantier Choisi :
-                <select name="chantier_choisi" value={numero_chantier} onChange={e => setNumeroChantier(e.target.value)}>
+                <select name="chantier_choisi" value={numero_chantier} onChange={e => {setNumeroChantier(e.target.value); fetchEtapes(e.target.value);}}>
                         <option value="" hidden>-- Numéro du chantier --</option>
-                            {/* {Chantiers.map((Chantier) => (
-                                <option key={Chantier.nochantier} value={Chantier.nochantier}>{Chantier.nommodele}</option>
-                                ))} */}
+                            {Chantiers.map((Chantier) => (
+                                <option key={Chantier.nochantier} value={Chantier.nochantier}>{Chantier.nochantier} - {Chantier.adressechantier}</option>
+                                ))}
                 </select>            
             </label>
             <br />
@@ -60,9 +70,9 @@ export default function ArtisantForm() {
                 Nom Etape:
                 <select name="etape_choisi" value={numero_etape} onChange={e => setNumeroEtape(e.target.value)}>
                         <option value="" hidden>-- Etape à sélectionner --</option>
-                            {/* {Chantiers.map((Chantier) => (
-                                <option key={Chantier.nomodele} value={Chantier.nommodele}>{Chantier.nommodele}</option>
-                            ))} */}
+                            {/*Etapes.map((etape) => (
+                                <option key={etape.nomodele} value={etape.nommodele}>{etape.nommodele}</option>
+                            ))*/}
                 </select> 
             </label>
             
