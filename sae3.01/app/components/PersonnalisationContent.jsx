@@ -1,17 +1,26 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Formsupplement from '../components/PersonnalisationSupplement'
 
-// --- COMPOSANT PRINCIPAL ---
 export default function PersonnalisationContent() {
 
-    // STATE
-    const [numChantier, setNumChantier] = useState('1'); 
+    const [numChantier, setNumChantier] = useState("");
+    const [ChantierSelect, setChantierSelect] = useState([]);
     const [etapes, setEtapes] = useState([]); 
     const [loading, setLoading] = useState(false); 
-    const [selectedStepId, setSelectedStepId] = useState(null); 
+    const [selectedStepId, setSelectedStepId] = useState(""); 
 
-    // CHARGEMENT DES DONNÉES
+
     useEffect(() => {
+        async function fetchChantiers() {
+          const res = await fetch('/api/numero_chantier');
+          setChantierSelect(await res.json());
+        }
+        fetchChantiers();
+        console.log(ChantierSelect);
+      }, []);
+
+    useEffect(() => {      
         async function fetchEtapes() {
             if (!numChantier) return;
             setLoading(true);
@@ -65,7 +74,7 @@ export default function PersonnalisationContent() {
         if (!activeStep) return;
 
         try {
-            const response = await fetch('/api/etapes', {
+            const response = await fetch('/api/personnalisation_chantier', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -96,119 +105,71 @@ export default function PersonnalisationContent() {
                 <h1>Personnalisation</h1>
                 <div>
                     <label>Chantier N° </label>
-                    <input 
-                        type="text" 
-                        value={numChantier} 
-                        onChange={(e) => setNumChantier(e.target.value)} 
-                    />
+                    <select value={numChantier} onChange={(e)=>setNumChantier(e.target.value)}>
+                        <option value="" hidden>Choisir un chantier...</option>
+
+                        {ChantierSelect.map(chantier => (
+                            <option key={chantier.nochantier} value={chantier.nochantier}>
+                                { chantier.nochantier }
+                            </option>
+                        ))}
+                    </select>
                 </div>
             </header>
 
             <main>
-                {loading && <p>Chargement...</p>}
-                
-                {!loading && activeStep && (
-                    <>
-                        <section>
-                            <div>
-                                <label>Étape à Modifier : </label>
-                                <select 
-                                    value={selectedStepId} 
-                                    onChange={(e) => setSelectedStepId(Number(e.target.value))}
-                                >
-                                    {etapes.map(etape => (
-                                        <option key={etape.id} value={etape.id}>
-                                            {etape.nom}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
+                <section>
+                    <div>
+                        <label>Étape à Modifier : </label>
+                        <select 
+                            value={selectedStepId} 
+                            onChange={(e) => setSelectedStepId(Number(e.target.value))}>
+                            {etapes.map(etape => (
+                                <option key={etape.id} value={etape.id}>
+                                    { etape.nom }
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                {
+                    activeStep &&
 
-                            <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-                                <label>
-                                    <input 
-                                        type="checkbox" 
-                                        checked={activeStep.reserve} 
-                                        onChange={toggleReserve} 
-                                        disabled={!activeStep.isSelectable} 
-                                    />
-                                    <strong> Réservé par le client</strong>
-                                </label>
-                                
-                                {!activeStep.isSelectable && (
-                                    <span> (Cette étape n'est pas modifiable)</span>
-                                )}
-                            </div>
 
-                            <SupplementsForm 
-                                supplements={activeStep.supplements}
-                                onAdd={handleAddSupplement}
-                                onRemove={handleRemoveSupplement}
+                    <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+                        <label>
+                            <input 
+                                type="checkbox" 
+                                checked={activeStep.reserve} 
+                                onChange={toggleReserve} 
+                                disabled={!activeStep.isSelectable} 
                             />
-                        </section>
+                        </label>
+                        
+                        {!activeStep.isSelectable && (
+                            <span> (Cette étape n'est pas modifiable)</span>
+                        )}
+                    </div>
+                    }
 
-                        <section>
-                            <h3>Description</h3>
-                            <p>{activeStep.description}</p>
-                            
-                            <button onClick={handleSave}>
-                                Valider les modifications
-                            </button>
-                        </section>
-                    </>
-                )}
+                { activeStep &&
+                    <Formsupplement 
+                        supplements={activeStep.supplements}
+                        onAdd={handleAddSupplement}
+                        onRemove={handleRemoveSupplement}
+                    />
+                }
+                </section>
+
+                <section>
+                    <h3>Description</h3>
+                    { activeStep &&
+                        <p>{activeStep.description}</p>
+                    }
+                    <button onClick={handleSave}>
+                        Valider les modifications
+                    </button>
+                </section>
             </main>
-        </div>
-    );
-}
-
-// --- SOUS-COMPOSANT LOCAL ---
-function SupplementsForm({ supplements, onAdd, onRemove }) {
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-
-    const total = supplements.reduce((acc, item) => {
-        return item.type === 'plus' ? acc + item.price : acc - item.price;
-    }, 0);
-
-    const handleClickAdd = (e, type) => {
-        e.preventDefault();
-        if (name && price) {
-            onAdd(name, price, type);
-            setName('');
-            setPrice('');
-        }
-    };
-
-    return (
-        <div>
-            <h3>Ajustements</h3>
-            <p>Impact total : {total} €</p>
-            
-            <ul>
-                {supplements.map(s => (
-                    <li key={s.id}>
-                        [{s.type === 'plus' ? '+' : '-'}] {s.label} ({s.price} €)
-                        <button onClick={() => onRemove(s.id)}> Effacer </button>
-                    </li>
-                ))}
-            </ul>
-
-            <form>
-                <input 
-                    value={name} 
-                    onChange={(e) => setName(e.target.value)} 
-                    placeholder="Nom" 
-                />
-                <input 
-                    type="number" 
-                    value={price} 
-                    onChange={(e) => setPrice(e.target.value)} 
-                    placeholder="Prix" 
-                />
-                <button onClick={(e) => handleClickAdd(e, 'plus')}>+ Ajouter</button>
-                <button onClick={(e) => handleClickAdd(e, 'moins')}>- Réduire</button>
-            </form>
         </div>
     );
 }
