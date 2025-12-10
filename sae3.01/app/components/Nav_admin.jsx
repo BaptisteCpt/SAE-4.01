@@ -39,9 +39,13 @@ export default function Nav() {
       <a href="#">Administrer</a>
 
       <div className="profil-div">
-        <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
-        <input type='text' value="Admin" className='input-role' readOnly/>
-        <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>
+        <div className='profil'>
+          <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
+          <input type='text' value="Admin" className='input-role' readOnly/>
+        </div>
+        <div className='logout'>
+          <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>
+        </div>
       </div>
     </nav>
   );
