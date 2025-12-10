@@ -1,22 +1,13 @@
 generator client {
   provider        = "prisma-client-js"
   output          = "../app/generated/prisma"
-  previewFeatures = ["driverAdapters", "multiSchema"]
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
   schemas  = ["Bati_Parti"]
-}
-
-model User {
-  id           Int    @id @default(autoincrement())
-  login        String @unique
-  mot_de_passe String
-  role         String
-
-  @@schema("Bati_Parti")
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -163,6 +154,15 @@ model modele {
   descriptionmodele String?      @db.VarChar(250)
   chantier          chantier[]
   construire        construire[]
+
+  @@schema("Bati_Parti")
+}
+
+model User {
+  id           Int    @id @default(autoincrement())
+  login        String @unique
+  mot_de_passe String
+  role         String
 
   @@schema("Bati_Parti")
 }

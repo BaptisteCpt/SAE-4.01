@@ -7,6 +7,10 @@ import { useRouter } from 'next/navigation';
 jest.mock("next/navigation", () => ({
     useRouter: jest.fn(),
   }));
+
+// Pour acceder à la route
+const pushMock = jest.fn();
+useRouter.mockReturnValue({ push: pushMock });
  
 describe('Page de connexion', () => {
 
@@ -90,10 +94,6 @@ describe('Page de connexion', () => {
 
     // Test Login et Mot de passe correct
     test("Redirige sur la page acceuil", async () => {
-        // Pour acceder à la route
-        const pushMock = jest.fn();
-        useRouter.mockReturnValue({ push: pushMock });
-
         global.fetch = jest.fn(() =>
           Promise.resolve({
             ok: true,
@@ -116,7 +116,7 @@ describe('Page de connexion', () => {
         
         // On attends de voir si la redirection se fait
         await waitFor(() => {
-            expect(pushMock).toHaveBeenCalledWith("/acceuil"); // Vérifie que la redirection a eu lieu
+            expect(pushMock).toHaveBeenCalledWith("/accueil_admin"); // Vérifie que la redirection a eu lieu
           });
     });
 })
