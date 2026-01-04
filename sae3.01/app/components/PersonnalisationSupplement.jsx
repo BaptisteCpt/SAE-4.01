@@ -1,31 +1,33 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 
 export default function PersonnalisationSupplement({ supplements, onAdd, onRemove }) {
     const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
+    const [prix, setPrix] = useState('');
 
     const total = supplements.reduce((acc, item) => {
         return item.type === 'plus' ? acc + item.price : acc - item.price;
     }, 0);
 
-    const handleClickAdd = (e, type) => {
+    const handleClickAdd = (e, type) => { // Fonction appelé au click d'un bouton (ajouter / enlever) qui vérifie si un prix et un nom on était entré
+                                          // Si oui alors elle appel la fonction handleAddSupplement du composant PersonnalisationContent
         e.preventDefault();
-        if (name && price) {
-            onAdd(name, price, type);
+        if (name && prix) {
+            onAdd(name, prix, type);
             setName('');
-            setPrice('');
+            setPrix('');
         }
     };
 
     return (
         <div>
-            <h3>Ajustements</h3>
-            <p>Impact total : {total} €</p>
+            <h2>Supplément(s) / Réduction(s)</h2>
+            <p> Total des modifications : {total} €</p>
             
             <ul>
-                {supplements.map(s => (
+                <h4>Ajouter une modifications</h4>
+                {supplements.map(s => ( // Pour chaque supplément trouvé, on regarde si son type est plus ou moins pour écrire le bon signe
                     <li key={s.id}>
                         [{s.type === 'plus' ? '+' : '-'}] {s.label} ({s.price} €)
                         <button onClick={() => onRemove(s.id)}> Effacer </button>
@@ -37,16 +39,16 @@ export default function PersonnalisationSupplement({ supplements, onAdd, onRemov
                 <input 
                     value={name} 
                     onChange={(e) => setName(e.target.value)} 
-                    placeholder="Nom" 
+                    placeholder="Description modification" 
                 />
                 <input 
                     type="number" 
-                    value={price} 
-                    onChange={(e) => setPrice(e.target.value)} 
-                    placeholder="Prix" 
+                    value={prix} 
+                    onChange={(e) => setPrix(e.target.value)} 
+                    placeholder="Prix modification" 
                 />
-                <button onClick={(e) => handleClickAdd(e, 'plus')}>+ Ajouter</button>
-                <button onClick={(e) => handleClickAdd(e, 'moins')}>- Réduire</button>
+                <button onClick={(e) => handleClickAdd(e, 'plus')}>Ajouter +</button>
+                <button onClick={(e) => handleClickAdd(e, 'moins')}>Enlever -</button>
             </form>
         </div>
     );

@@ -57,8 +57,8 @@ export async function GET(request) {
                 id: toutesEtapes.noetape,
                 nom: toutesEtapes.nometape.trim(),
                 description: chantierData.modele.descriptionmodele || "Étape standard", 
-                reserve: isReserved,
-                isSelectable: toutesEtapes.reservable,
+                reservee: isReserved,
+                isReservable: toutesEtapes.reservable,
                 supplements: supplements
             };
         });

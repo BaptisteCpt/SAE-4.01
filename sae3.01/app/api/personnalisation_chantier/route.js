@@ -4,13 +4,13 @@ import prisma from '../../lib/prisma';
 export async function POST(request) {
     try {
         const body = await request.json();
-        const { chantierId, etapeId, reserve, supplements } = body;
+        const { chantierId, etapeId, reserve, supplements } = body; // on récupère les données passées en paramètres
 
-        if (!chantierId || !etapeId) {
+        if (!chantierId || !etapeId) { // on vérifie qu'on a bien nos données critiques
             return NextResponse.json({ error: "Données manquantes" }, { status: 400 });
         }
 
-        // 1. Check Sécurité
+        // On vérifie que l'étape existe dans la base
         const etapeInfo = await prisma.etape.findUnique({
             where: { noetape: parseInt(etapeId) }
         });
@@ -19,56 +19,50 @@ export async function POST(request) {
             return NextResponse.json({ error: "Étape inconnue" }, { status: 404 });
         }
 
+        // On vérifie que l'étape soit réservable
         if (reserve === true && !etapeInfo.reservable) {
             return NextResponse.json(
-                { error: "Action illégale : Cette étape n'est pas réservable." }, 
+                { error: "Cette étape n'est pas réservable." }, 
                 { status: 403 }
             );
         }
 
-        // 2. Calcul des montants et description
         let totalMontant = 0;
         let description = "";
-
+        
+        // On vérifie si on a au moins un supplément/réduction
         if (supplements && supplements.length > 0) {
-            // Calcul du prix total (reste inchangé)
+            // Calcul du prix total pour avoir qu'une valeur si on a plusieurs suppléments/réductions
             totalMontant = supplements.reduce((acc, item) => {
                 return item.type === 'plus' ? acc + item.price : acc - item.price;
             }, 0);
             
-            // --- CORRECTION ICI ---
-            // On map seulement 's.label' sans ajouter les '+' ou '-'
+            // On construit la description en fusionnant les descriptions récupérées au cas où on a plusieurs suppléments/réductions
             description = supplements.map(s => s.label).join(', ');
         }
 
-        // 3. Enregistrement
-        const cId = parseInt(chantierId);
-        const eId = parseInt(etapeId);
+        const idChantier = parseInt(chantierId);
+        const idEtape = parseInt(etapeId);
 
+        // On vérifie qu'il existe l'étape donnée dans le chantier donné
         const existing = await prisma.etape_chantier.findFirst({
-            where: { nochantier: cId, noetape: eId }
+            where: { nochantier: idChantier, noetape: idEtape }
         });
 
-        if (existing) {
+        if (existing) { // Si elle existe on la modifie avec nos données
             await prisma.etape_chantier.updateMany({
-                where: { nochantier: cId, noetape: eId },
+                where: { nochantier: idChantier, noetape: idEtape },
                 data: {
                     reservee: reserve,
                     reducsuppl: totalMontant,
-                    descriptionreducsuppl: description // Sauvegardera ex: "Peinture, Prise"
+                    descriptionreducsuppl: description
                 }
             });
         } else {
-            await prisma.etape_chantier.create({
-                data: {
-                    nochantier: cId,
-                    noetape: eId,
-                    reservee: reserve,
-                    reducsuppl: totalMontant,
-                    descriptionreducsuppl: description,
-                    montanttheoriquefacture: 0
-                }
-            });
+            return NextResponse.json(
+                { error: "étape non existante dans ce chantier" },
+                { status: 500 }
+            );
         }
 
         return NextResponse.json({ success: true, message: "Sauvegardé avec succès" });
