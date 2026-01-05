@@ -4,7 +4,7 @@ import "../css/accueil.css";
 import { useState, useEffect } from 'react' 
 import { useRouter } from 'next/navigation'
 
-export default function AccCommercial() { 
+export default function AccAdmin() { 
 
     const [nom, setNom] = useState("");
     const router = useRouter();

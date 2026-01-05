@@ -4,7 +4,7 @@ import "../css/accueil.css";
 import { useState, useEffect } from 'react' 
 import { useRouter } from 'next/navigation'
 
-export default function AccCommercial() { 
+export default function AccMaitre() { 
 
     const [nom, setNom] = useState("");
     const router = useRouter();
@@ -24,7 +24,7 @@ export default function AccCommercial() {
          router.push('/personnalisation')
     }
     function pageArti(){
-    //     router.push('/')
+         router.push('/artisant')
     }
 
     return (
