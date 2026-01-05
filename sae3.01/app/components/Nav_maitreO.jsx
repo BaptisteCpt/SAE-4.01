@@ -35,8 +35,8 @@ export default function Nav() {
         {openMenu === "Chantier" && (
           <div className="menuderoulantcontent">
             <a href="#">Suivi</a>
-            <a href="#">Personnalisation</a>
-            <a href="#">Artisan</a>
+            <a href="/personnalisation">Personnalisation</a>
+            <a href="/artisant">Artisan</a>
           </div>
         )}
       </div>

@@ -105,7 +105,7 @@ export default function PersonnalisationContent() {
 
                         {ChantierSelect.map(chantier => (
                             <option key={chantier.nochantier} value={chantier.nochantier}>
-                                { chantier.nochantier }
+                                {chantier.nochantier} - {chantier.adressechantier}
                             </option>
                         ))}
                     </select>
