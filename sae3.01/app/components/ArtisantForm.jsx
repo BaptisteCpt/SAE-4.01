@@ -58,8 +58,11 @@ export default function artisanForm() {
                 const data = await response.json();
                 if (response.ok) {
                     setArtisans(data);
-                    if (data.length > 0) setArtisanCourrant(data[0].noartisan); // si on a au moins un artisan on le séléctionne par défaut
-                    console.log(ArtisanCourrant);
+                    if (data.length > 0){
+                        setArtisanCourrant(data[0].noartisan); // si on a au moins un artisan on le séléctionne par défaut
+                    }else{
+                        setArtisanCourrant(undefined);
+                    }
                 } else {
                     setArtisans([]);
                 }
@@ -67,6 +70,35 @@ export default function artisanForm() {
         }
         fetchartisan();
     }, [EtapeCourrante]);
+
+
+    // Sauvegarder dans la base de données
+    const Sauvegarder = async () => {
+        if (!EtapeCourrante) return; // on verifie qu'on a bien une étape séléctionnée
+
+        try {
+            const response = await fetch('/api/sauv_artisan', { // on envoie à l'API les données requises pour sauvegarder
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chantierId: numero_chantier,
+                    etapeId: EtapeCourrante,
+                    noartisan: ArtisanCourrant
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                alert("Erreur : " + result.error);
+            } else {
+                alert("Modifications enregistrées !");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Erreur réseau");
+        }
+    };
 
   return (
     <div className='BulleDuFormulaire'>
@@ -103,22 +135,23 @@ export default function artisanForm() {
                     <h1>Choix de l'artisan :</h1>
                     <br/>
                     {
-                        ArtisanCourrant!=undefined &&
+                        ArtisanCourrant!==undefined ? (
                             <select name="artisan_choisi"
                                 value={ArtisanCourrant} 
-                                onChange={(e) => setartisanCourrant(Number(e.target.value))}>
+                                onChange={(e) => setArtisanCourrant(Number(e.target.value))}>
                                     {Artisans.map(artisan => (
                                         <option key={artisan.noartisan} value={artisan.noartisan}>{ artisan.nomartisan } - { artisan.prenomartisan }</option>
                                     ))}
                             </select>
-                        ||
-                        <span>Pas d'artisan</span>
+                        ):(
+                            <span>Aucun Artisan Trouvé</span>
+                        )
                     }
                      
                 </>
             }
                 <br />
-            <button type="button" >Valider</button>
+            <button onClick={Sauvegarder}>Valider</button>
         </form>
 
         {error && <p>{error}</p>}
