@@ -9,6 +9,8 @@ export default function PersonnalisationContent() {
     const [ChantierSelect, setChantierSelect] = useState([]);
     const [etapes, setEtapes] = useState([]); 
     const [EtapeCourrante, setEtapeCourrante] = useState(""); 
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupMessage, setPopupMessage] = useState("");
 
 
     useEffect(() => { // Chargement des chantier de la base et récupération de leur numéro dans la liste ChantierSelect
@@ -83,13 +85,16 @@ export default function PersonnalisationContent() {
             const result = await response.json();
 
             if (!response.ok) {
-                alert("Erreur : " + result.error);
+                setPopupMessage("Erreur : " + result.error);
+                setShowPopup(true);
             } else {
-                alert("Modifications enregistrées !");
+                setPopupMessage("Modifications enregistrées !");
+                setShowPopup(true);
             }
         } catch (error) {
             console.error(error);
-            alert("Erreur réseau");
+            setPopupMessage("Erreur réseau");
+            setShowPopup(true);
         }
     };
 
@@ -168,6 +173,15 @@ export default function PersonnalisationContent() {
                     </section>
                 </main>
             </div>
+
+            {showPopup && (
+                <div className="popup-overlay">
+                    <div className="popup-content">
+                        <p>{popupMessage}</p>
+                        <button onClick={() => setShowPopup(false)}>OK</button>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
