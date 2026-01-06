@@ -4,6 +4,7 @@ import React from 'react'
 import {useState} from 'react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import Footer from '../components/Footer'
 import Image from 'next/image'
 
 /* Fonction qui construit et renvoie un formulaire, qui effectue aussi des appels au back end grace à l'Api login. */
