@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
+import "../css/artisan.css";
 
 export default function artisanForm() {
 
@@ -97,60 +98,70 @@ export default function artisanForm() {
         }
     };
 
+    
   return (
-    <div className='BulleDuFormulaire'>
+    <div className='artisan'>
+        <div className='BulleArtisan'>
+            <h1>Nouvelle Affectation</h1>
 
-        <h1>Nouvelle Affectation</h1>
+            <div className="form-grid">
+                <label className="full-width">
+                    Chantier Choisi :
+                    <select value={numero_chantier} onChange={e => {setNumeroChantier(Number(e.target.value))}}>
+                        <option value="" hidden>-- Sélectionnez un chantier --</option>
+                        {Chantiers.map((Chantier) => (
+                            <option key={Chantier.nochantier} value={Chantier.nochantier}>
+                                {Chantier.nochantier} - {Chantier.adressechantier}
+                            </option>
+                        ))}
+                    </select>            
+                </label>
 
-            <label>
-                Chantier Choisi :
-                <select value={numero_chantier} onChange={e => {setNumeroChantier(Number(e.target.value))}}>
-                        <option value="" hidden>-- Numéro du chantier --</option>
-                            {Chantiers.map((Chantier) => (
-                                <option key={Chantier.nochantier} value={Chantier.nochantier}>{Chantier.nochantier} - {Chantier.adressechantier}</option>
-                            ))}
-                </select>            
-            </label>
-            <br />
-            {   numero_chantier &&
-                <>
-                    <label>
-                        Nom Etape:
-                        <select
-                            value={EtapeCourrante} 
-                            onChange={(e) => setEtapeCourrante(Number(e.target.value))}>
-                                {Etapes.map(etape => (
-                                    <option key={etape.id} value={etape.id}>{ etape.id } - { etape.nom }</option>
-                                ))}
-                        </select> 
-                    </label>
-                    
-                    <br />
-                    <hr/>
-
-                    <h1>Choix de l'artisan :</h1>
-                    <br/>
-                    {
-                        ArtisanCourrant!==undefined ? (
+                {numero_chantier && (
+                    <>
+                        <label className="full-width">
+                            Nom Étape:
                             <select
-                                value={ArtisanCourrant} 
-                                onChange={(e) => setArtisanCourrant(Number(e.target.value))}>
-                                    {Artisans.map(artisan => (
-                                        <option key={artisan.noartisan} value={artisan.noartisan}>{ artisan.nomartisan } - { artisan.prenomartisan }</option>
+                                value={EtapeCourrante} 
+                                onChange={(e) => setEtapeCourrante(Number(e.target.value))}>
+                                    {Etapes.map(etape => (
+                                        <option key={etape.id} value={etape.id}>{ etape.id } - { etape.nom }</option>
                                     ))}
-                            </select>
-                        ):(
-                            <span>Aucun Artisan Trouvé</span>
-                        )
-                    }
-                     
-                </>
-            }
-                <br />
-            <button onClick={Sauvegarder}>Valider</button>
-        {error && <p>{error}</p>}
+                            </select> 
+                        </label>
+                        
+                        <hr />
 
+                        <h1 className="full-width" style={{fontSize: '18px', marginTop: '10px'}}>Choix de l'artisan</h1>
+                        
+                        <div className="full-width">
+                            {ArtisanCourrant !== undefined ? (
+                                <label>
+                                    Artisan disponible :
+                                    <select
+                                        value={ArtisanCourrant} 
+                                        onChange={(e) => setArtisanCourrant(Number(e.target.value))}>
+                                            {Artisans.map(artisan => (
+                                                <option key={artisan.noartisan} value={artisan.noartisan}>
+                                                    { artisan.nomartisan } - { artisan.prenomartisan }
+                                                </option>
+                                            ))}
+                                    </select>
+                                </label>
+                            ) : (
+                                <div className="no-data">Aucun artisan qualifié trouvé pour cette étape.</div>
+                            )}
+                        </div>
+                    </>
+                )}
 
+                <button type="button" className='Valid' onClick={Sauvegarder}>
+                    Enregistrer l'affectation
+                </button>
+            </div>
+
+            {error && <p className="no-data">{error}</p>}
+        </div>
     </div>
   )
 }

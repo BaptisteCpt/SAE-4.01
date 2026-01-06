@@ -1,0 +1,128 @@
+:root {
+    --couleur-fond-page: #2c3e50;
+    --couleur-fond-bulle: #ffffff;
+    --couleur-texte-sombre: #2c3e50;
+    --couleur-texte-secondaire: #7f8c8d;
+    --couleur-principale: #ff9100;
+    --couleur-principale-hover: #e68200;
+    --couleur-bordure: #d5d8dc;
+    --espace-vertical: 28px;
+    --espace-horizontal: 24px;
+    --radius: 6px;
+  }
+  
+  /* Arrière-plan de la page sans affecter les composants globaux */
+  .artisan {
+    background-color: var(--couleur-fond-page);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .BulleArtisan {
+    background-color: var(--couleur-fond-bulle);
+    width: 700px; 
+    margin: 60px auto;
+    padding: 60px 50px;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    color: var(--couleur-texte-sombre);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    box-sizing: border-box;
+  }
+  
+  .BulleArtisan h1 {
+    font-weight: 700;
+    font-size: 32px;
+    text-align: center;
+    margin: 0 0 8px 0;
+    color: #1a252f;
+    letter-spacing: -0.5px;
+  }
+  
+  /* GRILLE DU FORMULAIRE */
+  .BulleArtisan .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--espace-horizontal);
+    row-gap: var(--espace-vertical);
+    margin-top: 40px;
+    align-items: end;
+  }
+  
+  /* ÉLÉMENTS PLEINE LARGEUR */
+  .BulleArtisan .full-width {
+    grid-column: 1 / -1;
+  }
+  
+  /* LABELS ET INPUTS */
+  .BulleArtisan label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--couleur-texte-secondaire);
+    letter-spacing: 0.7px;
+  }
+  
+  .BulleArtisan select {
+    padding: 12px 14px;
+    border: 1.5px solid var(--couleur-bordure);
+    border-radius: var(--radius);
+    font-size: 15px;
+    color: var(--couleur-texte-sombre);
+    background-color: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+  
+  .BulleArtisan select:focus {
+    border-color: var(--couleur-principale);
+    box-shadow: 0 0 0 4px rgba(255, 145, 0, 0.12);
+    background-color: #fafbfc;
+  }
+  
+  /* BOUTON VALIDER */
+  .BulleArtisan button.Valid {
+    grid-column: 1 / -1;
+    background-color: var(--couleur-principale);
+    color: #ffffff;
+    border: none;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: var(--radius);
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 145, 0, 0.25);
+  }
+  
+  .BulleArtisan button.Valid:hover {
+    background-color: var(--couleur-principale-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 145, 0, 0.35);
+  }
+  
+  /* Séparateur et messages */
+  .BulleArtisan hr {
+    grid-column: 1 / -1;
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 10px 0;
+    width: 100%;
+  }
+  
+  .BulleArtisan .no-data {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 14px;
+    padding: 10px;
+  }
+  
