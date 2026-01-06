@@ -3,6 +3,7 @@ import Nav from '../components/Nav_maitreO';
 import Footer from '../components/Footer'
 // On importe le gros fichier unique qui contient tout
 import PersonnalisationContent from '../components/PersonnalisationContent';
+import styles from '../css/personnalisation.css'
 
 export default function PersonnalisationPage() {
   return (
