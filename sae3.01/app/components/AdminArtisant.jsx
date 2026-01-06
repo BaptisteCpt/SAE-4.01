@@ -4,7 +4,7 @@ import "../css/accueil.css";
 import { useState, useEffect } from 'react' 
 import { useRouter } from 'next/navigation'
 
-export default function AccAdmin() { 
+export default function AdminArtisant() { 
 
     const [nom, setNom] = useState("");
     const router = useRouter();
@@ -16,8 +16,12 @@ export default function AccAdmin() {
         }
     }, []); 
 
-    function pageEmploye(){
-        router.push('/pageListeEmp')
+    function pageAjoutArtisant(){
+        router.push('/pageAjoutArti')
+    }
+
+    function pageListeArtisant(){
+        router.push('/pageListeArti')
     }
 
     return (
@@ -27,21 +31,15 @@ export default function AccAdmin() {
             <div className="boutons_accueil">
                 <table>
                     <td>
-                        <img src="/img/maison-icone.png" className="modeles-img"/>
-                        <button className="but" type="button">
-                            Liste des modèles
-                        </button>
-                    </td>
-                    <td>
                         <img src="/img/dossier.png" className="dossier-img"/>
-                        <button className="but" type="button">
-                            Liste des chantiers
+                        <button className="but" type="button" onClick={pageAjoutArtisant}>
+                            Ajout ou Modification d'un Artisant(e)
                         </button>
                     </td>
                     <td>
-                        <img src="/img/client.png" className="clients-img" onClick={pageEmploye}/>
-                        <button className="but" type="button" onClick={pageEmploye}>
-                            Liste des employés
+                        <img src="/img/client.png" className="clients-img" onClick={pageListeArtisant}/>
+                        <button className="but" type="button" onClick={pageListeArtisant}>
+                            Liste des Artisants
                         </button>
                     </td>
                 </table>
