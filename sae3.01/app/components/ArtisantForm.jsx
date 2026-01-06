@@ -16,9 +16,6 @@ export default function artisanForm() {
       
 
     useEffect(() => { // Chargement des chantier et récupérations dans la liste chantiers
-        if (fetchedChantiers.current) return; // On verifie si les chantier on déjà était récup
-        fetchedChantiers.current = true;
-
         async function fetchChantier(){
             try {
                 const res =  await fetch('/api/numero_chantier');
@@ -105,10 +102,9 @@ export default function artisanForm() {
 
         <h1>Nouvelle Affectation</h1>
 
-        <form>
             <label>
                 Chantier Choisi :
-                <select name="chantier_choisi" value={numero_chantier} onChange={e => {setNumeroChantier(Number(e.target.value))}}>
+                <select value={numero_chantier} onChange={e => {setNumeroChantier(Number(e.target.value))}}>
                         <option value="" hidden>-- Numéro du chantier --</option>
                             {Chantiers.map((Chantier) => (
                                 <option key={Chantier.nochantier} value={Chantier.nochantier}>{Chantier.nochantier} - {Chantier.adressechantier}</option>
@@ -120,11 +116,11 @@ export default function artisanForm() {
                 <>
                     <label>
                         Nom Etape:
-                        <select name="etape_choisi"
+                        <select
                             value={EtapeCourrante} 
                             onChange={(e) => setEtapeCourrante(Number(e.target.value))}>
                                 {Etapes.map(etape => (
-                                    <option key={etape.id} value={etape.id}>{ etape.nom }</option>
+                                    <option key={etape.id} value={etape.id}>{ etape.id } - { etape.nom }</option>
                                 ))}
                         </select> 
                     </label>
@@ -136,7 +132,7 @@ export default function artisanForm() {
                     <br/>
                     {
                         ArtisanCourrant!==undefined ? (
-                            <select name="artisan_choisi"
+                            <select
                                 value={ArtisanCourrant} 
                                 onChange={(e) => setArtisanCourrant(Number(e.target.value))}>
                                     {Artisans.map(artisan => (
@@ -152,8 +148,6 @@ export default function artisanForm() {
             }
                 <br />
             <button onClick={Sauvegarder}>Valider</button>
-        </form>
-
         {error && <p>{error}</p>}
 
 

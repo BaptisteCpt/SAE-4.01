@@ -24,7 +24,7 @@ export default function AccMaitre() {
          router.push('/personnalisation')
     }
     function pageArti(){
-         router.push('/artisant')
+         router.push('/artisan')
     }
 
     return (

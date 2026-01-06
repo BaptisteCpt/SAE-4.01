@@ -4,7 +4,7 @@ import prisma from '../../lib/prisma';
 export async function POST(request) {
     try {
         const body = await request.json();
-        const { chantierId, etapeId, reserve, supplements } = body; // on récupère les données passées en paramètres
+        const { chantierId, etapeId, reservee, supplements } = body; // on récupère les données passées en paramètres
 
         if (!chantierId || !etapeId) { // on vérifie qu'on a bien nos données critiques
             return NextResponse.json({ error: "Données manquantes" }, { status: 400 });
@@ -19,8 +19,10 @@ export async function POST(request) {
             return NextResponse.json({ error: "Étape inconnue" }, { status: 404 });
         }
 
+
         // On vérifie que l'étape soit réservable
-        if (reserve === true && !etapeInfo.reservable) {
+        
+        if (reservee === true && !etapeInfo.reservable) {
             return NextResponse.json(
                 { error: "Cette étape n'est pas réservable." }, 
                 { status: 403 }
@@ -43,6 +45,7 @@ export async function POST(request) {
 
         const idChantier = parseInt(chantierId);
         const idEtape = parseInt(etapeId);
+        console.log(reservee);
 
         // On vérifie qu'il existe l'étape donnée dans le chantier donné
         const existing = await prisma.etape_chantier.findFirst({
@@ -53,7 +56,7 @@ export async function POST(request) {
             await prisma.etape_chantier.updateMany({
                 where: { nochantier: idChantier, noetape: idEtape },
                 data: {
-                    reservee: reserve,
+                    reservee: reservee,
                     reducsuppl: totalMontant,
                     descriptionreducsuppl: description
                 }

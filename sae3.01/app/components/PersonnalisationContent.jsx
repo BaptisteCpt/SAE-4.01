@@ -40,8 +40,6 @@ export default function PersonnalisationContent() {
     // Inversion de la valeur de reservee de notre étape lorsque l'on coche / decoche
     const ReserverEtape = () => {
         if (!EtapeSelected) return;
-        // on arrête si ce n'est pas sélectionnable
-        if (!EtapeSelected.isReservable) return;
 
         setEtapes(etapes.map(e => e.id === EtapeSelected.id ? { ...e, reservee: !e.reservee } : e));
     };
@@ -124,7 +122,7 @@ export default function PersonnalisationContent() {
                                 onChange={(e) => setEtapeCourrante(Number(e.target.value))}>
                                 {etapes.map(etape => (
                                     <option key={etape.id} value={etape.id}>
-                                        { etape.nom }
+                                        { etape.id } - { etape.nom }
                                     </option>
                                 ))}
                             </select>

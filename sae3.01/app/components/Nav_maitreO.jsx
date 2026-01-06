@@ -36,7 +36,7 @@ export default function Nav() {
           <div className="menuderoulantcontent">
             <a href="#">Suivi</a>
             <a href="/personnalisation">Personnalisation</a>
-            <a href="/artisant">Artisan</a>
+            <a href="/artisan">Artisan</a>
           </div>
         )}
       </div>

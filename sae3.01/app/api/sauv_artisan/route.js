@@ -21,6 +21,7 @@ export async function POST(request) {
 
         const idChantier = parseInt(chantierId);
         const idEtape = parseInt(etapeId);
+        console.log(noartisan);
 
         // On vérifie qu'il existe l'étape donnée dans le chantier donné
         const existing = await prisma.etape_chantier.findFirst({
