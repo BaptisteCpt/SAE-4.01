@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import AdminAdmin from '../components/AdminAdmin'
+import Liste from '../components/ListeAdmin'
 import Nav_Admin from '../components/Nav_admin'
 
 export default function page() {
@@ -10,7 +10,7 @@ export default function page() {
   return (
     <>
       <Nav_Admin/>
-      <AdminAdmin/>
+      <Liste/>
     </>
   )
 }

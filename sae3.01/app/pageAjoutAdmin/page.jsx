@@ -1,30 +1,16 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import Nav_commercial from '../components/Nav_commercial'
-import Nav_M from '../components/Nav_maitreO'
-import styles from '../css/ListeMaquette.css'
-import PModel from '../components/PModel'
 import { useRouter } from 'next/navigation'
+import AjoutAdmin from '../components/AjoutAdmin'
+import Nav_Admin from '../components/Nav_admin'
 
 export default function page() {
-  const [navBar, setNavBar] = useState(null); 
-  const router = useRouter();
-
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-
-    if (role === "commercial") {
-      setNavBar(<Nav_commercial/>);
-    } else if(role === "maitre Oeuvre") {
-      setNavBar(<Nav_M/>);
-    }
-  }, []);
 
   return (
     <>
-      { navBar } 
-      <PModel/>
+      <Nav_Admin/>
+      <AjoutAdmin/>
     </>
   )
 }

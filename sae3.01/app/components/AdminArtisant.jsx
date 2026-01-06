@@ -16,11 +16,11 @@ export default function AdminArtisant() {
         }
     }, []); 
 
-    function pageAjoutArtisant(){
-        router.push('/pageAjoutArti')
+    function pageAjoutArti(){
+        router.push('/pageAjoutArti') 
     }
 
-    function pageListeArtisant(){
+    function pageListeArti(){
         router.push('/pageListeArti')
     }
 
@@ -30,20 +30,24 @@ export default function AdminArtisant() {
             
             <div className="boutons_accueil">
                 <table>
-                    <td>
-                        <img src="/img/dossier.png" className="dossier-img"/>
-                        <button className="but" type="button" onClick={pageAjoutArtisant}>
-                            Ajout ou Modification d'un Artisant(e)
-                        </button>
-                    </td>
-                    <td>
-                        <img src="/img/client.png" className="clients-img" onClick={pageListeArtisant}/>
-                        <button className="but" type="button" onClick={pageListeArtisant}>
-                            Liste des Artisants
-                        </button>
-                    </td>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <img src="/img/dossier.png" className="dossier-img" onClick={pageAjoutArti} alt="Ajout"/>
+                                <button className="but" type="button" onClick={pageAjoutArti}>
+                                    Ajout d'un Artisan
+                                </button>
+                            </td>
+                            <td>
+                                <img src="/img/client.png" className="clients-img" onClick={pageListeArti} alt="Liste"/>
+                                <button classNamae="but" type="button" onClick={pageListeArti}>
+                                    Liste des Artisans
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
     )
-} 
+}
