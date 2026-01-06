@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Nav_commercial from '../components/Nav_commercial'
+import Footer from '../components/Footer'
 import styles from '../css/accueil.css'
 import { useRouter } from 'next/navigation'
 import AccCommercial from '../components/AccCommercial'
@@ -26,6 +27,7 @@ export default function page() {
     <>
       <Nav_commercial/>
       <AccCommercial/>
+      <Footer/>
     </>
   )
 }

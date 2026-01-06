@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Nav_commercial from '../components/Nav_commercial'
 import Nav_M from '../components/Nav_maitreO'
+import Footer from '../components/Footer'
 import styles from '../css/ListeMaquette.css'
 import PModel from '../components/PModel'
 import { useRouter } from 'next/navigation'
@@ -25,6 +26,7 @@ export default function page() {
     <>
       { navBar } 
       <PModel/>
+      <Footer/>
     </>
   )
 }

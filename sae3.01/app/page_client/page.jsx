@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Nav_commercial from '../components/Nav_commercial'
 import Nav_admin from '../components/Nav_admin'
+import Footer from '../components/Footer'
 import styles from '../css/accueil.css'
 import Pclient from '../components/Pclient'
 import { useRouter } from 'next/navigation'
@@ -25,6 +26,7 @@ export default function page() {
     <>
       { navBar } 
       <Pclient/>
+      <Footer/>
     </>
   )
 }
