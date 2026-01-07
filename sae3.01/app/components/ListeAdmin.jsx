@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
 
 export default function PageListAdmin() {
 
@@ -81,33 +82,38 @@ export default function PageListAdmin() {
     }
 
     return (
-        <div className="bulle">
-            <h1>Liste des Administrateurs</h1>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Login</th>
-                        <th>Rôle</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {liste.map((admin) => (
-                        <tr key={admin.id}>
-                            <td>{admin.id}</td>
-                            <td>{admin.login}</td>
-                            <td>{admin.role}</td>
-                            <td>
-                                <button className='but' onClick={() => router.push(`/pageModifAdmin?id=${admin.id}`)}>Modifier</button>
-                                <button className='but' onClick={() => Suppr(admin.id, admin.login)}>Supprimer</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            {liste.length === 0 && <p>Aucun administrateur trouvé.</p>}
-        </div>
+        <>
+            <div className="bulle">
+                <h1>Liste des Administrateurs</h1>
+                
+                <div className="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Login</th>
+                                <th>Rôle</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {liste.map((admin) => (
+                                <tr key={admin.id}>
+                                    <td data-label="ID">{admin.id}</td>
+                                    <td data-label="Login">{admin.login}</td>
+                                    <td data-label="Rôle">{admin.role}</td>
+                                    <td data-label="Action">
+                                        <button className='but' onClick={() => router.push(`/pageModifAdmin?id=${admin.id}`)}>Modifier</button>
+                                        <button className='but' onClick={() => Suppr(admin.id, admin.login)}>Supprimer</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                {liste.length === 0 && <p>Aucun administrateur trouvé.</p>}
+            </div>
+            <Footer />
+        </>
     )
 }

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
 
 export default function ModifAdmin() {
     const router = useRouter();
@@ -71,20 +72,23 @@ export default function ModifAdmin() {
     }
 
     return (
-        <div className="bulle">
-            <h1>Modifier l'Administrateur N°{idAdmin}</h1>
-            <form>
-                <label>Identifiant (Login) :</label>
-                <input type="text" value={login} onChange={(e) => setLogin(e.target.value)} />
-                
-                <label>Mot de passe :</label>
-                <input type="text" value={mdp} onChange={(e) => setMdp(e.target.value)} />
-                
-                <div className="form-buttons">
-                    <button type="button" className="but" onClick={validerModif}>Enregistrer</button>
-                    <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
-                </div>
-            </form>
-        </div>
+        <>
+            <div className="bulle">
+                <h1>Modifier l'Administrateur N°{idAdmin}</h1>
+                <form>
+                    <label>Identifiant (Login) :</label>
+                    <input type="text" value={login} onChange={(e) => setLogin(e.target.value)} />
+                    
+                    <label>Mot de passe :</label>
+                    <input type="text" value={mdp} onChange={(e) => setMdp(e.target.value)} />
+                    
+                    <div className="form-buttons">
+                        <button type="button" className="but" onClick={validerModif}>Enregistrer</button>
+                        <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
+                    </div>
+                </form>
+            </div>
+            <Footer />
+        </>
     )
 }

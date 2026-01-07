@@ -4,7 +4,7 @@
 
 .bulle_accueil {
     background-color: var(--couleur-fond-page);
-    min-height: 100vh;
+    min-height: 80vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     padding-top: 20px; /* Un peu d'espace en haut */
@@ -91,4 +91,3 @@ img {
         width: auto;
     }
 }
-

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
 
 export default function PageModifChantier() {
     const router = useRouter();
@@ -101,45 +102,48 @@ export default function PageModifChantier() {
     }
 
     return (
-        <div className="bulle">
-            <h1>Modifier le Chantier N°{idChantier}</h1>
-            
-            <form>
-                <label>Client :</label>
-                <select value={selectedClient} onChange={(e) => setSelectedClient(e.target.value)}>
-                    <option value="">-- Sélectionner un client --</option>
-                    {clients.map(c => (
-                        <option key={c.noclient} value={c.noclient}>{c.nomclient} {c.prenomclient}</option>
-                    ))}
-                </select>
+        <>
+            <div className="bulle">
+                <h1>Modifier le Chantier N°{idChantier}</h1>
+                
+                <form>
+                    <label>Client :</label>
+                    <select value={selectedClient} onChange={(e) => setSelectedClient(e.target.value)}>
+                        <option value="">-- Sélectionner un client --</option>
+                        {clients.map(c => (
+                            <option key={c.noclient} value={c.noclient}>{c.nomclient} {c.prenomclient}</option>
+                        ))}
+                    </select>
 
-                <label>Adresse :</label>
-                <input type="text" value={adresse} onChange={(e) => setAdresse(e.target.value)} />
-                <label>Code Postal :</label>
-                <input type="text" value={cp} onChange={(e) => setCp(e.target.value)} />
-                <label>Ville :</label>
-                <input type="text" value={ville} onChange={(e) => setVille(e.target.value)} />
-                <label>Modèle de Maison :</label>
-                <select value={selectedModele} onChange={(e) => setSelectedModele(e.target.value)}>
-                    <option value="">-- Sélectionner un modèle --</option>
-                    {modeles.map(m => (
-                        <option key={m.nomodele} value={m.nomodele}>{m.nommodele}</option>
-                    ))}
-                </select>
+                    <label>Adresse :</label>
+                    <input type="text" value={adresse} onChange={(e) => setAdresse(e.target.value)} />
+                    <label>Code Postal :</label>
+                    <input type="text" value={cp} onChange={(e) => setCp(e.target.value)} />
+                    <label>Ville :</label>
+                    <input type="text" value={ville} onChange={(e) => setVille(e.target.value)} />
+                    <label>Modèle de Maison :</label>
+                    <select value={selectedModele} onChange={(e) => setSelectedModele(e.target.value)}>
+                        <option value="">-- Sélectionner un modèle --</option>
+                        {modeles.map(m => (
+                            <option key={m.nomodele} value={m.nomodele}>{m.nommodele}</option>
+                        ))}
+                    </select>
 
-                <label>Maître d'Oeuvre :</label>
-                <select value={selectedMoe} onChange={(e) => setSelectedMoe(e.target.value)}>
-                    <option value="">-- Sélectionner un MOE --</option>
-                    {moes.map(m => (
-                        <option key={m.nomoe} value={m.nomoe}>{m.nommoe} {m.prenommoe}</option>
-                    ))}
-                </select>
+                    <label>Maître d'Oeuvre :</label>
+                    <select value={selectedMoe} onChange={(e) => setSelectedMoe(e.target.value)}>
+                        <option value="">-- Sélectionner un MOE --</option>
+                        {moes.map(m => (
+                            <option key={m.nomoe} value={m.nomoe}>{m.nommoe} {m.prenommoe}</option>
+                        ))}
+                    </select>
 
-                <div className="form-buttons">
-                    <button type="button" className="but" onClick={validerModif}>Enregistrer</button>
-                    <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
-                </div>
-            </form>
-        </div>
+                    <div className="form-buttons">
+                        <button type="button" className="but" onClick={validerModif}>Enregistrer</button>
+                        <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
+                    </div>
+                </form>
+            </div>
+            <Footer />
+        </>
     )
 }

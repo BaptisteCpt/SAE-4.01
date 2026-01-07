@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
 
 export default function PageListeCom() {
 
@@ -69,31 +70,36 @@ export default function PageListeCom() {
     }
 
     return (
-        <div className="bulle">
-            <h1>Liste des Commerciaux</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Identifiant</th>
-                        <th>Mot de passe</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {liste.map((com) => (
-                        <tr key={com.id}>
-                            <td>{com.login}</td>
-                            <td>{com.mot_de_passe}</td>
-                            <td>
-                                <button className='but' onClick={() => router.push(`/pageModifCom?id=${com.id}`)}>Modifier</button>
-                                <button className='but' onClick={() => Suppr(com.id, com.login)}>Supprimer</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <>
+            <div className="bulle">
+                <h1>Liste des Commerciaux</h1>
+                <div className="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Identifiant</th>
+                                <th>Mot de passe</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {liste.map((com) => (
+                                <tr key={com.id}>
+                                    <td data-label="Identifiant">{com.login}</td>
+                                    <td data-label="Mot de passe">{com.mot_de_passe}</td>
+                                    <td data-label="Action">
+                                        <button className='but' onClick={() => router.push(`/pageModifCom?id=${com.id}`)}>Modifier</button>
+                                        <button className='but' onClick={() => Suppr(com.id, com.login)}>Supprimer</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
-            {liste.length === 0 && <p>Aucun commercial trouvé.</p>}
-        </div>
+                {liste.length === 0 && <p>Aucun commercial trouvé.</p>}
+            </div>
+            <Footer />
+        </>
     )
 }

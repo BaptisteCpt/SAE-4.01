@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
+
 export default function PageListeModele() {
     const [liste, setListe] = useState([])
     const router = useRouter();
@@ -45,44 +47,49 @@ export default function PageListeModele() {
         }
     }
     return (
-        <div className="bulle">
-            <h1>Liste des Modèles</h1>
-            <div>
-                <button className="but" onClick={() => router.push('/pageAjoutModel')}>
-                    Nouveau Modèle
-                </button>
+        <>
+            <div className="bulle">
+                <h1>Liste des Modèles</h1>
+                <div>
+                    <button className="but" onClick={() => router.push('/pageAjoutModel')}>
+                        Nouveau Modèle
+                    </button>
+                </div>
+                <div className="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Description</th>
+                                <th>Étapes incluses</th>
+                                <th>Modifier/Supprimer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {liste.map((m) => (
+                                <tr key={m.nomodele}>
+                                    <td data-label="Nom">{m.nommodele}</td>
+                                    <td data-label="Description">{m.descriptionmodele || "..."}</td>
+                                    <td data-label="Étapes incluses">
+                                        {m.etapes && m.etapes.length > 0 ? (
+                                            <ul>
+                                                {m.etapes.map(e => <li key={e.noetape}>{e.nometape}</li>)}
+                                            </ul>
+                                        ) : <p>Aucune Étapes</p>}
+                                    </td>
+                                    <td data-label="Modifier/Supprimer">
+                                        <button className='but' onClick={() => router.push(`/pageModifModel?id=${m.nomodele}`)}>Modifier
+                                        </button>
+                                        <button className='but' onClick={() => Suppr(m.nomodele, m.nommodele)}>Supprimer</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                {liste.length === 0 && <p>Aucun modèle trouvé.</p>}
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Description</th>
-                        <th>Étapes incluses</th>
-                        <th>Modifier/Supprimer</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {liste.map((m) => (
-                        <tr key={m.nomodele}>
-                            <td>{m.nommodele}</td>
-                            <td>{m.descriptionmodele || "..."}</td>
-                            <td>
-                                {m.etapes && m.etapes.length > 0 ? (
-                                    <ul>
-                                        {m.etapes.map(e => <li key={e.noetape}>{e.nometape}</li>)}
-                                    </ul>
-                                ) : <p>Aucune Étapes</p>}
-                            </td>
-                            <td>
-                                <button className='but' onClick={() => router.push(`/pageModifModel?id=${m.nomodele}`)}>Modifier
-                                </button>
-                                <button className='but' onClick={() => Suppr(m.nomodele, m.nommodele)}>Supprimer</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            {liste.length === 0 && <p>Aucun modèle trouvé.</p>}
-        </div>
+            <Footer />
+        </>
     )
 }

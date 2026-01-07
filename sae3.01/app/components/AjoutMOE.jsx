@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
 
 export default function AjoutMoe() {
 
@@ -66,22 +67,25 @@ export default function AjoutMoe() {
     }
     
     return (
-        <div className="bulle">
-            <h1>Ajouter un Maitre d'Oeuvre</h1>
+        <>
+            <div className="bulle">
+                <h1>Ajouter un Maitre d'Oeuvre</h1>
 
-            <form>
-                <label>Nom :</label>
-                <input type="text" className="nom" value={nom} onChange={(e) => setNom(e.target.value)} placeholder="Nom..." />
-                
-                <label>Prénom :</label>
-                <input type="text" className="prenom" placeholder="Prénom..." value={prenom} onChange={(e) => setPrenom(e.target.value)} />
-                
-                <div className="form-buttons">
-                    <button className="but" type="button" onClick={validerForm}>Valider</button>
-                    <button className="but" type="button" onClick={() => router.back()}>Annuler</button>
-                </div>
-                {error && <p>{error}</p>}
-            </form>
-        </div>
+                <form>
+                    <label>Nom :</label>
+                    <input type="text" className="nom" value={nom} onChange={(e) => setNom(e.target.value)} placeholder="Nom..." />
+                    
+                    <label>Prénom :</label>
+                    <input type="text" className="prenom" placeholder="Prénom..." value={prenom} onChange={(e) => setPrenom(e.target.value)} />
+                    
+                    <div className="form-buttons">
+                        <button className="but" type="button" onClick={validerForm}>Valider</button>
+                        <button className="but" type="button" onClick={() => router.back()}>Annuler</button>
+                    </div>
+                    {error && <p>{error}</p>}
+                </form>
+            </div>
+            <Footer />
+        </>
     )
 }

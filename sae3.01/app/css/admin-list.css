@@ -53,6 +53,12 @@ body {
 }
 
 /* Tableau */
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -80,14 +86,13 @@ td {
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f8f9fa; /* Gris très clair pour l'alternance */
+    background-color: #f8f9fa; 
 }
 
 tr:hover {
-    background-color: #e9ecef; /* Gris un peu plus foncé au survol */
+    background-color: #e9ecef; 
 }
 
-/* Bordures verticales fines */
 th, td {
     border-right: 1px solid #dee2e6;
 }
@@ -96,7 +101,6 @@ th:last-child, td:last-child {
     border-right: none;
 }
 
-/* Listes dans le tableau (étapes) */
 td ul {
     list-style-type: disc;
     padding-left: 20px;
@@ -107,7 +111,6 @@ td ul li {
     margin-bottom: 4px;
 }
 
-/* Message si vide */
 .bulle > p {
     text-align: center;
     font-style: italic;
@@ -115,7 +118,6 @@ td ul li {
     margin-top: 20px;
 }
 
-/* --- Styles pour les Formulaires (Modif/Ajout) --- */
 form {
     max-width: 800px;
     margin: 0 auto;
@@ -152,7 +154,6 @@ textarea {
     resize: vertical;
 }
 
-/* Zone des étapes (checkboxes) */
 .etapes-container { 
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -173,7 +174,7 @@ textarea {
     padding: 8px;
     border-radius: 4px;
     border: 1px solid #e0e0e0;
-    color: black; /* Titres en noir */
+    color: black;
 }
 
 .etape-item:hover {
@@ -184,7 +185,7 @@ textarea {
 .form-buttons { 
     display: flex;
     justify-content: flex-end;
-    gap: 30px; /* Espacement agrandi */
+    gap: 15px;
     margin-top: 20px;
 }
 
@@ -192,60 +193,31 @@ textarea {
 @media (max-width: 768px) {
     .bulle {
         width: 95%;
-        padding: 15px;
+        padding: 20px;
+        margin: 20px auto;
     }
 
-    table, thead, tbody, th, td, tr {
-        display: block;
+    .bulle h1 {
+        font-size: 1.8rem;
     }
 
-    thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
+    .but {
+        padding: 8px 15px;
+        font-size: 0.95rem;
     }
 
-    tr {
-        margin-bottom: 20px;
-        border: 1px solid #eee;
-        border-radius: 8px;
-        padding: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    td {
-        border: none;
-        position: relative;
-        padding-left: 50%;
-        text-align: right;
-        display: flex;
+    .form-buttons {
         flex-direction: column;
-        align-items: flex-end;
+        gap: 10px;
     }
 
-    td::before {
-        position: absolute;
-        top: 15px;
-        left: 10px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        text-align: left;
-        font-weight: bold;
-        content: attr(data-label); 
-    }
-    
-    td {
-        text-align: left;
-        padding: 10px;
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-    }
-    
     .but {
         width: 100%;
-        margin-bottom: 5px;
         margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    table {
+        min-width: 800px; /* Force le scroll horizontal sur mobile */
     }
 }
