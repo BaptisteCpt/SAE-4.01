@@ -40,7 +40,7 @@ export default function AdminArtisant() {
                             </td>
                             <td>
                                 <img src="/img/client.png" className="clients-img" onClick={pageListeArti} alt="Liste"/>
-                                <button classNamae="arti" type="button" onClick={pageListeArti}>
+                                <button className="arti" type="button" onClick={pageListeArti}>
                                     Liste des Artisans
                                 </button>
                             </td>
