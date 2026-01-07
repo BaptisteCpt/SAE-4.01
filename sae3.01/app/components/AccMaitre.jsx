@@ -51,7 +51,7 @@ export default function AccMaitre() {
                 </div>
 
                 <div className="bloc-accueil">
-                    <img src="/img/client.png" onClick={pageSuivi} />
+                    <img src="/img/calendrier.png" onClick={pageSuivi} />
                     <button className="but" type="button" onClick={pageSuivi}>
                         Suivi d'un Chantier
                     </button>
