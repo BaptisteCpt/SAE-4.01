@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Formsupplement from '../components/PersonnalisationSupplement'
+import Formsupplement from '../components/PersonnalisationSupplement';
+import '../css/personnalisation.css';
 
 export default function PersonnalisationContent() {
 
@@ -8,6 +9,8 @@ export default function PersonnalisationContent() {
     const [ChantierSelect, setChantierSelect] = useState([]);
     const [etapes, setEtapes] = useState([]); 
     const [EtapeCourrante, setEtapeCourrante] = useState(""); 
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupMessage, setPopupMessage] = useState("");
 
 
     useEffect(() => { // Chargement des chantier de la base et récupération de leur numéro dans la liste ChantierSelect
@@ -82,22 +85,25 @@ export default function PersonnalisationContent() {
             const result = await response.json();
 
             if (!response.ok) {
-                alert("Erreur : " + result.error);
+                setPopupMessage("Erreur : " + result.error);
+                setShowPopup(true);
             } else {
-                alert("Modifications enregistrées !");
+                setPopupMessage("Modifications enregistrées !");
+                setShowPopup(true);
             }
         } catch (error) {
             console.error(error);
-            alert("Erreur réseau");
+            setPopupMessage("Erreur réseau");
+            setShowPopup(true);
         }
     };
 
     return (
-        <div>
+        <>
             <header>
-                <h1>Personnalisation</h1>
+                <h1>Personnalisation Chantier N°</h1>
                 <div>
-                    <label>Chantier N° </label>
+                    <label>Identifiant</label>
                     <select value={numChantier} onChange={(e)=>setNumChantier(e.target.value)}>
                         <option value="" hidden>Choisir un chantier...</option>
 
@@ -110,61 +116,72 @@ export default function PersonnalisationContent() {
                 </div>
             </header>
 
-            <main>
-                {
-                    EtapeSelected &&
-                    <>
-                    <section>
-                        <div>
-                            <label>Étape à personnaliser : </label>
-                            <select 
-                                value={EtapeCourrante} 
-                                onChange={(e) => setEtapeCourrante(Number(e.target.value))}>
-                                {etapes.map(etape => (
-                                    <option key={etape.id} value={etape.id}>
-                                        { etape.id } - { etape.nom }
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+            <div className="card-container">
+                <main>
+                    {
+                        EtapeSelected &&
+                        <>
+                        <section className="left-section">
+                            <div>
+                                <label>Étape à Modifier :</label>
+                                <select 
+                                    value={EtapeCourrante} 
+                                    onChange={(e) => setEtapeCourrante(Number(e.target.value))}>
+                                    {etapes.map(etape => (
+                                        <option key={etape.id} value={etape.id}>
+                                            Numéro {etape.id} - {etape.nom}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
 
+                            <div className="reserve-section">
+                                <label>
+                                    Réservé :
+                                    <input 
+                                        type="checkbox" 
+                                        checked={EtapeSelected.reservee}
+                                        onChange={ReserverEtape}
+                                        hidden={!EtapeSelected.isReservable}
+                                    />
+                                </label>
+                                
+                                {!EtapeSelected.isReservable && (
+                                    <span>Cette étape n'est pas réservable</span>
+                                )}
+                            </div>
 
-                        <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-                            <label>
-                                Reserver l'étape : 
-                                <input 
-                                    type="checkbox" 
-                                    checked={EtapeSelected.reservee} // coche automatiquement si l'étape est déjà réservée
-                                    onChange={ReserverEtape} // appel la fonction dans ReserverEtape a chaque changement d'état
-                                    hidden={!EtapeSelected.isReservable} // si l'etape n'est pas réservable, on cache la case et on affiche le span présent en dessous
-                                />
-                            </label>
                             
-                            {!EtapeSelected.isReservable && (
-                                <span> Cette étape n'est pas réservable</span> // affiché uniquement quand l'étape n'est pas réservable
-                            )}
-                        </div>
+                            <Formsupplement
+                                supplements={EtapeSelected.supplements}
+                                onAdd={handleAddSupplement}
+                                onRemove={handleRemoveSupplement}
+                            />
+                        </section>
 
-                        <Formsupplement // affichage du sous composant PersonnalisationSupplement
-                            supplements={EtapeSelected.supplements}
-                            onAdd={handleAddSupplement}
-                            onRemove={handleRemoveSupplement}
-                        />
+                        <section className="right-section">
+                            <h2>Description de ce modèle :</h2>
+                            <p>{EtapeSelected.description || "Description des éléments qui composent cette étape."}</p>
+                        </section>
+                        </>
+                    }
+                        
+                    <section className="button-section">
+                        <button onClick={handleSave}>
+                            Valider
+                        </button>
                     </section>
+                </main>
+            </div>
 
-                    <section>
-                            <h2>Description Du Modèle De Maison</h2>
-                            <p>{EtapeSelected.description}</p>
-                    </section>
-                    </>
-                }
-                    
-                <section>
-                    <button onClick={handleSave}>
-                        Valider
-                    </button>
-                </section>
-            </main>
-        </div>
+            {showPopup && (
+                <div className="popup-overlay">
+                    <div className="popup-content">
+                        <p>{popupMessage}</p>
+                        <button onClick={() => setShowPopup(false)}>OK</button>
+                    </div>
+                </div>
+            )}
+        </>
     );
 }
