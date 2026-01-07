@@ -68,4 +68,22 @@
     border-color: #f39c12;
     box-shadow: 0 0 0 2px rgba(243, 156, 18, 0.2);
   }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .liste_etapes {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .etape {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .etape-dates {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+  }
   

@@ -28,9 +28,6 @@
 .logo-image {
   width: 200px;
   height: auto;
-  position: fixed;
-  top: 0px;
-  left: 5px;
 }
 
 /* Titre Authentification */
@@ -124,4 +121,31 @@
   text-align: center;
   margin-top: 0.5rem;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .logo-container {
+    position: static;
+    margin-bottom: 2rem;
+    justify-content: center;
+  }
+
+  .logo-image {
+    width: 150px;
+  }
+
+  .auth-title {
+    font-size: 2rem;
+    margin-top: 1rem;
+  }
+
+  .login-container {
+    padding: 1rem;
+    justify-content: center;
+  }
+
+  .login-form {
+    padding: 1.5rem;
+  }
 }

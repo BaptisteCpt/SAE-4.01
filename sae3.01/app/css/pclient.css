@@ -23,6 +23,25 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Police propre sans-serif */
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+    .bulle_liste_clients {
+        width: 95%;
+        padding: 15px;
+        overflow-x: auto; /* Permet le scroll horizontal pour le tableau */
+    }
+
+    .table_clients th, .table_clients td {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    .btn_creation {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+}
+
 /* --- Titre --- */
 .bulle_liste_clients h1 {
     color: #2c3e50; /* Gris foncé/Bleu nuit */

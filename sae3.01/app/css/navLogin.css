@@ -118,3 +118,45 @@
     align-items: center;
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+    .Nav {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .nav-item, .Nav a {
+        height: 40px; /* Reduced height for stacked items */
+        width: 100%;
+        justify-content: center;
+    }
+
+    .menuderoulant {
+        height: auto;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
+    .menuderoulantcontent {
+        position: static;
+        width: 100%;
+        text-align: center;
+        box-shadow: none;
+        border: 1px solid #eee;
+    }
+
+    .profil-div {
+        flex-direction: column;
+        height: auto;
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .logo-img {
+        height: 40px;
+    }
+}
+

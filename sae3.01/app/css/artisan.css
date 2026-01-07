@@ -21,7 +21,8 @@
   
   .BulleArtisan {
     background-color: var(--couleur-fond-bulle);
-    width: 700px; 
+    width: 90%;
+    max-width: 700px; 
     margin: 60px auto;
     padding: 60px 50px;
     border-radius: 12px;
@@ -124,5 +125,22 @@
     color: #7f8c8d;
     font-size: 14px;
     padding: 10px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .BulleArtisan {
+        padding: 30px 20px;
+        margin: 20px auto;
+    }
+
+    .BulleArtisan .form-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .BulleArtisan h1 {
+        font-size: 24px;
+    }
   }
   

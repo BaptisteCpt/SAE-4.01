@@ -72,3 +72,23 @@ img {
     transform: scale(0.98); /* Petit clic réaliste */
 }
 
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .boutons_accueil {
+        flex-direction: column;
+        gap: 40px;
+        min-height: auto;
+        padding-bottom: 40px;
+    }
+
+    img {
+        height: 180px;
+        width: auto;
+    }
+}
+
