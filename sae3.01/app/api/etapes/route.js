@@ -56,7 +56,6 @@ export async function GET(request) {
                       where: { noartisan: perso.noartisan }
                     });
                   
-                let nomA, prenomA;
                 if (artisan) {
                     nomA = artisan.nomartisan;
                     prenomA = artisan.prenomartisan;
