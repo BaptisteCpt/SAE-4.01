@@ -23,6 +23,11 @@ export default function AccMaitre() {
     function pagePerso(){
          router.push('/personnalisation')
     }
+
+    function pageSuivi(){
+        router.push('/suivi')
+    }
+
     function pageArti(){
          router.push('/artisan')
     }
@@ -42,6 +47,13 @@ export default function AccMaitre() {
                     <img src="/img/dossier.png" onClick={pagePerso} />
                     <button className="but" type="button" onClick={pagePerso}>
                         Personnalisation des étapes
+                    </button>
+                </div>
+
+                <div className="bloc-accueil">
+                    <img src="/img/calendrier.png" onClick={pageSuivi} />
+                    <button className="but" type="button" onClick={pageSuivi}>
+                        Suivi d'un Chantier
                     </button>
                 </div>
 
