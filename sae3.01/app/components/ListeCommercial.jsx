@@ -79,7 +79,7 @@ export default function PageListeCom() {
                             <tr>
                                 <th>Identifiant</th>
                                 <th>Mot de passe</th>
-                                <th>Action</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>

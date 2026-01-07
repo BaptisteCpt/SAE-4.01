@@ -64,7 +64,7 @@ export default function ModifAdmin() {
                 router.push('/pageListeAdmin');
             } else {
                 const info = await res.json();
-                Swal.fire('Erreur', info.error || "Echec mise à jour", 'error');
+                Swal.fire('Erreur', info.error || "Échec de la mise à jour", 'error');
             }
         } catch (err) {
             Swal.fire('Erreur', 'Erreur serveur', 'error');

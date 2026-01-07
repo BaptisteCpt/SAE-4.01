@@ -122,8 +122,8 @@ export default function PersonnalisationContent() {
                         EtapeSelected &&
                         <>
                         <section className="left-section">
-                            <div>
-                                <label>Étape à Modifier :</label>
+                            <div className="etape-select-card">
+                                <label>Étape à Modifier</label>
                                 <select 
                                     value={EtapeCourrante} 
                                     onChange={(e) => setEtapeCourrante(Number(e.target.value))}>
@@ -135,23 +135,31 @@ export default function PersonnalisationContent() {
                                 </select>
                             </div>
 
-                            <div className="reserve-section">
-                                <label>
-                                    Réservé :
-                                    <input 
-                                        type="checkbox" 
-                                        checked={EtapeSelected.reservee}
-                                        onChange={ReserverEtape}
-                                        hidden={!EtapeSelected.isReservable}
-                                    />
-                                </label>
-                                
-                                {!EtapeSelected.isReservable && (
-                                    <span>Cette étape n'est pas réservable</span>
-                                )}
+                            <div className="reserve-card">
+                                <div className="reserve-header">
+                                    <label>Statut de réservation</label>
+                                    {EtapeSelected.isReservable ? (
+                                        <div className="reserve-toggle">
+                                            <input 
+                                                type="checkbox" 
+                                                id="reserve-checkbox"
+                                                checked={EtapeSelected.reservee}
+                                                onChange={ReserverEtape}
+                                            />
+                                            <label htmlFor="reserve-checkbox" className="toggle-label">
+                                                <span className={EtapeSelected.reservee ? 'active' : ''}>
+                                                    {EtapeSelected.reservee ? 'Réservé' : 'Disponible'}
+                                                </span>
+                                            </label>
+                                        </div>
+                                    ) : (
+                                        <div className="reserve-info">
+                                            <span className="info-badge">Non réservable</span>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
 
-                            
                             <Formsupplement
                                 supplements={EtapeSelected.supplements}
                                 onAdd={handleAddSupplement}

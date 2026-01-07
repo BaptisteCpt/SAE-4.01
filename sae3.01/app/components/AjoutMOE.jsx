@@ -40,7 +40,7 @@ export default function AjoutMoe() {
             if (res.ok) {
                 await Swal.fire({
                     title: 'Succès !',
-                    text: "Le Maître d'Oeuvre a été ajouté avec succès.",
+                    text: "Le maître d'œuvre a été ajouté avec succès.",
                     icon: 'success',
                     confirmButtonText: 'Super !'
                 });
@@ -49,7 +49,7 @@ export default function AjoutMoe() {
                 const info = await res.json();
                 Swal.fire({
                     title: 'Erreur',
-                    text: info.error || "Echec de l'ajout du Maitre d'oeuvre",
+                    text: info.error || "Échec de l'ajout du maître d'œuvre",
                     icon: 'error',
                     confirmButtonText: 'Fermer'
                 });
@@ -69,7 +69,7 @@ export default function AjoutMoe() {
     return (
         <>
             <div className="bulle">
-                <h1>Ajouter un Maitre d'Oeuvre</h1>
+                <h1>Ajouter un Maître d'Œuvre</h1>
 
                 <form>
                     <label>Nom :</label>

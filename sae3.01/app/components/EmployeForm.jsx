@@ -52,9 +52,9 @@ export default function EmployeForm() {
                     </div>
 
                     <div className="bloc-accueil">
-                            <img src="/img/client.png" onClick={pageMOE} alt="Maitre d'oeuvre" />
+                            <img src="/img/client.png" onClick={pageMOE} alt="Maître d'œuvre" />
                             <button className="but" type="button" onClick={pageMOE}>
-                            Maitre D'oeuvre
+                            Maître d'œuvre
                             </button>
                     </div>
 

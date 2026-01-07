@@ -81,7 +81,7 @@ export default function PageListeMoe() {
                                 <th>Nom</th>
                                 <th>Prénom</th>
                                 <th>Login</th>
-                                <th>Action</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>

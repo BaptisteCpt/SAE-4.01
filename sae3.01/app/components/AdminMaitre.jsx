@@ -34,14 +34,14 @@ export default function AdminMaitre() {
                     <div className="bloc-accueil">
                         <img src="/img/dossier.png" className="dossier-img" onClick={pageAjoutMoe} alt="Ajout"/>
                         <button className="but" type="button" onClick={pageAjoutMoe}>
-                            Ajout d'un Maitre d'oeuvre
+                            Ajout d'un maître d'œuvre
                         </button>
                     </div>
 
                     <div className="bloc-accueil">
                         <img src="/img/client.png" className="clients-img" onClick={pageListeMoe} alt="Liste"/>
                         <button className="but" type="button" onClick={pageListeMoe}>
-                            Liste des Maitres d'oeuvre
+                            Liste des maîtres d'œuvre
                         </button>
                     </div>
                 </div>

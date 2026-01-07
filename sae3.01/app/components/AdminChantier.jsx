@@ -77,7 +77,7 @@ export default function PageListeChantier() {
                                 <th>Adresse</th>
                                 <th>Ville</th>
                                 <th>Modèle</th>
-                                <th>Maitre d'Œuvre</th>
+                                <th>Maître d'œuvre</th>
                                 <th>Date</th>
                                 <th>Actions</th>
                             </tr>
@@ -90,7 +90,7 @@ export default function PageListeChantier() {
                                     <td data-label="Adresse">{chantier.adressechantier}</td>
                                     <td data-label="Ville">{chantier.villechantier} ({chantier.cpchantier})</td>
                                     <td data-label="Modèle">{chantier.modele ? chantier.modele.nommodele : '-'}</td>
-                                    <td data-label="Maitre d'Œuvre">{chantier.maitre_oeuvre ? chantier.maitre_oeuvre.nommoe : '-'}</td>
+                                    <td data-label="Maître d'œuvre">{chantier.maitre_oeuvre ? chantier.maitre_oeuvre.nommoe : '-'}</td>
                                     <td data-label="Date">{formatDate(chantier.datecreation)}</td>
                                     <td data-label="Actions">
                                         <button className='but' onClick={() => modif(chantier.nochantier)}>Modifier</button>

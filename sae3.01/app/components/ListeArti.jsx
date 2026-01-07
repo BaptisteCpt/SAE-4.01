@@ -79,7 +79,7 @@ export default function PageListeArti() {
                                 <th>Nom</th>
                                 <th>Prénom</th>
                                 <th>Ville</th>
-                                <th>Action</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -30,7 +30,7 @@ export default function ModifMoe() {
                     setNom(data.nommoe || "");
                     setPrenom(data.prenommoe || "");
                 } else {
-                    Swal.fire('Erreur', "Maitre d'oeuvre introuvable", 'error');
+                    Swal.fire('Erreur', "Maître d'œuvre introuvable", 'error');
                     router.push('/pageListeMoe');
                 }
             } catch (err) {
@@ -60,11 +60,11 @@ export default function ModifMoe() {
             });
 
             if (res.ok) {
-                await Swal.fire('Succès', "Maitre d'oeuvre mis à jour", 'success');
+                await Swal.fire('Succès', "Maître d'œuvre mis à jour", 'success');
                 router.push('/pageListeMoe');
             } else {
                 const info = await res.json();
-                Swal.fire('Erreur', info.error || "Echec mise à jour", 'error');
+                Swal.fire('Erreur', info.error || "Échec de la mise à jour", 'error');
             }
         } catch (err) {
             Swal.fire('Erreur', 'Erreur serveur', 'error');
@@ -74,7 +74,7 @@ export default function ModifMoe() {
     return (
         <>
             <div className="bulle">
-                <h1>Modifier le Maitre d'Oeuvre N°{idMoe}</h1>
+                <h1>Modifier le Maître d'Œuvre N°{idMoe}</h1>
                 <form>
                     <label>Nom :</label>
                     <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} />

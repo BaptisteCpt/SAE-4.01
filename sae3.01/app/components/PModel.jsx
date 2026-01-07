@@ -47,9 +47,8 @@ export default function PageModeles() {
                     return (
                         <div key={modele.nomodele || index} className="img_modele">
                             <img 
-                                src={IMAGES_MAP[nom] || "img/logo.png"} 
-                                alt={nom} 
-                                className="img_modele"
+                                src={IMAGES_MAP[nom] || "/img/logo.png"} 
+                                alt={nom}
                             />
                             
                             <div className="info_modele">
@@ -62,7 +61,7 @@ export default function PageModeles() {
                                         <ul className="liste_etapes">
                                             {steps.map((etape) => (
                                                 <li key={etape.noetape}>
-                                                    <p>{etape.nometape}</p> 
+                                                    <span>{etape.nometape}</span> 
                                                     {etape.nbjoursrealisation && 
                                                         <span className="duree_etape"> ({etape.nbjoursrealisation} jours)</span>
                                                     }
@@ -70,7 +69,7 @@ export default function PageModeles() {
                                             ))}
                                         </ul>
                                     ) : (
-                                        <p>Aucune étape définie.</p>
+                                        <p style={{color: '#2c3e50'}}>Aucune étape définie.</p>
                                     )}
                                 </div>
                             </div>

@@ -47,7 +47,7 @@ export default function AjoutAdmin() {
                 const info = await res.json();
                 Swal.fire({
                     title: 'Erreur',
-                    text: info.error || "Echec de l'ajout de l'administrateur",
+                    text: info.error || "Échec de l'ajout de l'administrateur",
                     icon: 'error',
                     confirmButtonText: 'Fermer'
                 });

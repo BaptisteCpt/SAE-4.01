@@ -46,9 +46,15 @@ button:hover {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .bulle_accueil {
+        min-height: auto;
+        padding-bottom: 20px;
+    }
+
     h1 {
         font-size: 1.8rem;
         margin-bottom: 20px;
+        padding: 0 15px;
     }
 
     .boutons_accueil {
@@ -61,5 +67,25 @@ button:hover {
     img {
         height: 180px;
         width: auto;
+    }
+
+    button {
+        width: 90%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    img {
+        height: 150px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 16px;
     }
 }

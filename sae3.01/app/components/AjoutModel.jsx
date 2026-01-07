@@ -52,7 +52,7 @@ export default function PageAjoutModele() {
                 router.push('/pageListeModel');
             } else {
                 const info = await res.json();
-                Swal.fire('Erreur', info.error || "Echec création", 'error');
+                Swal.fire('Erreur', info.error || "Échec de la création", 'error');
             }
         } catch (err) {
             Swal.fire('Erreur', "Erreur serveur", 'error');
@@ -76,7 +76,7 @@ export default function PageAjoutModele() {
                             </div>))}
                     </div>
                     <div className="form-buttons">
-                        <button type="button" className="but" onClick={validerForm}>Creer</button>
+                        <button type="button" className="but" onClick={validerForm}>Créer</button>
                         <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
                     </div>
                 </form>

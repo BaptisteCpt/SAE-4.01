@@ -93,7 +93,7 @@ export default function PageListAdmin() {
                                 <th>ID</th>
                                 <th>Login</th>
                                 <th>Rôle</th>
-                                <th>Action</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>

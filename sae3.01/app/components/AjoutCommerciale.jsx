@@ -47,7 +47,7 @@ export default function AjoutCommerciale() {
                 const info = await res.json();
                 Swal.fire({
                     title: 'Erreur',
-                    text: info.error || "Echec de l'ajout du commercial",
+                    text: info.error || "Échec de l'ajout du commercial",
                     icon: 'error',
                     confirmButtonText: 'Fermer'
                 });
