@@ -23,6 +23,10 @@ export default function AccAdmin() {
         router.push('/pageAdminChantier')
     }
 
+    function pageModel(){
+        router.push('/pageListeModel')
+    }
+
     return (
         <div className="bulle_accueil">
             <h1>Bienvenue { nom }</h1> 
@@ -31,8 +35,8 @@ export default function AccAdmin() {
                     <tbody>
                         <tr>
                             <td>
-                                <img src="/img/maison-icone.png" className="modeles-img" alt="Modèles"/>
-                                <button className="but" type="button">
+                                <img src="/img/maison-icone.png" className="modeles-img" alt="Modèles" onClick={pageModel}/>
+                                <button className="but" type="button" onClick={pageModel}>
                                     Liste des modèles
                                 </button>
                             </td>
