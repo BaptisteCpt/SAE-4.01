@@ -1,89 +1,322 @@
-/* --- Conteneur des étapes --- */
+/* ============================================
+   VARIABLES DE COULEUR ET STYLES GÉNÉRAUX
+   ============================================ */
+
+:root {
+  --couleur-fond-page: #2c3e50;
+  --couleur-fond-bulle: #ffffff;
+  --couleur-texte-sombre: #2c3e50;
+  --couleur-texte-secondaire: #7f8c8d;
+  --couleur-principale: #f39c12;
+  --couleur-principale-hover: #e67e22;
+  --couleur-bordure: #d5d8dc;
+  --espace-vertical: 20px;
+  --espace-horizontal: 24px;
+  --radius: 8px;
+}
+
+/* Fond de page */
+body {
+  background-color: var(--couleur-fond-page);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  min-height: 100vh;
+}
+
+/* ============================================
+   CONTENEUR PRINCIPAL - LA BULLE
+   ============================================ */
+
 .liste_etapes {
-    background-color: #ffffff;
-    color: #2c3e50;
-    width: 90%;
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* --- Une étape = une ligne --- */
-  .etape {
-    display: grid;
-    grid-template-columns: 2fr 5fr;
-    align-items: center;
-    padding: 15px 20px;
-    border-bottom: 1px solid #eee;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  /* Dernière ligne sans bordure */
-  .etape:last-child {
-    border-bottom: none;
-  }
-  
-  /* Hover élégant */
-  .etape:hover {
-    background-color: #fff3e0;
-    transform: translateX(5px);
-  }
-  
-  /* --- Nom de l’étape --- */
-  .etape-nom {
-    font-weight: 600;
-    color: #2c3e50;
-    font-size: 1rem;
-  }
-  
-  /* --- Bloc des dates --- */
+  background-color: var(--couleur-fond-bulle);
+  color: var(--couleur-texte-sombre);
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 40px 50px;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   TITRE PRINCIPAL
+   ============================================ */
+
+.liste_etapes h1 {
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  text-align: center;
+  margin: 0 0 40px 0;
+  color: var(--couleur-texte-sombre);
+  letter-spacing: -0.5px;
+}
+
+/* ============================================
+   SELECT DE CHANTIER
+   ============================================ */
+
+.liste_etapes > label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--couleur-texte-secondaire);
+  letter-spacing: 0.7px;
+}
+
+.liste_etapes select {
+  padding: 12px 14px;
+  border: 1.5px solid var(--couleur-bordure);
+  border-radius: var(--radius);
+  font-size: 15px;
+  color: var(--couleur-texte-sombre);
+  background-color: var(--couleur-fond-bulle);
+  width: 100%;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.liste_etapes select:hover:not(:focus) {
+  border-color: #c0c7cf;
+}
+
+.liste_etapes select:focus {
+  border-color: var(--couleur-principale);
+  box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.12);
+  background-color: #fafbfc;
+}
+
+/* ============================================
+   ÉTAPES
+   ============================================ */
+
+.etape {
+  display: grid;
+  grid-template-columns: 2fr 5fr;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid #eee;
+  transition: all 0.3s ease-in-out;
+  border-radius: var(--radius);
+  margin-bottom: 8px;
+}
+
+.etape:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.etape:hover {
+  background-color: #fff8f0;
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Nom de l'étape */
+.etape-nom {
+  font-weight: 600;
+  color: var(--couleur-texte-sombre);
+  font-size: 1.1rem;
+  letter-spacing: 0.2px;
+}
+
+/* ============================================
+   BLOC DES DATES
+   ============================================ */
+
+.etape-dates {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  align-items: start;
+}
+
+.etape-dates > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.etape-dates label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--couleur-texte-secondaire);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0;
+  display: block;
+}
+
+/* Inputs date */
+.etape-dates input[type="date"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--couleur-bordure);
+  font-size: 0.9rem;
+  color: var(--couleur-texte-sombre);
+  background-color: var(--couleur-fond-bulle);
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.etape-dates input[type="date"]:hover:not(:focus) {
+  border-color: #c0c7cf;
+}
+
+.etape-dates input[type="date"]:focus {
+  outline: none;
+  border-color: var(--couleur-principale);
+  box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.12);
+  background-color: #fafbfc;
+}
+
+/* Style pour la section Artisan */
+.etape-dates > div:last-child label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  text-transform: none;
+  font-weight: 600;
+  color: var(--couleur-texte-sombre);
+}
+
+/* ============================================
+   BOUTONS
+   ============================================ */
+
+/* Bouton Affecter */
+.etape-dates button {
+  padding: 8px 16px;
+  border: none;
+  background-color: var(--couleur-principale);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(243, 156, 18, 0.25);
+  letter-spacing: 0.3px;
+}
+
+.etape-dates button:hover {
+  background-color: var(--couleur-principale-hover);
+  box-shadow: 0 4px 12px rgba(243, 156, 18, 0.35);
+  transform: translateY(-2px);
+}
+
+.etape-dates button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(243, 156, 18, 0.2);
+}
+
+/* Bouton Valider */
+.liste_etapes > button {
+  width: 100%;
+  background-color: var(--couleur-principale);
+  color: #ffffff;
+  border: none;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  margin-top: 30px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.25);
+  text-transform: uppercase;
+}
+
+.liste_etapes > button:hover {
+  background-color: var(--couleur-principale-hover);
+  box-shadow: 0 6px 20px rgba(243, 156, 18, 0.35);
+  transform: translateY(-2px);
+}
+
+.liste_etapes > button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(243, 156, 18, 0.2);
+}
+
+/* ============================================
+   MESSAGES D'ERREUR
+   ============================================ */
+
+.liste_etapes p {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 15px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 1024px) {
   .etape-dates {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .liste_etapes {
+    width: 95%;
+    padding: 30px 20px;
+    margin: 20px auto;
+  }
+
+  .liste_etapes h1 {
+    font-size: 26px;
+    margin-bottom: 30px;
+  }
+
+  .etape {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 15px 20px;
+  }
+
+  .etape-dates {
+    grid-template-columns: 1fr;
     gap: 15px;
   }
-  
-  /* Labels */
-  .etape-dates label {
-    font-size: 0.75rem;
-    color: #777;
-    margin-bottom: 4px;
-    display: block;
-  }
-  
-  /* Inputs date */
-  .etape-dates input[type="date"] {
-    width: 100%;
-    padding: 6px 8px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    font-size: 0.85rem;
-  }
-  
-  /* Focus */
-  .etape-dates input[type="date"]:focus {
-    outline: none;
-    border-color: #f39c12;
-    box-shadow: 0 0 0 2px rgba(243, 156, 18, 0.2);
+
+  .etape-nom {
+    font-size: 1rem;
+    margin-bottom: 5px;
   }
 
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .liste_etapes {
-        width: 95%;
-        padding: 15px;
-    }
-
-    .etape {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-
-    .etape-dates {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
+  .liste_etapes > button {
+    padding: 14px;
+    font-size: 14px;
   }
+}
+
+@media (max-width: 480px) {
+  .liste_etapes {
+    padding: 20px 15px;
+  }
+
+  .liste_etapes h1 {
+    font-size: 22px;
+  }
+
+  .etape {
+    padding: 12px 15px;
+  }
+}
   
