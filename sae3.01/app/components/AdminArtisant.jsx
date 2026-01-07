@@ -29,24 +29,19 @@ export default function AdminArtisant() {
             <h1>Bienvenue { nom }</h1> 
             
             <div className="boutons_accueil">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <img src="/img/dossier.png" className="dossier-img" onClick={pageAjoutArti} alt="Ajout"/>
-                                <button className="arti" type="button" onClick={pageAjoutArti}>
-                                    Ajout d'un Artisan
-                                </button>
-                            </td>
-                            <td>
-                                <img src="/img/client.png" className="clients-img" onClick={pageListeArti} alt="Liste"/>
-                                <button className="arti" type="button" onClick={pageListeArti}>
-                                    Liste des Artisans
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div className="bloc-accueil">
+                    <img src="/img/dossier.png" className="dossier-img" onClick={pageAjoutArti} alt="Ajout"/>
+                    <button className="but" type="button" onClick={pageAjoutArti}>
+                        Ajout d'un Artisan
+                    </button>
+                </div>
+
+                <div className="bloc-accueil">
+                    <img src="/img/client.png" className="clients-img" onClick={pageListeArti} alt="Liste"/>
+                    <button className="but" type="button" onClick={pageListeArti}>
+                        Liste des Artisans
+                    </button>
+                </div>
             </div>
         </div>
     )

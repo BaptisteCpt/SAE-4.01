@@ -1,10 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 
 export default function PageListeArti() {
 
+    const router = useRouter();
     const [liste, setListe] = useState([])
 
     useEffect(() => {
@@ -84,6 +86,7 @@ export default function PageListeArti() {
                             <td>{arti.prenomartisan}</td>
                             <td>{arti.villeartisan}</td>
                             <td>
+                                <button className='but' onClick={() => router.push(`/pageModifArti?id=${arti.noartisan}`)}>Modifier</button>
                                 <button className='but' onClick={() => Suppr(arti.noartisan, arti.nomartisan)}>Supprimer</button>
                             </td>
                         </tr>

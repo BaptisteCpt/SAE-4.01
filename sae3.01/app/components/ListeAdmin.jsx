@@ -1,10 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 
 export default function PageListAdmin() {
 
+    const router = useRouter();
     const [liste, setListe] = useState([])
 
     useEffect(() => {
@@ -98,6 +100,7 @@ export default function PageListAdmin() {
                             <td>{admin.login}</td>
                             <td>{admin.role}</td>
                             <td>
+                                <button className='but' onClick={() => router.push(`/pageModifAdmin?id=${admin.id}`)}>Modifier</button>
                                 <button className='but' onClick={() => Suppr(admin.id, admin.login)}>Supprimer</button>
                             </td>
                         </tr>

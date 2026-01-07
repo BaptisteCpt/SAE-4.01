@@ -1,10 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 
 export default function PageListeMoe() {
 
+    const router = useRouter();
     const [liste, setListe] = useState([])
     
     useEffect(() => {
@@ -86,6 +88,7 @@ export default function PageListeMoe() {
                             <td>{moe.prenommoe}</td>
                             <td>{moe.login}</td>
                             <td>
+                                <button className='but' onClick={() => router.push(`/pageModifMoe?id=${moe.nomoe}`)}>Modifier</button>
                                 <button className='but' onClick={() => Suppr(moe.nomoe, moe.nommoe, moe.login)}> Supprimer </button>
                             </td>
                         </tr>

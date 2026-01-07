@@ -29,24 +29,19 @@ export default function AdminAdmin() {
             <h1>Bienvenue { nom }</h1> 
             
             <div className="boutons_accueil">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <img src="/img/dossier.png" className="dossier-img" onClick={pageAjoutAdmin} alt="Dossier"/>
-                                <button className="but" type="button" onClick={pageAjoutAdmin}>
-                                    Ajout d'un Administrateur
-                                </button>
-                            </td>
-                            <td>
-                                <img src="/img/client.png" className="clients-img" onClick={pageListeAdmin} alt="Client"/>
-                                <button className="but" type="button" onClick={pageListeAdmin}>
-                                    Liste des Administrateurs
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div className="bloc-accueil">
+                    <img src="/img/dossier.png" className="dossier-img" onClick={pageAjoutAdmin} alt="Dossier"/>
+                    <button className="but" type="button" onClick={pageAjoutAdmin}>
+                        Ajout d'un Administrateur
+                    </button>
+                </div>
+
+                <div className="bloc-accueil">
+                    <img src="/img/client.png" className="clients-img" onClick={pageListeAdmin} alt="Client"/>
+                    <button className="but" type="button" onClick={pageListeAdmin}>
+                        Liste des Administrateurs
+                    </button>
+                </div>
             </div>
         </div>
     )

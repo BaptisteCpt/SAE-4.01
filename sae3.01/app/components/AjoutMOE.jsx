@@ -70,12 +70,16 @@ export default function AjoutMoe() {
             <h1>Ajouter un Maitre d'Oeuvre</h1>
 
             <form>
-                <label>Nouveau Maitre d'oeuvre :</label>
+                <label>Nom :</label>
                 <input type="text" className="nom" value={nom} onChange={(e) => setNom(e.target.value)} placeholder="Nom..." />
                 
+                <label>Prénom :</label>
                 <input type="text" className="prenom" placeholder="Prénom..." value={prenom} onChange={(e) => setPrenom(e.target.value)} />
                 
-                <button type="button" onClick={validerForm}>Valider</button>
+                <div className="form-buttons">
+                    <button className="but" type="button" onClick={validerForm}>Valider</button>
+                    <button className="but" type="button" onClick={() => router.back()}>Annuler</button>
+                </div>
                 {error && <p>{error}</p>}
             </form>
         </div>
