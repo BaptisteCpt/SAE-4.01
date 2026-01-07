@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
 
 export default function PageListeChantier() {
 
@@ -63,43 +64,47 @@ export default function PageListeChantier() {
     }
 
     return (
-        <div className="bulle">
-            <h1>Liste des Chantiers</h1>
-            
-            <div> 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>N°</th>
-                            <th>Client</th>
-                            <th>Adresse</th>
-                            <th>Ville</th>
-                            <th>Modèle</th>
-                            <th>Maitre d'Œuvre</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {liste.map((chantier) => (
-                            <tr key={chantier.nochantier}>
-                                <td>{chantier.nochantier}</td>
-                                <td>{chantier.client ? chantier.client.nomclient : 'Inconnu'}</td>
-                                <td>{chantier.adressechantier}</td>
-                                <td>{chantier.villechantier} ({chantier.cpchantier})</td>
-                                <td>{chantier.modele ? chantier.modele.nommodele : '-'}</td>
-                                <td>{chantier.maitre_oeuvre ? chantier.maitre_oeuvre.nommoe : '-'}</td>
-                                <td>{formatDate(chantier.datecreation)}</td>
-                                <td>
-                                    <button className='but' onClick={() => modif(chantier.nochantier)}>Modifier</button>
-                                    <button className='but'onClick={() => Suppr(chantier.nochantier)}>Supprimer</button>
-                                </td>
+        <>
+            <div className="bulle">
+                <h1>Liste des Chantiers</h1>
+                
+                <div className="table-container"> 
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Client</th>
+                                <th>Adresse</th>
+                                <th>Ville</th>
+                                <th>Modèle</th>
+                                <th>Maître d'œuvre</th>
+                                <th>Date</th>
+                                <th>Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            {liste.map((chantier) => (
+                                <tr key={chantier.nochantier}>
+                                    <td data-label="N°">{chantier.nochantier}</td>
+                                    <td data-label="Client">{chantier.client ? chantier.client.nomclient : 'Inconnu'}</td>
+                                    <td data-label="Adresse">{chantier.adressechantier}</td>
+                                    <td data-label="Ville">{chantier.villechantier} ({chantier.cpchantier})</td>
+                                    <td data-label="Modèle">{chantier.modele ? chantier.modele.nommodele : '-'}</td>
+                                    <td data-label="Maître d'œuvre">{chantier.maitre_oeuvre ? chantier.maitre_oeuvre.nommoe : '-'}</td>
+                                    <td data-label="Date">{formatDate(chantier.datecreation)}</td>
+                                    <td data-label="Actions">
+                                        <button className='but' onClick={() => modif(chantier.nochantier)}>Modifier</button>
+                                        <button className='but'onClick={() => Suppr(chantier.nochantier)}>Supprimer</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
-            {liste.length === 0 && <p className="Pdonner">Aucun chantier enregistré.</p>}
-        </div>
+                {liste.length === 0 && <p className="Pdonner">Aucun chantier enregistré.</p>}
+            </div>
+            <Footer />
+        </>
     )
 }

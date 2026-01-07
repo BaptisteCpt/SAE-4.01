@@ -21,39 +21,72 @@ export default function PersonnalisationSupplement({ supplements, onAdd, onRemov
     };
 
     return (
-        <div>
-            <h2>Supplément(s) / Réduction(s)</h2>
-            <p> Total des modifications : {total} €</p>
+        <div className="supplement-container">
+            <div className="supplement-header">
+                <h2>Supplément(s) / Réduction(s)</h2>
+                <div className="total-badge">
+                    <span className="total-label">Total :</span>
+                    <span className={`total-amount ${total >= 0 ? 'positive' : 'negative'}`}>
+                        {total >= 0 ? '+' : ''}{total.toFixed(2)} €
+                    </span>
+                </div>
+            </div>
             
-            <ul>
-                <h4>Ajouter une modifications</h4>
-                {supplements.map(s => ( // Pour chaque supplément trouvé, on regarde si son type est plus ou moins pour écrire le bon signe
-                    <li key={s.id}>
-                        [{s.type === 'plus' ? '+' : '-'}] {s.label} ({s.price} €)
-                        <button onClick={() => onRemove(s.id)}> Effacer </button>
-                    </li>
-                ))}
-            </ul>
+            {supplements.length > 0 && (
+                <div className="supplements-list">
+                    <h4>Modifications enregistrées</h4>
+                    <ul>
+                        {supplements.map(s => (
+                            <li key={s.id} className="supplement-item">
+                                <span className={`supplement-type ${s.type === 'plus' ? 'type-plus' : 'type-minus'}`}>
+                                    {s.type === 'plus' ? '+' : '−'}
+                                </span>
+                                <span className="supplement-label">{s.label}</span>
+                                <span className="supplement-price">{s.price.toFixed(2)} €</span>
+                                <button className="btn-remove" onClick={() => onRemove(s.id)}>
+                                    <span>×</span>
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
 
-            <form>
-                <div className='montant'>
-                <input 
-                    value={name} 
-                    onChange={(e) => setName(e.target.value)} 
-                    placeholder="Description modification" 
-                />
-                <input 
-                    type="number"
-                    value={prix} 
-                    onChange={(e) => setPrix(e.target.value)} 
-                    placeholder="Prix modification" 
-                />
+            <div className="supplement-form">
+                <h4>Ajouter une modification</h4>
+                <div className="form-inputs">
+                    <input 
+                        value={name} 
+                        onChange={(e) => setName(e.target.value)} 
+                        placeholder="Description de la modification" 
+                        className="input-description"
+                    />
+                    <input 
+                        type="number" 
+                        step="0.01"
+                        value={prix} 
+                        onChange={(e) => setPrix(e.target.value)} 
+                        placeholder="Montant (€)" 
+                        className="input-price"
+                    />
                 </div>
-                <div className='modif'>
-                <button onClick={(e) => handleClickAdd(e, 'plus')}>Ajouter +</button>
-                <button onClick={(e) => handleClickAdd(e, 'moins')}>Enlever -</button>
+                <div className="form-buttons-supplement">
+                    <button 
+                        className="btn-add" 
+                        onClick={(e) => handleClickAdd(e, 'plus')}
+                        disabled={!name || !prix}
+                    >
+                        <span>+</span> Ajouter
+                    </button>
+                    <button 
+                        className="btn-subtract" 
+                        onClick={(e) => handleClickAdd(e, 'moins')}
+                        disabled={!name || !prix}
+                    >
+                        <span>−</span> Enlever
+                    </button>
                 </div>
-            </form>
+            </div>
         </div>
     );
 }

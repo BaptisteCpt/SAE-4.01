@@ -1,10 +1,13 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
 
 export default function PageListeMoe() {
 
+    const router = useRouter();
     const [liste, setListe] = useState([])
     
     useEffect(() => {
@@ -68,31 +71,37 @@ export default function PageListeMoe() {
     }
 
     return (
-        <div className="bulle">
-            <h1>Liste des Maîtres d'Oeuvre</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Login</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {liste.map((moe) => (
-                        <tr key={moe.nomoe}>
-                            <td>{moe.nommoe}</td>
-                            <td>{moe.prenommoe}</td>
-                            <td>{moe.login}</td>
-                            <td>
-                                <button className='but' onClick={() => Suppr(moe.nomoe, moe.nommoe, moe.login)}> Supprimer </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            {liste.length === 0 && <p>Aucun maître d'oeuvre trouvé.</p>}
-        </div>
+        <>
+            <div className="bulle">
+                <h1>Liste des Maîtres d'Oeuvre</h1>
+                <div className="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Login</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {liste.map((moe) => (
+                                <tr key={moe.nomoe}>
+                                    <td data-label="Nom">{moe.nommoe}</td>
+                                    <td data-label="Prénom">{moe.prenommoe}</td>
+                                    <td data-label="Login">{moe.login}</td>
+                                    <td data-label="Action">
+                                        <button className='but' onClick={() => router.push(`/pageModifMoe?id=${moe.nomoe}`)}>Modifier</button>
+                                        <button className='but' onClick={() => Suppr(moe.nomoe, moe.nommoe, moe.login)}> Supprimer </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                {liste.length === 0 && <p>Aucun maître d'oeuvre trouvé.</p>}
+            </div>
+            <Footer />
+        </>
     )
 }

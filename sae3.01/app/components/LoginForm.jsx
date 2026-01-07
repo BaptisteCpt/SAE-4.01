@@ -48,17 +48,18 @@ export default function LoginForm() {
       
           setSuccess(true);
         } catch (err) {
-          setError('Erreur Server');
+          setError('Erreur serveur');
         }
       }
 
     useEffect(() => { /* ici on evite le warning car next à le temps de charger le composants sans regarder le router.push */
         if (success) {
-          if(localStorage.role == "admin"){
+          const role = localStorage.getItem("role");
+          if(role === "admin"){
             router.push('/accueil_admin');
-          }else if(localStorage.role == "commercial"){
+          }else if(role === "commercial"){
             router.push('/accueil_commerciale')
-          }else if(localStorage.role == "maitre Oeuvre"){
+          }else if(role === "maitre Oeuvre"){
             router.push('/accueil_maitre')
           }
         }

@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
+
 export default function PageAjoutModele() {
     const router = useRouter();
     const [nom, setNom] = useState("");
@@ -50,33 +52,36 @@ export default function PageAjoutModele() {
                 router.push('/pageListeModel');
             } else {
                 const info = await res.json();
-                Swal.fire('Erreur', info.error || "Echec création", 'error');
+                Swal.fire('Erreur', info.error || "Échec de la création", 'error');
             }
         } catch (err) {
             Swal.fire('Erreur', "Erreur serveur", 'error');
         }
     }
     return (
-        <div className="bulle">
-            <h1>Nouveau Modèle</h1>
-            <form>
-                <label>Nom du Modèle :</label>
-                <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder=" Maison 3..." />
-                <label>Description :</label>
-                <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description..."/>
-                <label>Étapes :</label>
-                <div>
-                    {toutesLesEtapes.map((etape) => (
-                        <div key={etape.noetape}>
-                            <input type="checkbox" id={`etape-${etape.noetape}`} checked={etapesSelectionnees.includes(etape.noetape)} onChange={() => cocher(etape.noetape)}/>
-                            <label>{etape.nometape}</label>
-                        </div>))}
-                </div>
-                <div>
-                    <button type="button" className="but" onClick={validerForm}>Creer</button>
-                    <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
-                </div>
-            </form>
-        </div>
+        <>
+            <div className="bulle">
+                <h1>Nouveau Modèle</h1>
+                <form>
+                    <label>Nom du Modèle :</label>
+                    <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder=" Maison 3..." />
+                    <label>Description :</label>
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description..."/>
+                    <label>Étapes :</label>
+                    <div className="etapes-container">
+                        {toutesLesEtapes.map((etape) => (
+                            <div key={etape.noetape} className="etape-item" onClick={() => cocher(etape.noetape)} style={{cursor:'pointer'}}>
+                                <input type="checkbox" id={`etape-${etape.noetape}`} checked={etapesSelectionnees.includes(etape.noetape)} readOnly style={{pointerEvents:'none'}}/>
+                                <span style={{marginLeft:'10px'}}>{etape.nometape}</span>
+                            </div>))}
+                    </div>
+                    <div className="form-buttons">
+                        <button type="button" className="but" onClick={validerForm}>Créer</button>
+                        <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
+                    </div>
+                </form>
+            </div>
+            <Footer />
+        </>
     )
 }

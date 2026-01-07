@@ -2,15 +2,30 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import AdminAdmin from '../components/AdminAdmin'
+import ListeModel from '../components/ListeModel'
 import Nav_Admin from '../components/Nav_admin'
 
 export default function page() {
+  const router = useRouter();
+  const [authorized, setAuthorized] = useState(false);
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if (role === "admin") {
+      setAuthorized(true);
+    } else {
+      router.push('/');
+    }
+  }, [router]);
+
+  if (!authorized) {
+    return null;
+  }
 
   return (
     <>
       <Nav_Admin/>
-      <AdminAdmin/>
+      <ListeModel/>
     </>
   )
 }

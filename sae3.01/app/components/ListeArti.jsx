@@ -1,10 +1,13 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
 
 export default function PageListeArti() {
 
+    const router = useRouter();
     const [liste, setListe] = useState([])
 
     useEffect(() => {
@@ -65,33 +68,39 @@ export default function PageListeArti() {
     }
 
     return (
-        <div className="bulle">
-            <h1>Liste des Artisans</h1>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Ville</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {liste.map((arti) => (
-                        <tr key={arti.noartisan}>
-                            <td>{arti.nomartisan}</td>
-                            <td>{arti.prenomartisan}</td>
-                            <td>{arti.villeartisan}</td>
-                            <td>
-                                <button className='but' onClick={() => Suppr(arti.noartisan, arti.nomartisan)}>Supprimer</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+        <>
+            <div className="bulle">
+                <h1>Liste des Artisans</h1>
+                
+                <div className="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Ville</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {liste.map((arti) => (
+                                <tr key={arti.noartisan}>
+                                    <td data-label="Nom">{arti.nomartisan}</td>
+                                    <td data-label="Prénom">{arti.prenomartisan}</td>
+                                    <td data-label="Ville">{arti.villeartisan}</td>
+                                    <td data-label="Action">
+                                        <button className='but' onClick={() => router.push(`/pageModifArti?id=${arti.noartisan}`)}>Modifier</button>
+                                        <button className='but' onClick={() => Suppr(arti.noartisan, arti.nomartisan)}>Supprimer</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
-            {liste.length === 0 && <p>Aucun artisan trouvé.</p>}
-        </div>
+                {liste.length === 0 && <p>Aucun artisan trouvé.</p>}
+            </div>
+            <Footer />
+        </>
     )
 }

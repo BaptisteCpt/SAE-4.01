@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
+
 export default function ModifModele() {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -68,34 +70,37 @@ export default function ModifModele() {
                 router.push('/pageListeModel');
             } else {
                 const info = await res.json();
-                Swal.fire('Erreur', info.error || "Echec mise à jour", 'error');
+                Swal.fire('Erreur', info.error || "Échec de la mise à jour", 'error');
             }
         } catch (err) {
             Swal.fire('Erreur', 'Erreur serveur', 'error');
         }
     }
     return (
-        <div className="bulle">
-            <h1>Modifier le Modèle N°{idModele}</h1>
-            <form>
-                <label>Nom :</label>
-                <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} />
-                <label>Description :</label>
-                <textarea value={description} onChange={(e) => setDescription(e.target.value)} className="textarea-desc"/>
+        <>
+            <div className="bulle">
+                <h1>Modifier le Modèle N°{idModele}</h1>
+                <form>
+                    <label>Nom :</label>
+                    <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} />
+                    <label>Description :</label>
+                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} className="textarea-desc"/>
 
-                <label>Étapes :</label>
-                <div>
-                    {toutesEtap.map((etape) => (
-                        <div key={etape.noetape}>
-                            <input type="checkbox" id={`etape-${etape.noetape}`} checked={etapesSelect.includes(etape.noetape)} onChange={() => chocher(etape.noetape)}/>
-                            <label>{etape.nometape}</label>
-                        </div>))}
-                </div>
-                <div>
-                    <button type="button" className="but" onClick={validerModif}>Enregistrer</button>
-                    <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
-                </div>
-            </form>
-        </div>
+                    <label>Étapes :</label>
+                    <div className="etapes-container">
+                        {toutesEtap.map((etape) => (
+                            <div key={etape.noetape} className="etape-item" onClick={() => chocher(etape.noetape)} style={{cursor: 'pointer'}}>
+                                <input type="checkbox" checked={etapesSelect.includes(etape.noetape)} readOnly style={{pointerEvents: 'none'}}/>
+                                <span style={{marginLeft: '10px'}}>{etape.nometape}</span>
+                            </div>))}
+                    </div>
+                    <div className="form-buttons">
+                        <button type="button" className="but" onClick={validerModif}>Enregistrer</button>
+                        <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
+                    </div>
+                </form>
+            </div>
+            <Footer />
+        </>
     )
 }

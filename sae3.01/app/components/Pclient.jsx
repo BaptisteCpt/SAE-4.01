@@ -63,11 +63,11 @@ export default function PageClients() {
                         {clients.map((client, index) => (
                             <tr key={client.noclient || index} onClick={() => handleRowClick(client.noclient)}
                                 className={idclient === client.noclient ? "row-selected" : ""}>
-                                <td>{client.nomclient}</td>
-                                <td>{client.prenomclient}</td>
-                                <td>{client.adresseclient}</td>
-                                <td>{client.villeclient}</td>
-                                <td>{client.cpclient}</td>
+                                <td data-label="Nom">{client.nomclient}</td>
+                                <td data-label="Prénom">{client.prenomclient}</td>
+                                <td data-label="Adresse">{client.adresseclient}</td>
+                                <td data-label="Ville">{client.villeclient}</td>
+                                <td data-label="Code Postal">{client.cpclient}</td>
                             </tr>
                         ))}
                     </tbody>

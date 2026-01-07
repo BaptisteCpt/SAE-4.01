@@ -80,7 +80,7 @@ export default function ClientForm() {
                 setSuccess(true);
             }
         } catch (err) {
-            setError('Erreur Server');
+            setError('Erreur serveur');
         }
     }
 

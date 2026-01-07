@@ -129,7 +129,12 @@
   
   /* Responsive Design */
   @media (max-width: 768px) {
+    .artisan {
+        min-height: auto;
+    }
+
     .BulleArtisan {
+        width: 95%;
         padding: 30px 20px;
         margin: 20px auto;
     }
@@ -141,6 +146,37 @@
 
     .BulleArtisan h1 {
         font-size: 24px;
+    }
+
+    .popup-content {
+        max-width: 90%;
+        padding: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .BulleArtisan {
+        width: 98%;
+        padding: 20px 15px;
+        margin: 15px auto;
+    }
+
+    .BulleArtisan h1 {
+        font-size: 20px;
+    }
+
+    .BulleArtisan label {
+        font-size: 11px;
+    }
+
+    .BulleArtisan select {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .BulleArtisan button.Valid {
+        padding: 14px;
+        font-size: 14px;
     }
   }
 
