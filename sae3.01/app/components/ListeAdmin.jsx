@@ -1,43 +1,52 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-export default function ListeCommerciaux() {
+import React, { useState, useEffect } from 'react'
+export default function PageListAdmin() {
+
     const [liste, setListe] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState('')
-
     useEffect(() => {
-        async function recupliste() {
+        async function Liste() {
             try {
-                const res = await fetch('/api/recup_admin')
-                
-                if (!res.ok) {
-                    setError('Erreur récupération')
-                }
-
+                const res = await fetch('/api/recup_admin') 
                 const data = await res.json()
-                setListe(data)
-            } catch (err) {
-                console.error(err)
-                setError("Erreur Serveur")
-            }
+                if (res.ok) setListe(data)
+            } catch (err) { console.error(err) }
         }
-
-        recupliste()
+        Liste()
     }, [])
 
-    if (liste.length === 0) {
-        return (
-            <div className="bulle">
-                <h1>Administrateur</h1>
-                <p>Aucun Administrateur trouvé.</p>
-            </div>
-        )
+    async function Suppr(id, loginDeLaLigne) {
+        const monLoginActuel = localStorage.getItem("nom");
+        if (monLoginActuel && loginDeLaLigne) {
+            if (monLoginActuel.toLowerCase() === loginDeLaLigne.toLowerCase()) {
+                alert("Action impossible : Vous ne pouvez pas supprimer votre propre compte !");
+                return; 
+            }
+        }
+        const confirmation = window.confirm(`Voulez-vous vraiment supprimer l'administrateur "${login}" ?`);
+        if (confirmation) {
+            try {
+                const res = await fetch('/api/suppradmin', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: id }),
+                });
+                if (res.ok) {
+                    setListe(prevListe => prevListe.filter(user => user.id !== id));
+                    alert("Administrateur supprimé !");
+                } else {
+                    const info = await res.json();
+                    alert("Impossible de supprimer");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Erreur de connexion serveur");
+            }
+        }
     }
-
     return (
         <div className="bulle">
-            <h1>Admiinistrateur</h1>
-
+            <h1>Liste des Administrateurs</h1>
+            
             <table>
                 <thead>
                     <tr>
@@ -47,15 +56,19 @@ export default function ListeCommerciaux() {
                     </tr>
                 </thead>
                 <tbody>
-                    {liste.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.login}</td>
-                            <td>{user.role}</td>
+                    {liste.map((admin) => (
+                        <tr key={admin.id}>
+                            <td>{admin.id}</td>
+                            <td>{admin.login}</td>
+                            <td>{admin.role}</td>
+                            <td>
+                                <button className='but'onClick={() => Suppr(admin.id, admin.login)}>Supprimer</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            {liste.length === 0 && <p>Aucun administrateur trouvé.</p>}
         </div>
     )
 }

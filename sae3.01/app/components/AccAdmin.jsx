@@ -20,6 +20,10 @@ export default function AccAdmin() {
         router.push('/pageListeEmp')
     }
 
+    function pageChantier(){
+        router.push('/pageAdminChantier')
+    }
+
     return (
         <div className="bulle_accueil">
             <h1>Bienvenue { nom }</h1> 
@@ -33,8 +37,8 @@ export default function AccAdmin() {
                         </button>
                     </td>
                     <td>
-                        <img src="/img/dossier.png" className="dossier-img"/>
-                        <button className="but" type="button">
+                        <img src="/img/dossier.png" className="dossier-img" onClick={pageChantier}/>
+                        <button className="but" type="button" onClick={pageChantier}>
                             Liste des chantiers
                         </button>
                     </td>

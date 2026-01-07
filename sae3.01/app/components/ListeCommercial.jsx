@@ -1,61 +1,73 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-export default function ListeCommerciaux() {
+
+import React, { useState, useEffect } from 'react'
+export default function PageListeCom() {
+
     const [liste, setListe] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState('')
 
     useEffect(() => {
-        async function recupliste() {
+        async function liste() {
             try {
-                const res = await fetch('/api/recup_commerciale')
-                
-                if (!res.ok) {
-                    setError('Erreur récupération')
-                }
-
+                const res = await fetch('/api/recup_commerciale') 
                 const data = await res.json()
-                setListe(data)
-            } catch (err) {
-                console.error(err)
-                setError("Erreur Serveur")
-            }
+                if (res.ok) {
+                    setListe(data)
+                } else {
+                    console.error("Erreur chargement liste")
+                }
+            } catch (err) { console.error(err) }
         }
-
-        recupliste()
+        liste()
     }, [])
 
-    if (liste.length === 0) {
-        return (
-            <div className="bulle">
-                <h1>Commerciale</h1>
-                <p>Aucun commercial trouvé.</p>
-            </div>
-        )
+    async function Suppr(id, nom) {
+        const confirmation = window.confirm(`Voulez-vous vraiment supprimer le commercial "${nom}" ?\nCette action est irréversible.`);
+        if (confirmation) {
+            try {
+                const res = await fetch('/api/supprcom', {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: id }),
+                });
+
+                if (res.ok) {
+                    setListe(prevListe => prevListe.filter(com => com.nocommercial !== id));
+                    alert("Commercial supprimé avec succès !");
+                } else {
+                    const info = await res.json();
+                    alert("Impossible de supprimer");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Erreur de connexion au serveur");
+            }
+        }
     }
 
     return (
         <div className="bulle">
-            <h1>Commerciale</h1>
-
+            <h1>Liste des Commerciaux</h1>
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Login</th>
-                        <th>Rôle</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {liste.map((user) => (
-                        <tr key={user.id}>
-                            <td>{user.id}</td>
-                            <td>{user.login}</td>
-                            <td>{user.role}</td>
+                    {liste.map((com) => (
+                        <tr key={com.id}>
+                            <td>{com.login}</td>
+                            <td>{com.mot_de_passe}</td>
+                            <td>
+                                <button className='but' onClick={() => Suppr(com.id, com.login)}>Supprimer</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            {liste.length === 0 && <p>Aucun commercial trouvé.</p>}
         </div>
     )
 }
