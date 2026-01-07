@@ -1,0 +1,75 @@
+.appelForm {
+    display: flex;
+    justify-content: center;
+}
+
+.appel-card {
+    background-color: var(--couleur-fond-bulle);
+    border: 1px solid var(--couleur-bordure);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+  
+.appel-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--couleur-principale);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+  
+  /* Header carte */
+.appel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--couleur-texte-sombre);
+    margin-bottom: 20px;
+}
+  
+.appel-montant {
+    color: var(--couleur-principale);
+    font-size: 18px;
+}
+  
+  /* Grille des dates */
+.appel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+  
+  /* Input date */
+.appel-grid input[type="date"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--couleur-bordure);
+    border-radius: var(--radius);
+    font-size: 15px;
+}
+  
+.appel-grid input[type="date"]:focus {
+    outline: none;
+    border-color: var(--couleur-principale);
+    box-shadow: 0 0 0 4px rgba(255, 145, 0, 0.12);
+}
+  
+  /* En attente */
+.attente {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--couleur-texte-secondaire);
+}
+  
+  /* Responsive */
+@media (max-width: 768px) {
+    .appel-grid {
+      grid-template-columns: 1fr;
+    }
+}
+  

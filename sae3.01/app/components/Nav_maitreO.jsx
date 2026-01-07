@@ -51,7 +51,7 @@ export default function Nav() {
           )}
         </div>
 
-        <a href="#">Appel de fond</a>
+        <a href="/appel">Appel de fond</a>
 
         <div className="profil-div">
           <div className='profil'>
