@@ -43,7 +43,7 @@ export default function PersonnalisationSupplement({ supplements, onAdd, onRemov
                     placeholder="Description modification" 
                 />
                 <input 
-                    type="number" 
+                    type="number"
                     value={prix} 
                     onChange={(e) => setPrix(e.target.value)} 
                     placeholder="Prix modification" 
