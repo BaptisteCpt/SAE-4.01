@@ -1,6 +1,6 @@
 'use client' 
 
-import "../css/accueil.css"; 
+import "../css/admin-list.css"; 
 import { useState, useEffect } from 'react' 
 import { useRouter } from 'next/navigation'
 import Nav_admin from '../components/Nav_admin'

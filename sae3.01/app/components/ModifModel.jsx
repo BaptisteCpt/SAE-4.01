@@ -84,14 +84,14 @@ export default function ModifModele() {
                 <textarea value={description} onChange={(e) => setDescription(e.target.value)} className="textarea-desc"/>
 
                 <label>Étapes :</label>
-                <div>
+                <div className="etapes-container">
                     {toutesEtap.map((etape) => (
-                        <div key={etape.noetape}>
-                            <input type="checkbox" id={`etape-${etape.noetape}`} checked={etapesSelect.includes(etape.noetape)} onChange={() => chocher(etape.noetape)}/>
-                            <label>{etape.nometape}</label>
+                        <div key={etape.noetape} className="etape-item" onClick={() => chocher(etape.noetape)} style={{cursor: 'pointer'}}>
+                            <input type="checkbox" checked={etapesSelect.includes(etape.noetape)} readOnly style={{pointerEvents: 'none'}}/>
+                            <span style={{marginLeft: '10px'}}>{etape.nometape}</span>
                         </div>))}
                 </div>
-                <div>
+                <div className="form-buttons">
                     <button type="button" className="but" onClick={validerModif}>Enregistrer</button>
                     <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
                 </div>

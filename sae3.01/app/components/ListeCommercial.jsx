@@ -1,10 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 
 export default function PageListeCom() {
 
+    const router = useRouter();
     const [liste, setListe] = useState([])
 
     useEffect(() => {
@@ -74,6 +76,7 @@ export default function PageListeCom() {
                     <tr>
                         <th>Identifiant</th>
                         <th>Mot de passe</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,6 +85,7 @@ export default function PageListeCom() {
                             <td>{com.login}</td>
                             <td>{com.mot_de_passe}</td>
                             <td>
+                                <button className='but' onClick={() => router.push(`/pageModifCom?id=${com.id}`)}>Modifier</button>
                                 <button className='but' onClick={() => Suppr(com.id, com.login)}>Supprimer</button>
                             </td>
                         </tr>

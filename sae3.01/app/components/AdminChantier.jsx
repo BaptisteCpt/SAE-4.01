@@ -77,6 +77,7 @@ export default function PageListeChantier() {
                             <th>Modèle</th>
                             <th>Maitre d'Œuvre</th>
                             <th>Date</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>

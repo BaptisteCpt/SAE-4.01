@@ -58,6 +58,7 @@ export default function PageListeModele() {
                         <th>Nom</th>
                         <th>Description</th>
                         <th>Étapes incluses</th>
+                        <th>Modifier/Supprimer</th>
                     </tr>
                 </thead>
                 <tbody>

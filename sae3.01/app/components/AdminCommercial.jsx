@@ -4,7 +4,7 @@ import "../css/accueil.css";
 import { useState, useEffect } from 'react' 
 import { useRouter } from 'next/navigation'
 
-export default function AdminArtisant() { 
+export default function AdminCommercial() { 
 
     const [nom, setNom] = useState("");
     const router = useRouter();
@@ -29,24 +29,19 @@ export default function AdminArtisant() {
             <h1>Bienvenue { nom }</h1> 
             
             <div className="boutons_accueil">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <img src="/img/dossier.png" className="dossier-img" onClick={pageAjoutCom} alt="Ajout"/>
-                                <button className="but" type="button" onClick={pageAjoutCom}>
-                                    Ajout d'un Commercial(e)
-                                </button>
-                            </td>
-                            <td>
-                                <img src="/img/client.png" className="clients-img" onClick={pageListeCom} alt="Liste"/>
-                                <button className="but" type="button" onClick={pageListeCom}>
-                                    Liste des Commerciaux
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div className="bloc-accueil">
+                    <img src="/img/dossier.png" className="dossier-img" onClick={pageAjoutCom} alt="Ajout"/>
+                    <button className="but" type="button" onClick={pageAjoutCom}>
+                        Ajout d'un Commercial(e)
+                    </button>
+                </div>
+
+                <div className="bloc-accueil">
+                    <img src="/img/client.png" className="clients-img" onClick={pageListeCom} alt="Liste"/>
+                    <button className="but" type="button" onClick={pageListeCom}>
+                        Liste des Commerciaux
+                    </button>
+                </div>
             </div>
         </div>
     )

@@ -68,12 +68,16 @@ export default function AjoutCommerciale() {
             <h1>Ajouter un Commercial</h1>
 
             <form>
-                <label>Nouveau Commercial :</label>
+                <label>Nom :</label>
                 <input type="text" className="nom" value={nomCom} onChange={(e) => setNom(e.target.value)} placeholder="Nom..." />
                 
+                <label>Prénom :</label>
                 <input type="text" className="prenom" placeholder="Prénom..." value={prenom} onChange={(e) => setPrenom(e.target.value)} />
                 
-                <button type="button" onClick={validerForm}>Valider</button>
+                <div className="form-buttons">
+                    <button className="but" type="button" onClick={validerForm}>Valider</button>
+                    <button className="but" type="button" onClick={() => router.back()}>Annuler</button>
+                </div>
             </form>
         </div>
     )

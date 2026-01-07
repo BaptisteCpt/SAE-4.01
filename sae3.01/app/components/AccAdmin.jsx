@@ -31,30 +31,26 @@ export default function AccAdmin() {
         <div className="bulle_accueil">
             <h1>Bienvenue { nom }</h1> 
             <div className="boutons_accueil">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <img src="/img/maison-icone.png" className="modeles-img" alt="Modèles" onClick={pageModel}/>
-                                <button className="but" type="button" onClick={pageModel}>
-                                    Liste des modèles
-                                </button>
-                            </td>
-                            <td>
-                                <img src="/img/dossier.png" className="dossier-img" onClick={pageChantier} alt="Chantiers"/>
-                                <button className="but" type="button" onClick={pageChantier}>
-                                    Liste des chantiers
-                                </button>
-                            </td>
-                            <td>
-                                <img src="/img/client.png" className="clients-img" onClick={pageEmploye} alt="Employés"/>
-                                <button className="but" type="button" onClick={pageEmploye}>
-                                    Liste des employés
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div className="bloc-accueil">
+                    <img src="/img/maison-icone.png" className="modeles-img" alt="Modèles" onClick={pageModel}/>
+                    <button className="but" type="button" onClick={pageModel}>
+                        Liste des modèles
+                    </button>
+                </div>
+
+                <div className="bloc-accueil">
+                    <img src="/img/dossier.png" className="dossier-img" onClick={pageChantier} alt="Chantiers"/>
+                    <button className="but" type="button" onClick={pageChantier}>
+                        Liste des chantiers
+                    </button>
+                </div>
+
+                <div className="bloc-accueil">
+                    <img src="/img/client.png" className="clients-img" onClick={pageEmploye} alt="Employés"/>
+                    <button className="but" type="button" onClick={pageEmploye}>
+                        Liste des employés
+                    </button>
+                </div>
             </div>
         </div>
     )

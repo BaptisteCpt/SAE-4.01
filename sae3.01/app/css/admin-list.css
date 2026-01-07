@@ -1,0 +1,251 @@
+:root {
+    --couleur-fond-page: #2c3e50;
+    --couleur-bouton: #f39c12;
+    --couleur-bouton-hover: #e67e22;
+    --couleur-texte: #333;
+    --couleur-blanc: #ffffff;
+}
+
+body {
+    background-color: var(--couleur-fond-page);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+}
+
+.bulle {
+    background-color: var(--couleur-blanc);
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    min-height: 80vh;
+}
+
+.bulle h1 {
+    text-align: center;
+    color: var(--couleur-texte);
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+/* Boutons */
+.but {
+    background-color: var(--couleur-bouton);
+    color: var(--couleur-blanc);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-right: 10px;
+}
+
+.but:hover {
+    background-color: var(--couleur-bouton-hover);
+}
+
+.but:active {
+    transform: scale(0.98);
+}
+
+/* Tableau */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+thead {
+    background-color: #ecf0f1;
+}
+
+th {
+    padding: 15px;
+    text-align: left;
+    color: #2c3e50;
+    font-weight: 600;
+    border-bottom: 2px solid #bdc3c7;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid #ecf0f1;
+    color: #555;
+    vertical-align: middle;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* Gris très clair pour l'alternance */
+}
+
+tr:hover {
+    background-color: #e9ecef; /* Gris un peu plus foncé au survol */
+}
+
+/* Bordures verticales fines */
+th, td {
+    border-right: 1px solid #dee2e6;
+}
+
+th:last-child, td:last-child {
+    border-right: none;
+}
+
+/* Listes dans le tableau (étapes) */
+td ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0;
+}
+
+td ul li {
+    margin-bottom: 4px;
+}
+
+/* Message si vide */
+.bulle > p {
+    text-align: center;
+    font-style: italic;
+    color: #777;
+    margin-top: 20px;
+}
+
+/* --- Styles pour les Formulaires (Modif/Ajout) --- */
+form {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    box-sizing: border-box; 
+}
+
+input[type="text"]:focus, textarea:focus, select:focus {
+    border-color: var(--couleur-bouton);
+    outline: none;
+    box-shadow: 0 0 5px rgba(243, 156, 18, 0.3);
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Zone des étapes (checkboxes) */
+.etapes-container { 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.etape-item { 
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+    color: black; /* Titres en noir */
+}
+
+.etape-item:hover {
+    background-color: #fff3e0;
+    border-color: var(--couleur-bouton);
+}
+
+.form-buttons { 
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px; /* Espacement agrandi */
+    margin-top: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .bulle {
+        width: 95%;
+        padding: 15px;
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        margin-bottom: 20px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    td::before {
+        position: absolute;
+        top: 15px;
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        content: attr(data-label); 
+    }
+    
+    td {
+        text-align: left;
+        padding: 10px;
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .but {
+        width: 100%;
+        margin-bottom: 5px;
+        margin-right: 0;
+    }
+}

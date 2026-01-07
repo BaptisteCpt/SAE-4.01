@@ -135,9 +135,9 @@ export default function PageModifChantier() {
                     ))}
                 </select>
 
-                <div className="boutons-form">
-                    <button type="button" onClick={validerModif}>Enregistrer</button>
-                    <button type="button" onClick={() => router.back()}>Annuler</button>
+                <div className="form-buttons">
+                    <button type="button" className="but" onClick={validerModif}>Enregistrer</button>
+                    <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
                 </div>
             </form>
         </div>
