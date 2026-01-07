@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import Swal from 'sweetalert2';
 
 export default function AjoutArtisan() {
     const [idSelectionne, setIdSelectionne] = useState("") 
@@ -11,7 +12,6 @@ export default function AjoutArtisan() {
     const [cp, setCp] = useState('')
     const [ville, setVille] = useState('')
     
-    const [error, setError] = useState('')
     const [listeArti, setListeArti] = useState([])
     const [toutesLesEtapes, setToutesLesEtapes] = useState([])
     const [etapesSelectionnees, setEtapesSelectionnees] = useState([])
@@ -39,6 +39,7 @@ export default function AjoutArtisan() {
         }
         fetchEtapes();
     }, []);
+
     function Selectionner(e) {
         const id = e.target.value;
         setIdSelectionne(id);
@@ -63,6 +64,7 @@ export default function AjoutArtisan() {
             }
         }
     }
+
     function caseCocher(idEtape) {
         if (etapesSelectionnees.includes(idEtape)) {
             setEtapesSelectionnees(prev => prev.filter(id => id !== idEtape));
@@ -70,12 +72,17 @@ export default function AjoutArtisan() {
             setEtapesSelectionnees(prev => [...prev, idEtape]);
         }
     }
+
     async function validerForm(e) {
         e.preventDefault();
-        setError("");
 
         if (!prenom || !nom || !cp) {
-            setError("Veuillez compléter au moins Nom, Prénom et CP");
+            Swal.fire({
+                title: 'Champs manquants',
+                text: "Veuillez compléter au moins Nom, Prénom et Code Postal",
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
@@ -87,10 +94,13 @@ export default function AjoutArtisan() {
         try {
             let url = '/api/cre_artisant';
             let method = 'POST';
+            let successMessage = "L'artisan a été créé avec succès.";
+
             if (idSelectionne) {
                 url = '/api/maj_artisan';
                 method = 'PUT';
                 dataToSend.id = idSelectionne; 
+                successMessage = "L'artisan a été modifié avec succès.";
             }
 
             const res = await fetch(url, {
@@ -100,16 +110,34 @@ export default function AjoutArtisan() {
             });
 
             if (res.ok) {
+                await Swal.fire({
+                    title: 'Succès !',
+                    text: successMessage,
+                    icon: 'success',
+                    confirmButtonText: 'Parfait'
+                });
                 router.push('/pageArtisant');
             } else {
-                setError("Erreur lors de l'enregistrement");
+                const info = await res.json();
+                Swal.fire({
+                    title: 'Erreur',
+                    text: info.error || "Une erreur est survenue lors de l'enregistrement",
+                    icon: 'error',
+                    confirmButtonText: 'Fermer'
+                });
             }
 
         } catch (err) {
             console.error(err);
-            setError("Erreur Serveur");
+            Swal.fire({
+                title: 'Erreur Serveur',
+                text: "Impossible de contacter le serveur",
+                icon: 'error',
+                confirmButtonText: 'Fermer'
+            });
         }
     }
+
     return (
         <div className="bulle">
             <h1>Gestion des Artisans</h1>

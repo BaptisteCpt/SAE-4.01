@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Swal from 'sweetalert2';
+
 export default function PageListeCom() {
 
     const [liste, setListe] = useState([])
@@ -12,8 +14,6 @@ export default function PageListeCom() {
                 const data = await res.json()
                 if (res.ok) {
                     setListe(data)
-                } else {
-                    console.error("Erreur chargement liste")
                 }
             } catch (err) { console.error(err) }
         }
@@ -21,8 +21,18 @@ export default function PageListeCom() {
     }, [])
 
     async function Suppr(id, nom) {
-        const confirmation = window.confirm(`Voulez-vous vraiment supprimer le commercial "${nom}" ?\nCette action est irréversible.`);
-        if (confirmation) {
+        const result = await Swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: `Voulez-vous vraiment supprimer le commercial "${nom}" ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler'
+        });
+
+        if (result.isConfirmed) {
             try {
                 const res = await fetch('/api/supprcom', {
                     method: 'DELETE',
@@ -31,15 +41,27 @@ export default function PageListeCom() {
                 });
 
                 if (res.ok) {
-                    setListe(prevListe => prevListe.filter(com => com.nocommercial !== id));
-                    alert("Commercial supprimé avec succès !");
+                    setListe(prevListe => prevListe.filter(com => com.id !== id));
+                    Swal.fire(
+                        'Supprimé !',
+                        'Commercial supprimé avec succès !',
+                        'success'
+                    );
                 } else {
                     const info = await res.json();
-                    alert("Impossible de supprimer");
+                    Swal.fire(
+                        'Erreur',
+                        info.error || "Impossible de supprimer",
+                        'error'
+                    );
                 }
             } catch (err) {
                 console.error(err);
-                alert("Erreur de connexion au serveur");
+                Swal.fire(
+                    'Erreur',
+                    "Erreur de connexion au serveur",
+                    'error'
+                );
             }
         }
     }
@@ -50,8 +72,8 @@ export default function PageListeCom() {
             <table>
                 <thead>
                     <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
+                        <th>Identifiant</th>
+                        <th>Mot de passe</th>
                     </tr>
                 </thead>
                 <tbody>

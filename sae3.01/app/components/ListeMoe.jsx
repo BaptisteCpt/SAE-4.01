@@ -1,6 +1,8 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Swal from 'sweetalert2';
+
 export default function PageListeMoe() {
 
     const [liste, setListe] = useState([])
@@ -17,9 +19,18 @@ export default function PageListeMoe() {
     }, [])
 
     async function Suppr(id, nom, login) {
-        const confirmation = window.confirm(`Voulez-vous vraiment supprimer le MOE "${nom}" ?`);
+        const result = await Swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: `Voulez-vous vraiment supprimer le MOE "${nom}" ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0a60b0ff',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler'
+        });
 
-        if (confirmation) {
+        if (result.isConfirmed) {
             try {
                 const res = await fetch('/api/supprmoe', {
                     method: 'DELETE',
@@ -32,14 +43,26 @@ export default function PageListeMoe() {
 
                 if (res.ok) {
                     setListe(prevListe => prevListe.filter(moe => moe.nomoe !== id));
-                    alert("Maître d'Oeuvre supprimé !");
+                    Swal.fire(
+                        'Supprimé !',
+                        "Maître d'Oeuvre supprimé !",
+                        'success'
+                    );
                 } else {
                     const info = await res.json();
-                    alert("Impossible de supprimer");
+                    Swal.fire(
+                        'Erreur',
+                        info.error || "Impossible de supprimer",
+                        'error'
+                    );
                 }
             } catch (err) {
                 console.error(err);
-                alert("Erreur de connexion serveur");
+                Swal.fire(
+                    'Erreur',
+                    "Erreur de connexion serveur",
+                    'error'
+                );
             }
         }
     }
@@ -53,6 +76,7 @@ export default function PageListeMoe() {
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Login</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>

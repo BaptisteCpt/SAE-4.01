@@ -1,26 +1,28 @@
 'use client'
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Swal from 'sweetalert2';
 
 export default function AjoutMoe() {
 
     const [nom, setNom] = useState('')
     const [prenom, setPrenom] = useState('')
     const [error, setError] = useState('')
-    const [listeMoe, setListeMoe] = useState([]) 
     
     const router = useRouter()
-
-    useEffect(() => {
-    }, []);
     
     async function validerForm(e) {
         e.preventDefault();
         setError("");
 
         if (!prenom || !nom) {
-            setError("Veuillez compléter tous les champs")
+            Swal.fire({
+                title: 'Champs manquants',
+                text: 'Veuillez compléter tous les champs',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
@@ -35,15 +37,31 @@ export default function AjoutMoe() {
             });
 
             if (res.ok) {
+                await Swal.fire({
+                    title: 'Succès !',
+                    text: "Le Maître d'Oeuvre a été ajouté avec succès.",
+                    icon: 'success',
+                    confirmButtonText: 'Super !'
+                });
                 router.push('/pageMoe'); 
             } else {
                 const info = await res.json();
-                setError(info.error || "Echec de l'ajout du Maitre d'oeuvre");
+                Swal.fire({
+                    title: 'Erreur',
+                    text: info.error || "Echec de l'ajout du Maitre d'oeuvre",
+                    icon: 'error',
+                    confirmButtonText: 'Fermer'
+                });
             }
 
         } catch (err) {
             console.error(err);
-            setError("Erreur Serveur");
+            Swal.fire({
+                title: 'Erreur Serveur',
+                text: "Impossible de contacter le serveur",
+                icon: 'error',
+                confirmButtonText: 'Fermer'
+            });
         }
     }
     
@@ -58,6 +76,7 @@ export default function AjoutMoe() {
                 <input type="text" className="prenom" placeholder="Prénom..." value={prenom} onChange={(e) => setPrenom(e.target.value)} />
                 
                 <button type="button" onClick={validerForm}>Valider</button>
+                {error && <p>{error}</p>}
             </form>
         </div>
     )

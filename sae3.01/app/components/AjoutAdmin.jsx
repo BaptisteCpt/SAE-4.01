@@ -1,24 +1,26 @@
 'use client'
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Swal from 'sweetalert2';
 
 export default function AjoutAdmin() {
 
     const [nom, setNom] = useState('')
     const [prenom, setPrenom] = useState('')
-    const [error, setError] = useState('')
-    const [listeCom, setListeCom] = useState([]) 
     
     const router = useRouter()
-
-    useEffect(() => {
-    }, []);
     
     async function validerForm(e) {
         e.preventDefault();
+
         if (!prenom || !nom) {
-            setError("Veuillez compléter tous les champs")
+            Swal.fire({
+                title: 'Champs manquants',
+                text: 'Veuillez compléter tous les champs',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
@@ -33,14 +35,31 @@ export default function AjoutAdmin() {
             });
 
             if (res.ok) {
+                await Swal.fire({
+                    title: 'Succès !',
+                    text: "L'administrateur a été ajouté avec succès.",
+                    icon: 'success',
+                    confirmButtonText: 'Parfait'
+                });
                 router.push('/pageAdmin'); 
             } else {
-                setError("Echec de l'ajout de l'administrateur");
+                const info = await res.json();
+                Swal.fire({
+                    title: 'Erreur',
+                    text: info.error || "Echec de l'ajout de l'administrateur",
+                    icon: 'error',
+                    confirmButtonText: 'Fermer'
+                });
             }
 
         } catch (err) {
             console.error(err);
-            setError("Erreur Serveur");
+            Swal.fire({
+                title: 'Erreur Serveur',
+                text: "Impossible de contacter le serveur",
+                icon: 'error',
+                confirmButtonText: 'Fermer'
+            });
         }
     }
     
@@ -49,12 +68,11 @@ export default function AjoutAdmin() {
             <h1>Ajouter un Administrateur</h1>
 
             <form>
-
                 <label>Nouvel Administrateur :</label>
-                <input type="text" className="nom" value={nom} onChange={(e) => setNom(e.target.value)} placeholder="Nom..."
-                />
+                <input type="text" className="nom" value={nom} onChange={(e) => setNom(e.target.value)} placeholder="Nom..." />
                 
                 <input type="text" className="prenom" placeholder="Prénom..." value={prenom} onChange={(e) => setPrenom(e.target.value)} />
+                
                 <button type="button" onClick={validerForm}>Valider</button>
             </form>
         </div>

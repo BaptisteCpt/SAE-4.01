@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
+import Swal from 'sweetalert2';
 
 export default function PageListeArti() {
 
@@ -18,10 +19,18 @@ export default function PageListeArti() {
     }, [])
 
     async function Suppr(id, nom) {
+        const result = await Swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: `Voulez-vous vraiment supprimer l'artisan "${nom}" ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler'
+        });
 
-        const confirmation = window.confirm(`Voulez-vous vraiment supprimer l'artisan "${nom}" ?\nCette action est irréversible.`);
-
-        if (confirmation) {
+        if (result.isConfirmed) {
             try {
                 const res = await fetch('/api/supprartisant', {
                     method: 'DELETE',
@@ -31,14 +40,26 @@ export default function PageListeArti() {
 
                 if (res.ok) {
                     setListe(prevListe => prevListe.filter(artisan => artisan.noartisan !== id));
-                    alert("Suppression réussie !");
+                    Swal.fire(
+                        'Supprimé !',
+                        'Suppression réussie !',
+                        'success'
+                    );
                 } else {
                     const info = await res.json();
-                    alert("Impossible de supprimer");
+                    Swal.fire(
+                        'Erreur',
+                        info.error || "Impossible de supprimer",
+                        'error'
+                    );
                 }
             } catch (err) {
                 console.error(err);
-                alert("Erreur de connexion serveur");
+                Swal.fire(
+                    'Erreur',
+                    "Erreur de connexion serveur",
+                    'error'
+                );
             }
         }
     }
@@ -53,6 +74,7 @@ export default function PageListeArti() {
                         <th>Nom</th>
                         <th>Prénom</th>
                         <th>Ville</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
