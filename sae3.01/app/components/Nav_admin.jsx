@@ -31,11 +31,15 @@ export default function Nav() {
         localStorage.clear()
         router.push('/');
         }
+
+      function goAccAdmin() {
+        router.push('/accueil_admin');
+      }
       
 
     return (
     <nav className="Nav">
-      <div className="logo-div">
+      <div className="logo-div" onClick={goAccAdmin} style={{cursor: 'pointer'}}>
         <img src="/img/logo.png" alt="Bâti'Parti" className="logo-img"/>
       </div>
 

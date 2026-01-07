@@ -46,7 +46,7 @@ export default function Nav() {
 
     return (
     <nav className="Nav">
-      <div className="logo-div">
+      <div className="logo-div" onClick={goAcc} style={{cursor: 'pointer'}}>
         <img src="/img/logo.png" alt="Bâti'Parti" className="logo-img"/>
       </div>
 
