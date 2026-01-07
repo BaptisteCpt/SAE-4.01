@@ -30,10 +30,10 @@ export default function PageAdmin() {
   }
 
   return (
-    <>
+    <div className="page-wrapper">
       <Nav_admin />
       <AccAdmin/>
       <Footer />
-    </>
+    </div>
   )
 }

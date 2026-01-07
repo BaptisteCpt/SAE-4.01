@@ -24,10 +24,10 @@ export default function page() {
   }
 
   return (
-    <>
+    <div className="page-wrapper">
       <Nav_commercial/>
       <AccCommercial/>
       <Footer/>
-    </>
+    </div>
   )
 }

@@ -19,8 +19,10 @@ export default function page() {
       setNavBar(<Nav_commercial/>);
     } else if(role === "maitre Oeuvre") {
       setNavBar(<Nav_M/>);
+    } else {
+      router.push('/');
     }
-  }, []);
+  }, [router]);
 
   return (
     <div className="page-wrapper">

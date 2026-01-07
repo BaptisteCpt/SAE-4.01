@@ -30,10 +30,10 @@ export default function PageMaitreOeuvre() {
   }
 
   return (
-    <>
+    <div className="page-wrapper">
       <Nav_maitreO />
       <AccMaitre />
       <Footer />
-    </>
+    </div>
   )
 }

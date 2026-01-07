@@ -10,11 +10,20 @@ import ClientForm from '../components/ClientForm'
 import '../css/creation_chantier.css'
 
 export default function page() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if (role !== "commercial") {
+      router.push('/');
+    }
+  }, [router]);
+
   return (
-    <>
+    <div className="page-wrapper">
         <Nav/>
         <ClientForm/>
         <Footer/>
-    </>
+    </div>
   )
 }
