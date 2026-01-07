@@ -21,15 +21,19 @@ export default function AccMaitre() {
     }
 
     function pagePerso(){
-         router.push('/personnalisation')
+         router.push('/personnalisation');
     }
 
     function pageSuivi(){
-        router.push('/suivi')
+        router.push('/suivi');
     }
 
     function pageArti(){
-         router.push('/artisan')
+         router.push('/artisan');
+    }
+
+    function pageAppel(){
+        router.push('/appel');
     }
 
     return (
@@ -60,7 +64,14 @@ export default function AccMaitre() {
                 <div className="bloc-accueil">
                     <img src="/img/client.png" onClick={pageArti} />
                     <button className="but" type="button" onClick={pageArti}>
-                        Affectation des artisant
+                        Affectation des artisans
+                    </button>
+                </div>
+
+                <div className="bloc-accueil">
+                    <img src="/img/money.png" onClick={pageAppel} />
+                    <button className="but" type="button" onClick={pageAppel}>
+                        Appel de fonds
                     </button>
                 </div>
             </div>
