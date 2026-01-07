@@ -14,8 +14,6 @@ export default function artisanForm() {
     const [error,setError] = useState()
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState("");
-
-    const fetchedChantiers = useRef(false);
       
 
     useEffect(() => { // Chargement des chantier et récupérations dans la liste chantiers
