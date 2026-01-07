@@ -10,7 +10,7 @@ export default function PageListeArti() {
     useEffect(() => {
         async function recupListe() {
             try {
-                const res = await fetch('/api/recup_artisan')
+                const res = await fetch('/api/recup_arti_bis')
                 const data = await res.json()
                 if (res.ok) setListe(data)
             } catch (err) { console.error(err) }

@@ -19,7 +19,7 @@ export default function AjoutArtisan() {
     
     async function getArti(){
         try{
-            const res = await fetch('/api/recup_artisan');
+            const res = await fetch('/api/recup_arti_bis');
             if(res.ok){
                 const data = await res.json();
                 setListeArti(data);
