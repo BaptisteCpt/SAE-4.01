@@ -1,0 +1,38 @@
+'use client' 
+import "../css/accueil.css"; 
+import { useState, useEffect } from 'react' 
+import { useRouter } from 'next/navigation'
+import Nav_admin from '../components/Nav_admin'
+import Modif from "../components/ModifModel"
+
+
+export default function AccCommercial() { 
+
+  const router = useRouter();
+  const [authorized, setAuthorized] = useState(false); 
+  const [nom, setNom] = useState("");
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    const nomStocke = localStorage.getItem("nom");
+
+ 
+    if (role === "admin") {
+      setAuthorized(true);
+      setNom(nomStocke);
+    } else {
+      router.push('/');
+    }
+  }, [router]);
+
+  if (!authorized) {
+    return null;
+  }
+
+  return (
+    <>
+      <Nav_admin />
+      <Modif/>
+    </>
+  )
+} 
