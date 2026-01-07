@@ -12,6 +12,8 @@ export default function artisanForm() {
     const[EtapeCourrante, setEtapeCourrante] = useState();
     const[ArtisanCourrant, setArtisanCourrant] = useState();
     const [error,setError] = useState()
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupMessage, setPopupMessage] = useState("");
 
     const fetchedChantiers = useRef(false);
       
@@ -88,13 +90,16 @@ export default function artisanForm() {
             const result = await response.json();
 
             if (!response.ok) {
-                alert("Erreur : " + result.error);
+                setPopupMessage("Erreur : " + result.error);
+                setShowPopup(true);
             } else {
-                alert("Modifications enregistrées !");
+                setPopupMessage("Modifications enregistrées !");
+                setShowPopup(true);
             }
         } catch (error) {
             console.error(error);
-            alert("Erreur réseau");
+            setPopupMessage("Erreur réseau");
+            setShowPopup(true);
         }
     };
 
@@ -161,6 +166,15 @@ export default function artisanForm() {
             </div>
 
             {error && <p className="no-data">{error}</p>}
+
+            {showPopup && (
+                <div className="popup-overlay">
+                    <div className="popup-content">
+                        <p>{popupMessage}</p>
+                        <button onClick={() => setShowPopup(false)}>OK</button>
+                    </div>
+                </div>
+            )}
         </div>
     </div>
   )

@@ -118,24 +118,66 @@
     align-items: center;
 }
 
+/* Burger Menu Styles */
+.burger-menu {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #2c3e50;
+    padding: 5px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-grow: 1;
+    justify-content: space-around;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .Nav {
-        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: space-between;
         height: auto;
-        padding: 15px;
-        gap: 15px;
+        padding: 10px 20px;
+        position: relative;
+    }
+
+    .burger-menu {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+        background-color: white;
+        padding-bottom: 20px;
+        border-top: 1px solid #eee;
+    }
+
+    .nav-links.open {
+        display: flex;
+        animation: slideDown 0.3s ease-in-out;
     }
 
     .nav-item, .Nav a {
-        height: 40px; /* Reduced height for stacked items */
         width: 100%;
         justify-content: center;
+        padding: 15px 0;
+        border-bottom: 1px solid #f0f0f0;
+        height: auto;
     }
 
     .menuderoulant {
-        height: auto;
         flex-direction: column;
+        height: auto;
         width: 100%;
         align-items: center;
     }
@@ -145,18 +187,21 @@
         width: 100%;
         text-align: center;
         box-shadow: none;
-        border: 1px solid #eee;
+        background-color: #f9f9f9;
+        margin-top: 10px;
     }
 
     .profil-div {
         flex-direction: column;
-        height: auto;
+        margin-top: 20px;
+        width: 100%;
         gap: 15px;
-        margin-top: 10px;
+        justify-content: center;
     }
+}
 
-    .logo-img {
-        height: 40px;
-    }
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 

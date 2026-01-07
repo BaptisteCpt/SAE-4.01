@@ -23,10 +23,10 @@ export default function page() {
   }, []);
 
   return (
-    <>
+    <div className="page-wrapper">
       { navBar } 
       <Pclient/>
       <Footer/>
-    </>
+    </div>
   )
 }

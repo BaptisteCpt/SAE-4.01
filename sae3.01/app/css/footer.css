@@ -7,4 +7,5 @@
     background: white;
     flex-wrap: wrap; /* Ensure content wraps on very small screens */
     color: black;
+    margin-top: auto; /* Push footer to bottom if container is flex column */
 }

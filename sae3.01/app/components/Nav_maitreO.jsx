@@ -4,10 +4,15 @@ import { useRouter } from 'next/navigation';
 
 export default function Nav() {
   const [openMenu, setOpenMenu] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
 
   function toggleMenu(menu) {
     setOpenMenu(openMenu === menu ? null : menu);
+  }
+
+  function toggleMobileMenu() {
+    setMobileMenuOpen(!mobileMenuOpen);
   }
 
   function logout() {
@@ -25,31 +30,37 @@ export default function Nav() {
         <img src="/img/logo.png" alt="Bâti'Parti" className="logo-img"/>
       </div>
 
-      <a href="#" onClick={goToAccMaitre}>Accueil</a>
+      <button className="burger-menu" onClick={toggleMobileMenu}>
+        ☰
+      </button>
 
-      <div className="menuderoulant">
-        <p className="nav-item" onClick={() => toggleMenu("Chantier")}>
-          Chantier {openMenu === "Chantier" ? "⮝  " : "⮟"}
-        </p>
+      <div className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
+        <a href="#" onClick={goToAccMaitre}>Accueil</a>
 
-        {openMenu === "Chantier" && (
-          <div className="menuderoulantcontent">
-            <a href="/suivi">Suivi</a>
-            <a href="/personnalisation">Personnalisation</a>
-            <a href="/artisan">Artisan</a>
-          </div>
-        )}
-      </div>
+        <div className="menuderoulant">
+          <p className="nav-item" onClick={() => toggleMenu("Chantier")}>
+            Chantier {openMenu === "Chantier" ? "⮝  " : "⮟"}
+          </p>
 
-      <a href="#">Appel de fond</a>
-
-      <div className="profil-div">
-        <div className='profil'>
-          <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
-          <input type='text' value="MaitreO" className='input-role' readOnly/>
+          {openMenu === "Chantier" && (
+            <div className="menuderoulantcontent">
+              <a href="/suivi">Suivi</a>
+              <a href="/personnalisation">Personnalisation</a>
+              <a href="/artisan">Artisan</a>
+            </div>
+          )}
         </div>
-        <div className='logout'>
-          <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>
+
+        <a href="#">Appel de fond</a>
+
+        <div className="profil-div">
+          <div className='profil'>
+            <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
+            <input type='text' value="MaitreO" className='input-role' readOnly/>
+          </div>
+          <div className='logout'>
+            <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>
+          </div>
         </div>
       </div>
     </nav>

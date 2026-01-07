@@ -95,12 +95,21 @@ h1 {
 /* Responsive Design */
 @media (max-width: 768px) {
     .grille_img {
-        width: 95%;
-        gap: 15px;
-        grid-template-columns: 1fr; /* Force 1 column on small screens */
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 20px;
+        padding-bottom: 20px;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+        grid-template-columns: none; /* Reset grid */
     }
 
     .img_modele {
+        min-width: 100%;
+        scroll-snap-align: center;
         padding: 15px;
     }
 

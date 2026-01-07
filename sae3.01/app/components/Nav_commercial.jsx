@@ -6,8 +6,13 @@ import { useRouter } from 'next/navigation'
 
 export default function Nav() {
     const [openMenu, setOpenMenu] = useState(null);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [pageOne,setPage1] = useState("Chantier ⮟")
     const router = useRouter()
+
+    function toggleMobileMenu() {
+        setMobileMenuOpen(!mobileMenuOpen);
+    }
 
     function toggleMenu(menu) {
         setOpenMenu(openMenu === menu ? null : menu);
@@ -45,29 +50,35 @@ export default function Nav() {
         <img src="/img/logo.png" alt="Bâti'Parti" className="logo-img"/>
       </div>
 
-      <a href="#" onClick={goAcc}>Accueil</a>
+      <button className="burger-menu" onClick={toggleMobileMenu}>
+        ☰
+      </button>
 
-      <div className="menuderoulant">
-        <button className="nav-item" onClick={() => toggleMenu("Chantier")}>
-          {pageOne}
-        </button>
-        {openMenu === "Chantier" && 
-          <div className="menuderoulantcontent">
-            <a href="#"onClick={goListeClient}>Liste clients</a>
-            <a href="#"onClick={goStartChantier}>Création d'un chantier</a>
-          </div>
-        }
-      </div>
+      <div className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
+        <a href="#" onClick={goAcc}>Accueil</a>
 
-      <a href="#" onClick={goModel}>Catalogue</a>
-
-      <div className="profil-div">
-        <div className='profil'>
-          <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
-          <input type='text' value="Commercial" className='input-role' readOnly/>
+        <div className="menuderoulant">
+            <button className="nav-item" onClick={() => toggleMenu("Chantier")}>
+            {pageOne}
+            </button>
+            {openMenu === "Chantier" && 
+            <div className="menuderoulantcontent">
+                <a href="#"onClick={goListeClient}>Liste clients</a>
+                <a href="#"onClick={goStartChantier}>Création d'un chantier</a>
+            </div>
+            }
         </div>
-        <div className='logout'>
-          <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>
+
+        <a href="#" onClick={goModel}>Catalogue</a>
+
+        <div className="profil-div">
+            <div className='profil'>
+            <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
+            <input type='text' value="Commercial" className='input-role' readOnly/>
+            </div>
+            <div className='logout'>
+            <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>
+            </div>
         </div>
       </div>
 

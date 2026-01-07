@@ -7,7 +7,7 @@ import Footer from '../components/Footer'
 
 export default function page() {
   return (
-    <div className='Main'>
+    <div className='page-wrapper'>
         <Nav/>
         <Suivi/>
         <Footer/>

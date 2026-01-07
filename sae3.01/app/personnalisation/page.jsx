@@ -6,7 +6,7 @@ import styles from '../css/personnalisation.css'
 
 export default function PersonnalisationPage() {
   return (
-    <div>
+    <div className="page-wrapper">
         <Nav />
         <PersonnalisationContent />
         <Footer/>
