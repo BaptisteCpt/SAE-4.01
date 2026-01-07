@@ -17,6 +17,16 @@ export default function artisanForm() {
       
 
     useEffect(() => { // Chargement des chantier et récupérations dans la liste chantiers
+
+        const chantierGiven = localStorage.getItem('chantier');
+        const etapeGiven = localStorage.getItem('etape');
+        if (chantierGiven) {
+            setNumeroChantier(chantierGiven);
+            setEtapeCourrante(etapeGiven);
+            localStorage.removeItem('chantier');
+            localStorage.removeItem('etape');
+        }
+
         async function fetchChantier(){
             try {
                 const res =  await fetch('/api/numero_chantier');
