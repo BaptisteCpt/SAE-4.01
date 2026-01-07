@@ -34,7 +34,7 @@ export default function Nav() {
         <img src="/img/logo.png" alt="Bâti'Parti" className="logo-img"/>
       </div>
 
-      <a href="#">Home</a>
+      <a href="#">Accueil</a>
 
       <a href="#">Administrer</a>
 
