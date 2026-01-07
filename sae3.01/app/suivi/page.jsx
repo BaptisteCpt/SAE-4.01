@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import ArtisantForm from '../components/ArtisanForm'
+import Suivi from '../components/Suivi'
 import Nav from '../components/Nav_maitreO'
 import Footer from '../components/Footer'
 
@@ -9,7 +9,7 @@ export default function page() {
   return (
     <div className='Main'>
         <Nav/>
-        <ArtisantForm/>
+        <Suivi/>
         <Footer/>
     </div>
   )
