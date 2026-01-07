@@ -217,19 +217,57 @@ li {
   color: #2c3e50;
 }
 
-.left-section input[type="text"],
-.left-section input[type="number"] {
+.montant {
+  display: flex;
+  justify-content: space-around; 
+  align-items: center;  
+}
+
+.left-section input {
+  padding: 12px 14px;
+  border: 1.5px solid #d5d8dc;
+  border-radius: 6px;
+  font-size: 15px;
   color: #2c3e50;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.3s ease;
   font-weight: 500;
+}
+
+.left-section input:focus {
+  border-color: #ff9100;
+  box-shadow: 0 0 0 4px rgba(255, 145, 0, 0.12);
+  background-color: #fafbfc;
 }
 
 .left-section input::placeholder {
   color: #95a5a6;
 }
 
-.left-section button:not(.button-section button) {
-  color: #95a5a6;
-  font-weight: 600;
+.modif {
+  display: flex;
+  justify-content: space-around; 
+  align-items: center;  
+}
+
+.left-section button {
+  background-color: #ff9100;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.left-section button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .left-section form input {

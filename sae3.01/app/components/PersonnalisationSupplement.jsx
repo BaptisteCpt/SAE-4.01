@@ -36,6 +36,7 @@ export default function PersonnalisationSupplement({ supplements, onAdd, onRemov
             </ul>
 
             <form>
+                <div className='montant'>
                 <input 
                     value={name} 
                     onChange={(e) => setName(e.target.value)} 
@@ -47,8 +48,11 @@ export default function PersonnalisationSupplement({ supplements, onAdd, onRemov
                     onChange={(e) => setPrix(e.target.value)} 
                     placeholder="Prix modification" 
                 />
+                </div>
+                <div className='modif'>
                 <button onClick={(e) => handleClickAdd(e, 'plus')}>Ajouter +</button>
                 <button onClick={(e) => handleClickAdd(e, 'moins')}>Enlever -</button>
+                </div>
             </form>
         </div>
     );
