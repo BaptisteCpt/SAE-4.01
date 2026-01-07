@@ -3,14 +3,16 @@
 }
 
 /* C'est ici que la magie opère pour le fond de la page */
-body {
+.liste_clients {
     background-color: var(--couleur-fond-page);
     margin: 0;
     min-height: 100vh; /* Prend toute la hauteur de l'écran */
+    display: flex;
+    flex-direction: column;
 }
 
 /* --- Conteneur Principal (Style "Carte" de la maquette) --- */
-.liste_clients {
+.bulle_liste_clients {
     background-color: #ffffff; /* Fond blanc comme la maquette */
     width: 90%;
     max-width: 1000px; /* Plus large que le formulaire pour le tableau */
@@ -22,7 +24,7 @@ body {
 }
 
 /* --- Titre --- */
-.liste_clients h1 {
+.bulle_liste_clients h1 {
     color: #2c3e50; /* Gris foncé/Bleu nuit */
     font-size: 1.8rem;
     margin-bottom: 25px;

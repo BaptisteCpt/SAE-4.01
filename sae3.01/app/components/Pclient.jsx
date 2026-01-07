@@ -45,39 +45,41 @@ export default function PageClients() {
     };
 
     return (
-        <div className="liste_clients">
-            <h1>Liste des Clients</h1>
-            
-            <table className="table_clients">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th>Adresse</th>
-                        <th>Ville</th>
-                        <th>Code Postal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {clients.map((client, index) => (
-                        <tr key={client.noclient || index} onClick={() => handleRowClick(client.noclient)}
-                            className={idclient === client.noclient ? "row-selected" : ""}>
-                            <td>{client.nomclient}</td>
-                            <td>{client.prenomclient}</td>
-                            <td>{client.adresseclient}</td>
-                            <td>{client.villeclient}</td>
-                            <td>{client.cpclient}</td>
+        <div className='liste_clients'>
+            <div className="bulle_liste_clients">
+                <h1>Liste des Clients</h1>
+                
+                <table className="table_clients">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Adresse</th>
+                            <th>Ville</th>
+                            <th>Code Postal</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-            {idclient && (
-                <div className="bar_selection">
-                    <button className="btn_creation" onClick={GoCreaChantier}>
-                        Créer un chantier pour ce client
-                    </button>
-                </div>
-            )}
+                    </thead>
+                    <tbody>
+                        {clients.map((client, index) => (
+                            <tr key={client.noclient || index} onClick={() => handleRowClick(client.noclient)}
+                                className={idclient === client.noclient ? "row-selected" : ""}>
+                                <td>{client.nomclient}</td>
+                                <td>{client.prenomclient}</td>
+                                <td>{client.adresseclient}</td>
+                                <td>{client.villeclient}</td>
+                                <td>{client.cpclient}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                {idclient && (
+                    <div className="bar_selection">
+                        <button className="btn_creation" onClick={GoCreaChantier}>
+                            Créer un chantier pour ce client
+                        </button>
+                    </div>
+                )}
+            </div>
         </div>
     )
 }
