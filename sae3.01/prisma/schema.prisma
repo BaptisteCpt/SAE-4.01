@@ -17,7 +17,7 @@ model appel {
   dateappel     DateTime? @db.Date
   montantappel  Decimal   @db.Decimal(8, 2)
   datereglappel DateTime? @db.Date
-  chantier      chantier  @relation(fields: [nochantier], references: [nochantier], onDelete: NoAction, onUpdate: NoAction)
+  chantier      chantier  @relation(fields: [nochantier], references: [nochantier], onDelete: Cascade, onUpdate: NoAction)
 
   @@id([nochantier, noappel])
   @@schema("Bati_Parti")
@@ -105,7 +105,7 @@ model etape_chantier {
   datefin                 DateTime?        @db.Date
   noartisan               Int?
   artisan                 artisan?         @relation(fields: [noartisan], references: [noartisan], onDelete: NoAction, onUpdate: NoAction)
-  chantier                chantier         @relation(fields: [nochantier], references: [nochantier], onDelete: NoAction, onUpdate: NoAction)
+  chantier                chantier         @relation(fields: [nochantier], references: [nochantier], onDelete: Cascade, onUpdate: NoAction)
   etape                   etape            @relation(fields: [noetape], references: [noetape], onDelete: NoAction, onUpdate: NoAction)
   facture_artisan         facture_artisan?
 
@@ -132,7 +132,7 @@ model facture_artisan {
   datereglfacture DateTime?      @db.Date
   nochantier      Int
   noetape         Int
-  etape_chantier  etape_chantier @relation(fields: [nochantier, noetape], references: [nochantier, noetape], onDelete: NoAction, onUpdate: NoAction)
+  etape_chantier  etape_chantier @relation(fields: [nochantier, noetape], references: [nochantier, noetape], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([nochantier, noetape])
   @@schema("Bati_Parti")
