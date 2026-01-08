@@ -1,5 +1,6 @@
 'use client'
 
+import "../css/admin-list.css"; 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import AjoutModel from '../components/AjoutModel'

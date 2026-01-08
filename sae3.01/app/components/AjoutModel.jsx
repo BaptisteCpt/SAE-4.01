@@ -37,13 +37,21 @@ export default function PageAjoutModele() {
             return;
         }
         try {
+            const etapesAvecDuree = etapesSelectionnees.map(id => {
+                const etapeInfo = toutesLesEtapes.find(e => e.noetape === id);
+                return { 
+                    id: id, 
+                    jours: etapeInfo ? (etapeInfo.nbjoursrealisation || etapeInfo.duree || 1) : 1 
+                };
+            });
+
             const res = await fetch('/api/cre_model', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     nom: nom,
                     description: description,
-                    etapes: etapesSelectionnees
+                    etapes: etapesAvecDuree
                 })
             });
             if (res.ok) {
