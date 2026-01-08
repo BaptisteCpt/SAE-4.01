@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Formsupplement from '../components/PersonnalisationSupplement';
 import '../css/personnalisation.css';
 import Swal from 'sweetalert2';
@@ -10,6 +11,7 @@ export default function PersonnalisationContent() {
     const [ChantierSelect, setChantierSelect] = useState([]);
     const [etapes, setEtapes] = useState([]);
     const [EtapeCourrante, setEtapeCourrante] = useState("");
+    const router = useRouter();
 
     useEffect(() => { 
         async function fetchChantiers() {
@@ -103,6 +105,46 @@ export default function PersonnalisationContent() {
         }
     };
 
+    const finir = async () => {
+        try {
+            const response = await fetch('/api/finirperso', { 
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chantierId: numChantier,
+                    date: new Date()
+                })
+            });
+
+            const result = await response.json();
+            if (!response.ok) {
+                Swal.fire({
+                    title: 'Erreur',
+                    text: "La personnalisation a échoué",
+                    icon: 'error',
+                    confirmButtonText: 'Fermer'
+                })
+            } else {
+                Swal.fire({
+                    title: 'Succès !',
+                    text: "Modifications enregistrées avec succès !",
+                    icon: 'success',
+                    confirmButtonText: 'Super'
+                }).then(
+                    router.push('/accueil_maitre')
+                );
+            }
+        } catch (error) {
+            console.error(error);
+            Swal.fire({
+                title: 'Erreur réseau',
+                text: "Impossible de contacter le serveur.",
+                icon: 'error',
+                confirmButtonText: 'Fermer'
+            });
+        }
+    };
+
     return (
         <>
             <header>
@@ -180,6 +222,12 @@ export default function PersonnalisationContent() {
                         <section className="button-section">
                             <button onClick={handleSave}>
                                 Valider
+                            </button>
+                        </section>
+
+                        <section className="button-section">
+                            <button onClick={finir}>
+                                Terminer la personnalisation
                             </button>
                         </section>
                     </main>

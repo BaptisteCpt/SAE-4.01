@@ -62,7 +62,14 @@ export default function Suivi() {
         });
     
         const result = await res.json();
-        if (!res.ok) alert('Erreur date théorique : ' + result.error);
+        if (!res.ok){
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: "Vous devez entrer une date théorique",
+                confirmButtonText: 'OK'
+            });
+        }
         } catch (err) {
         console.error(err);
         alert('Erreur réseau');
@@ -82,7 +89,14 @@ export default function Suivi() {
             });
         
             const result = await res.json();
-            if (!res.ok) alert('Erreur date début : ' + result.error);
+            if (!res.ok){
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: "Vous devez entrer une date de début",
+                    confirmButtonText: 'OK'
+                });
+            }
             } catch (err) {
             console.error(err);
             alert('Erreur réseau');
@@ -144,7 +158,10 @@ export default function Suivi() {
             <h1>Suivi d'un chantier</h1>
             <label>
                 Chantier Choisi :
-                <select value={numero_chantier} onChange={e => {setNumeroChantier(Number(e.target.value))}}>
+                <select value={numero_chantier} onChange={e => {
+                                        const selected = Number(e.target.value);
+                                        localStorage.setItem('chantierSelectionne', selected);
+                                        window.location.reload(); /* rafraîchit la page */}}>
                         <option value="" hidden>-- Numéro du chantier --</option>
                             {Chantiers.map((Chantier) => (
                                 <option key={Chantier.nochantier} value={Chantier.nochantier}>{Chantier.nochantier} - {Chantier.adressechantier}</option>
