@@ -17,7 +17,7 @@ export async function POST(req) {
     }
 
     const updated = await prisma.etape_chantier.update({
-      where: { nochantier_noetape: { nochantier: chantierId, noetape: etapeId } },
+      where: { nochantier_noetape: { nochantier: parseInt(chantierId), noetape: etapeId } },
       data: { datefin: parseDateISO(dateFin) },
     });
 
