@@ -77,7 +77,7 @@ export default function Appel() {
                                     confirmButtonText: 'OK'
                         }).then(() => {
                             localStorage.setItem("chantier",numero_chantier);
-                            router.push('/appel');
+                            window.location.reload();
                         });
                     }
                 } catch (error) {

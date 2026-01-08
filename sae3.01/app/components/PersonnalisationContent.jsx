@@ -83,9 +83,7 @@ export default function PersonnalisationContent() {
                     text: "Le montant est supérieur au montant maximal de Réduction/Supplément",
                     icon: 'error',
                     confirmButtonText: 'Fermer'
-                }).then(
-                    
-                );
+                })
             } else {
                 Swal.fire({
                     title: 'Succès !',
