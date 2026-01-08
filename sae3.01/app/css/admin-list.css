@@ -220,8 +220,8 @@ form {
     gap: 30px;
 }
 
-/* Groupes de champs pour meilleure organisation */
-.form-group {
+/* Groupes de champs pour meilleure organisation - spécifiques aux pages admin uniquement */
+.bulle .form-group {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -232,18 +232,21 @@ form {
     transition: all 0.3s ease;
 }
 
-.form-group:hover {
+.bulle .form-group:hover {
     border-color: #dee2e6;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.form-group:focus-within {
+.bulle .form-group:focus-within {
     border-color: var(--couleur-bouton);
     box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.1);
     background: #ffffff;
 }
 
-label {
+/* Styles de labels spécifiques aux pages admin uniquement */
+.bulle label,
+.bulle form label,
+.bulle .form-group label {
     font-weight: 700;
     color: #2c3e50;
     margin-bottom: 0;
@@ -256,7 +259,9 @@ label {
     position: relative;
 }
 
-label::before {
+.bulle label::before,
+.bulle form label::before,
+.bulle .form-group label::before {
     content: '';
     width: 4px;
     height: 16px;
@@ -265,15 +270,15 @@ label::before {
     flex-shrink: 0;
 }
 
-/* Style pour les labels directs (sans form-group) */
-form > label {
+/* Style pour les labels directs (sans form-group) dans les pages admin */
+.bulle form > label {
     padding: 0;
     background: transparent;
     border: none;
     margin-bottom: 10px;
 }
 
-form > label::before {
+.bulle form > label::before {
     display: block;
 }
 
@@ -522,11 +527,11 @@ select:focus {
         gap: 25px;
     }
 
-    .form-group {
+    .bulle .form-group {
         padding: 15px;
     }
 
-    label {
+    .bulle label {
         font-size: 13px;
     }
 

@@ -54,19 +54,48 @@
   gap: 1.5rem;
 }
 
-/* Groupe de formulaire */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+/* Groupe de formulaire - styles spécifiques pour le formulaire de login uniquement */
+.login-container .form-group,
+.login-form .form-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  padding: 0 !important; /* Pas de padding pour éviter la bulle */
+  background: transparent !important; /* Pas de background pour éviter la bulle */
+  border: none !important; /* Pas de border pour éviter la bulle */
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transition: none !important;
 }
 
-/* Labels */
-.form-group label {
-  color: #4a4a4a; /* Gris foncé */
-  font-size: 0.95rem;
-  font-weight: 500;
-  font-family: Arial, Helvetica, sans-serif;
+/* S'assurer que les états hover et focus-within ne s'appliquent pas au login */
+.login-container .form-group:hover,
+.login-form .form-group:hover,
+.login-container .form-group:focus-within,
+.login-form .form-group:focus-within {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Labels - styles spécifiques pour le formulaire de login uniquement */
+.login-container .form-group label,
+.login-form .form-group label {
+  color: #4a4a4a !important; /* Gris foncé */
+  font-size: 0.95rem !important;
+  font-weight: 500 !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  text-transform: none !important; /* Pas de transformation en majuscules */
+  letter-spacing: normal !important;
+  display: block !important; /* Pas de flex pour éviter le ::before */
+  gap: 0 !important;
+}
+
+/* S'assurer qu'il n'y a pas de ::before sur les labels du login */
+.login-container .form-group label::before,
+.login-form .form-group label::before {
+  display: none !important;
+  content: none !important;
 }
 
 /* Inputs */
