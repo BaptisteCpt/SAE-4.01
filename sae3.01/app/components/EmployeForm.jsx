@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Footer from '../components/Footer';
 
 export default function EmployeForm() {
 
@@ -66,7 +65,6 @@ export default function EmployeForm() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     )
 }

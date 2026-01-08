@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
-import Footer from '../components/Footer';
 
 export default function PageListeMoe() {
 
@@ -101,7 +100,6 @@ export default function PageListeMoe() {
                 </div>
                 {liste.length === 0 && <p>Aucun maître d'oeuvre trouvé.</p>}
             </div>
-            <Footer />
         </>
     )
 }

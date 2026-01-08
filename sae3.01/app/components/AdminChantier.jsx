@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
-import Footer from '../components/Footer';
 
 export default function PageListeChantier() {
 
@@ -104,7 +103,6 @@ export default function PageListeChantier() {
 
                 {liste.length === 0 && <p className="Pdonner">Aucun chantier enregistré.</p>}
             </div>
-            <Footer />
         </>
     )
 }

@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
-import Footer from '../components/Footer';
 
 export default function PageListAdmin() {
 
@@ -113,7 +112,6 @@ export default function PageListAdmin() {
                 </div>
                 {liste.length === 0 && <p>Aucun administrateur trouvé.</p>}
             </div>
-            <Footer />
         </>
     )
 }

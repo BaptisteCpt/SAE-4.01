@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 
-export default function PersonnalisationSupplement({ supplements, onAdd, onRemove }) {
+export default function PersonnalisationSupplement({ montantmax, supplements, onAdd, onRemove }) {
     const [name, setName] = useState('');
     const [prix, setPrix] = useState('');
 
@@ -28,6 +28,12 @@ export default function PersonnalisationSupplement({ supplements, onAdd, onRemov
                     <span className="total-label">Total :</span>
                     <span className={`total-amount ${total >= 0 ? 'positive' : 'negative'}`}>
                         {total >= 0 ? '+' : ''}{total.toFixed(2)} €
+                    </span>
+                </div>
+                <div className="total-badge">
+                    <span className="total-label">Montant Autorisé :</span>
+                    <span className={`total-amount ${total >= 0 ? 'positive' : 'negative'}`}>
+                        {montantmax}
                     </span>
                 </div>
             </div>

@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
-import Footer from '../components/Footer';
 
 export default function PageListeArti() {
 
@@ -100,7 +99,6 @@ export default function PageListeArti() {
 
                 {liste.length === 0 && <p>Aucun artisan trouvé.</p>}
             </div>
-            <Footer />
         </>
     )
 }

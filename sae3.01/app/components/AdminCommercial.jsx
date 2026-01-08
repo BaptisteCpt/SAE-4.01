@@ -3,7 +3,6 @@
 import "../css/accueil.css"; 
 import { useState, useEffect } from 'react' 
 import { useRouter } from 'next/navigation'
-import Footer from '../components/Footer';
 
 export default function AdminCommercial() { 
 
@@ -46,7 +45,6 @@ export default function AdminCommercial() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     )
 }

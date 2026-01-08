@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react'
 import Nav_admin from '../components/Nav_admin'
 import Footer from '../components/Footer'
-import styles from '../css/accueil.css'
 import { useRouter } from 'next/navigation'
 import AccAdmin from '../components/AccAdmin'
 
