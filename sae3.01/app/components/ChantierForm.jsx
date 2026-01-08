@@ -85,7 +85,7 @@ export default function ChantierForm() {
                 setSuccess(true);
             }
         } catch (err) {
-            setError('Erreur Serveur');
+            setError('Erreur serveur');
         }
     }
 

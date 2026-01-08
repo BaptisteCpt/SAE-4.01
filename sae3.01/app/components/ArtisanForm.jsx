@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import "../css/artisan.css";
+import Swal from 'sweetalert2';
 
 export default function artisanForm() {
 
@@ -12,8 +13,6 @@ export default function artisanForm() {
     const[EtapeCourrante, setEtapeCourrante] = useState();
     const[ArtisanCourrant, setArtisanCourrant] = useState();
     const [error,setError] = useState()
-    const [showPopup, setShowPopup] = useState(false);
-    const [popupMessage, setPopupMessage] = useState("");
       
 
     useEffect(() => { // Chargement des chantier et récupérations dans la liste chantiers
@@ -98,16 +97,22 @@ export default function artisanForm() {
             const result = await response.json();
 
             if (!response.ok) {
-                setPopupMessage("Erreur : " + result.error);
-                setShowPopup(true);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oups...',
+                    text: result.error,
+                    confirmButtonText: 'OK'
+                })
             } else {
-                setPopupMessage("Modifications enregistrées !");
-                setShowPopup(true);
+                Swal.fire({
+                            icon: 'success',
+                            title: 'Réussi',
+                            text: "Modification Sauvegardé",
+                            confirmButtonText: 'OK'
+                })
             }
         } catch (error) {
             console.error(error);
-            setPopupMessage("Erreur réseau");
-            setShowPopup(true);
         }
     };
 
@@ -174,15 +179,6 @@ export default function artisanForm() {
             </div>
 
             {error && <p className="no-data">{error}</p>}
-
-            {showPopup && (
-                <div className="popup-overlay">
-                    <div className="popup-content">
-                        <p>{popupMessage}</p>
-                        <button onClick={() => setShowPopup(false)}>OK</button>
-                    </div>
-                </div>
-            )}
         </div>
     </div>
   )

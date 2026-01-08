@@ -14,36 +14,37 @@
   --radius: 8px;
 }
 
+/* Applique le fond bleu à toute la page */
 body {
     background-color: var(--couleur-fond-page);
     color: var(--couleur-texte-sombre);
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    min-height: 100vh;
 }
 
-/* --- Formulaire de Filtres (Ajouté pour le style du form vide) --- */
-/* Si vous ajoutez des filtres/recherche plus tard, ce style est prêt */
-.model_form {
-    padding: 20px;
-    margin: 0 auto;
-    max-width: 1200px;
+h1 {
+    font-family: 'Segoe UI';
+    text-align: center;
+    margin-top: 3%;
+    color: #ffffff; /* Titre en blanc pour être lisible sur le fond bleu */
 }
 
-/* --- Grille des Modèles --- */
 .grille_img {
+    width: 90%;
+    max-width: 1400px;
+    margin: 40px auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-    gap: 30px; 
-    padding: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* --- Carte Individuelle du Modèle (.img_modele) --- */
 .img_modele {
     background-color: var(--couleur-fond-carte);
     border-radius: var(--radius);
+    padding: 20px;
     overflow: hidden; 
     box-shadow: var(--shadow-leger);
     cursor: pointer;
@@ -52,44 +53,160 @@ body {
 }
 
 .img_modele:hover {
-    transform: translateY(-7px); 
+    background-color: #fff3e0;
+    transform: translateY(-5px); 
     box-shadow: var(--shadow-survol);
     border-color: var(--couleur-principale);
 }
 
-/* --- Image du Modèle --- */
-.img-modele {
+.img_modele img {
     width: 100%;
-    height: 200px; 
+    height: 200px;
     object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
     display: block;
-    transition: transform 0.5s ease;
 }
 
-.img_modele:hover .img-modele {
-    transform: scale(1.05); 
+.info_modele {
+    padding: 0;
 }
 
-/* --- Informations du Modèle --- */
-.info-modele {
-    padding: 15px;
-    text-align: center;
-}
-
-.info-modele h3 {
-    margin: 0;
-    font-size: 1.3em;
-    font-weight: 600;
+.info_modele h3 {
     color: var(--couleur-texte-sombre);
-    text-transform: capitalize; 
+    font-size: 1.4rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    font-weight: 600;
 }
 
+.info_modele p {
+    color: var(--couleur-texte-sombre);
+}
 
-/* --- Responsive Design pour les petits écrans --- */
+.listes_etapes h4 {
+    color: var(--couleur-texte-sombre);
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.liste_etapes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.liste_etapes li {
+    padding: 10px 8px;
+    border-bottom: 1px solid #eee;
+    color: var(--couleur-texte-sombre);
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.liste_etapes li:hover {
+    background-color: #ffe0b2;
+    transform: translateX(5px);
+    transition: all 0.2s ease;
+    font-weight: bold;
+    border-left: 4px solid var(--couleur-principale);
+    color: #d35400;
+}
+
+.duree_etape {
+    font-size: 0.85rem;
+    color: var(--couleur-texte-sombre);
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        padding: 0;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        margin-top: 20px;
+        padding: 0 15px;
+    }
+
     .grille_img {
-        grid-template-columns: 1fr; 
-        padding: 20px;
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
         gap: 20px;
+        padding: 20px;
+        width: 100%;
+        margin: 0;
+        box-sizing: border-box;
+        grid-template-columns: none;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: var(--couleur-principale) var(--couleur-fond-page);
+    }
+
+    .grille_img::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .grille_img::-webkit-scrollbar-track {
+        background: var(--couleur-fond-page);
+        border-radius: 4px;
+    }
+
+    .grille_img::-webkit-scrollbar-thumb {
+        background: var(--couleur-principale);
+        border-radius: 4px;
+    }
+
+    .img_modele {
+        min-width: 100%;
+        scroll-snap-align: center;
+        padding: 15px;
+        flex-shrink: 0;
+    }
+
+    .img_modele img {
+        height: 200px;
+    }
+
+    .info_modele h3 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.3rem;
+        margin-top: 15px;
+    }
+
+    .grille_img {
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .img_modele {
+        padding: 12px;
+    }
+
+    .img_modele img {
+        height: 200px;
+    }
+
+    .info_modele h3 {
+        font-size: 1.1rem;
+    }
+
+    .listes_etapes h4 {
+        font-size: 0.95rem;
+    }
+
+    .liste_etapes li {
+        font-size: 0.85rem;
+        padding: 8px 6px;
     }
 }

@@ -1,11 +1,13 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
 
 export default function AjoutArtisan() {
-    const [idSelectionne, setIdSelectionne] = useState("") 
+    const searchParams = useSearchParams();
+    const [idSelectionne, setIdSelectionne] = useState(searchParams.get('id') || "") 
     const [nom, setNom] = useState('')
     const [prenom, setPrenom] = useState('')
     const [adresse, setAdresse] = useState('')
@@ -139,41 +141,57 @@ export default function AjoutArtisan() {
     }
 
     return (
-        <div className="bulle">
-            <h1>Gestion des Artisans</h1>
-            <form>
-                <label>Sélectionner un artisan (ou Nouveau) :</label>
-                <select className="ArtisantListe" value={idSelectionne} onChange={Selectionner}>
-                    <option value="">-- Créer un Nouveau Artisan --</option>
-                    {listeArti.map((arti) => (
-                        <option key={arti.noartisan} value={arti.noartisan}>
-                            {arti.nomartisan} {arti.prenomartisan}
-                        </option>
-                    ))}
-                </select>
-                <h2>{idSelectionne ? "Modifier l'Artisan" : "Nouvel Artisan"}</h2>
-                
-                <div>
-                    <input type="text" className="nom" value={nom} onChange={(e) => setNom(e.target.value)} placeholder="Nom..." />
-                    <input type="text" className="prenom" value={prenom} onChange={(e) => setPrenom(e.target.value)} placeholder="Prénom..." />
-                    <input type="text" className="adresse" value={adresse} onChange={(e) => setAdresse(e.target.value)} placeholder="Adresse..." />
-                    <input type="text" className="cp" value={cp} onChange={(e) => setCp(e.target.value)} placeholder="Code Postal..." />
-                    <input type="text" className="ville" value={ville} onChange={(e) => setVille(e.target.value)} placeholder="Ville..." />
+        <>
+            <div className="bulle">
+                <h1>Gestion des Artisans</h1>
+                <form>
+                    <label>Sélectionner un artisan (ou Nouveau) :</label>
+                    <select value={idSelectionne} onChange={Selectionner}>
+                        <option value="">-- Créer un Nouveau Artisan --</option>
+                        {listeArti.map((arti) => (
+                            <option key={arti.noartisan} value={arti.noartisan}>
+                                {arti.nomartisan} {arti.prenomartisan}
+                            </option>
+                        ))}
+                    </select>
+                    <h2>{idSelectionne ? "Modifier l'Artisan" : "Nouvel Artisan"}</h2>
+                    
+                    <label>Nom :</label>
+                    <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} placeholder="Nom..." />
+                    
+                    <label>Prénom :</label>
+                    <input type="text" value={prenom} onChange={(e) => setPrenom(e.target.value)} placeholder="Prénom..." />
+                    
+                    <label>Adresse :</label>
+                    <input type="text" value={adresse} onChange={(e) => setAdresse(e.target.value)} placeholder="Adresse..." />
+                    
+                    <label>Code Postal :</label>
+                    <input type="text" value={cp} onChange={(e) => setCp(e.target.value)} placeholder="Code Postal..." />
+                    
+                    <label>Ville :</label>
+                    <input type="text" value={ville} onChange={(e) => setVille(e.target.value)} placeholder="Ville..." />
                     
                     <label>Qualifications :</label>
-                    <div>
+                    <div className="etapes-container">
                         {toutesLesEtapes.map((etape) => (
-                            <div key={etape.noetape}>
-                                <input type="checkbox" id={`etape-${etape.noetape}`} value={etape.noetape} checked={etapesSelectionnees.includes(etape.noetape)} onChange={() => caseCocher(etape.noetape)}/>
-                                <label>{etape.nometape}</label>
+                            <div key={etape.noetape} className="etape-item" onClick={() => caseCocher(etape.noetape)} style={{cursor: 'pointer'}}>
+                                <input type="checkbox" id={`etape-${etape.noetape}`} value={etape.noetape} checked={etapesSelectionnees.includes(etape.noetape)} readOnly style={{pointerEvents: 'none'}}/>
+                                <span style={{marginLeft: '10px'}}>{etape.nometape}</span>
                             </div>
                         ))}
                     </div>
-                    <button type="button" onClick={validerForm}> 
-                        {idSelectionne ? "Enregistrer les modifications" : "Valider la création"}
-                    </button>
-                </div>
-            </form>
-        </div>
+                    
+                    <div className="form-buttons">
+                        <button className="but" type="button" onClick={validerForm}> 
+                            {idSelectionne ? "Enregistrer" : "Valider"}
+                        </button>
+                        <button className="but" type="button" onClick={() => router.back()}> 
+                            Annuler
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <Footer />
+        </>
     )
 }

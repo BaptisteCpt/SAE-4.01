@@ -186,7 +186,7 @@ export default function Suivi() {
 
                         <div>
                             <label>
-                                Artisan : {etape.nomartisan ? `${etape.nomartisan} ${etape.prenomartisan}` : <button onClick={()=> redirect(etape.id,etape.idchantier)}>Affecter</button>}
+                                Artisan : <br/> {etape.nomartisan ? `${etape.nomartisan} ${etape.prenomartisan}` : <button onClick={()=> redirect(etape.id,etape.idchantier)}>Affecter</button>}
                             </label>
                         </div>
                     </div>

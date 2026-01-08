@@ -179,10 +179,11 @@
      RESPONSIVE - TABLETTES ET MOBILES
      ============================================ */
   
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .BulleDuFormulaire {
+      width: 95%;
       padding: 30px 20px;
-      margin: 20px;
+      margin: 20px auto;
       border-radius: 10px;
     }
   
@@ -214,5 +215,45 @@
     .BulleDuFormulaire select {
       padding: 11px 12px;
       font-size: 14px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .BulleDuFormulaire {
+      width: 98%;
+      padding: 20px 15px;
+      margin: 15px auto;
+    }
+  
+    .BulleDuFormulaire h1 {
+      font-size: 22px;
+    }
+  
+    .BulleDuFormulaire p {
+      font-size: 11px;
+      margin-bottom: 20px;
+    }
+
+    .BulleDuFormulaire label {
+      font-size: 10px;
+    }
+
+    .BulleDuFormulaire input[type="text"],
+    .BulleDuFormulaire input[type="date"],
+    .BulleDuFormulaire select {
+      padding: 10px;
+      font-size: 13px;
+    }
+
+    .BulleDuFormulaire button {
+      padding: 14px;
+      font-size: 14px;
+      width: 100%;
+    }
+
+    .liste_client {
+      width: 100%;
+      padding: 10px;
+      font-size: 13px;
     }
   }

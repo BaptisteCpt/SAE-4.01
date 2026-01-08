@@ -4,7 +4,7 @@
 
 .bulle_accueil {
     background-color: var(--couleur-fond-page);
-    min-height: 100vh;
+    min-height: 80vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: white;
     padding-top: 20px; /* Un peu d'espace en haut */
@@ -74,9 +74,15 @@ img {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .bulle_accueil {
+        min-height: auto;
+        padding-bottom: 20px;
+    }
+
     h1 {
         font-size: 1.8rem;
         margin-bottom: 20px;
+        padding: 0 15px;
     }
 
     .boutons_accueil {
@@ -90,5 +96,44 @@ img {
         height: 180px;
         width: auto;
     }
+
+    .but {
+        width: 90%;
+        max-width: 300px;
+    }
 }
 
+@media (max-width: 480px) {
+    .bulle_accueil {
+        padding-top: 15px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        padding: 0 10px;
+    }
+
+    .boutons_accueil {
+        gap: 30px;
+        padding: 20px 10px 30px 10px;
+        min-height: auto;
+    }
+
+    .bloc-accueil {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    img {
+        height: 150px;
+        width: auto;
+    }
+
+    .but {
+        font-size: 0.95rem;
+        padding: 10px 18px;
+        width: 100%;
+        max-width: 250px;
+    }
+}

@@ -44,9 +44,14 @@ h1 {
 .img_modele img {
     width: 100%;
     height: 200px;
-    object-fit: fill; /* Note: object-fit: cover est souvent plus joli pour éviter de déformer l'image */
+    object-fit: cover;
     border-radius: 10px;
     margin-bottom: 15px;
+    display: block;
+}
+
+.info_modele {
+    padding: 0;
 }
 
 .info_modele h3 {
@@ -55,12 +60,18 @@ h1 {
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
     margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.info_modele p {
+    color: #2c3e50;
 }
 
 .listes_etapes h4 {
-    color: #555;
+    color: #2c3e50;
     font-size: 1.05rem;
     margin-bottom: 8px;
+    font-weight: 600;
 }
 
 .liste_etapes {
@@ -72,7 +83,7 @@ h1 {
 .liste_etapes li {
     padding: 10px 8px;
     border-bottom: 1px solid #eee;
-    color: #666;
+    color: #2c3e50;
     font-size: 0.95rem;
     display: flex;
     justify-content: space-between;
@@ -89,31 +100,95 @@ h1 {
 
 .duree_etape {
     font-size: 0.85rem;
-    color: #777;
+    color: #2c3e50;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        padding: 0;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        margin-top: 20px;
+        padding: 0 15px;
+    }
+
     .grille_img {
         display: flex;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         gap: 20px;
-        padding-bottom: 20px;
+        padding: 20px;
         width: 100%;
         margin: 0;
-        padding: 20px;
         box-sizing: border-box;
-        grid-template-columns: none; /* Reset grid */
+        grid-template-columns: none;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #f39c12 #2c3e50;
+    }
+
+    .grille_img::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .grille_img::-webkit-scrollbar-track {
+        background: #2c3e50;
+        border-radius: 4px;
+    }
+
+    .grille_img::-webkit-scrollbar-thumb {
+        background: #f39c12;
+        border-radius: 4px;
     }
 
     .img_modele {
         min-width: 100%;
         scroll-snap-align: center;
         padding: 15px;
+        flex-shrink: 0;
     }
 
+    .img_modele img {
+        height: 200px;
+    }
+
+    .info_modele h3 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
     h1 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        margin-top: 15px;
+    }
+
+    .grille_img {
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .img_modele {
+        padding: 12px;
+    }
+
+    .img_modele img {
+        height: 200px;
+    }
+
+    .info_modele h3 {
+        font-size: 1.1rem;
+    }
+
+    .listes_etapes h4 {
+        font-size: 0.95rem;
+    }
+
+    .liste_etapes li {
+        font-size: 0.85rem;
+        padding: 8px 6px;
     }
 }

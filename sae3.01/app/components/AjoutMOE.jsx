@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
 
 export default function AjoutMoe() {
 
@@ -39,7 +40,7 @@ export default function AjoutMoe() {
             if (res.ok) {
                 await Swal.fire({
                     title: 'Succès !',
-                    text: "Le Maître d'Oeuvre a été ajouté avec succès.",
+                    text: "Le maître d'œuvre a été ajouté avec succès.",
                     icon: 'success',
                     confirmButtonText: 'Super !'
                 });
@@ -48,7 +49,7 @@ export default function AjoutMoe() {
                 const info = await res.json();
                 Swal.fire({
                     title: 'Erreur',
-                    text: info.error || "Echec de l'ajout du Maitre d'oeuvre",
+                    text: info.error || "Échec de l'ajout du maître d'œuvre",
                     icon: 'error',
                     confirmButtonText: 'Fermer'
                 });
@@ -66,18 +67,25 @@ export default function AjoutMoe() {
     }
     
     return (
-        <div className="bulle">
-            <h1>Ajouter un Maitre d'Oeuvre</h1>
+        <>
+            <div className="bulle">
+                <h1>Ajouter un Maître d'Œuvre</h1>
 
-            <form>
-                <label>Nouveau Maitre d'oeuvre :</label>
-                <input type="text" className="nom" value={nom} onChange={(e) => setNom(e.target.value)} placeholder="Nom..." />
-                
-                <input type="text" className="prenom" placeholder="Prénom..." value={prenom} onChange={(e) => setPrenom(e.target.value)} />
-                
-                <button type="button" onClick={validerForm}>Valider</button>
-                {error && <p>{error}</p>}
-            </form>
-        </div>
+                <form>
+                    <label>Nom :</label>
+                    <input type="text" className="nom" value={nom} onChange={(e) => setNom(e.target.value)} placeholder="Nom..." />
+                    
+                    <label>Prénom :</label>
+                    <input type="text" className="prenom" placeholder="Prénom..." value={prenom} onChange={(e) => setPrenom(e.target.value)} />
+                    
+                    <div className="form-buttons">
+                        <button className="but" type="button" onClick={validerForm}>Valider</button>
+                        <button className="but" type="button" onClick={() => router.back()}>Annuler</button>
+                    </div>
+                    {error && <p>{error}</p>}
+                </form>
+            </div>
+            <Footer />
+        </>
     )
 }

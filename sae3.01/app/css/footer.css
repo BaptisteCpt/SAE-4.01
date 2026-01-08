@@ -1,11 +1,31 @@
 .foot {
     display: flex;
-    justify-content: space-around; 
+    justify-content: center; 
     align-items: center;   
-    height: 70px;
-    padding: 0 30px;
+    min-height: 70px;
+    padding: 20px 30px;
     background: white;
-    flex-wrap: wrap; /* Ensure content wraps on very small screens */
+    flex-wrap: wrap;
     color: black;
-    margin-top: auto; /* Push footer to bottom if container is flex column */
+    margin-top: auto;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* Responsive Footer */
+@media (max-width: 768px) {
+    .foot {
+        padding: 15px 20px;
+        min-height: 60px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .foot {
+        padding: 12px 15px;
+        min-height: 50px;
+        font-size: 0.85rem;
+    }
 }

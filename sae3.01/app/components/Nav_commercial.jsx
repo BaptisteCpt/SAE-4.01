@@ -1,14 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import "../css/navLogin.css";
-import {useState} from 'react' 
 import { useRouter } from 'next/navigation'
 
 
 export default function Nav() {
     const [openMenu, setOpenMenu] = useState(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [pageOne,setPage1] = useState("Chantier ⮟")
+    const [pageOne,setPage1] = useState("Chantier ⮟");
+    const [roleDisplay, setRoleDisplay] = useState("Commercial");
     const router = useRouter()
+
+    useEffect(() => {
+        const role = localStorage.getItem("role");
+        if (role) {
+            const roleMap = {
+                "admin": "Administrateur",
+                "commercial": "Commercial",
+                "maitre Oeuvre": "Maître d'œuvre"
+            };
+            setRoleDisplay(roleMap[role] || role);
+        }
+    }, []);
 
     function toggleMobileMenu() {
         setMobileMenuOpen(!mobileMenuOpen);
@@ -74,7 +86,7 @@ export default function Nav() {
         <div className="profil-div">
             <div className='profil'>
             <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
-            <input type='text' value="Commercial" className='input-role' readOnly/>
+            <input type='text' value={roleDisplay} className='input-role' readOnly/>
             </div>
             <div className='logout'>
             <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>
