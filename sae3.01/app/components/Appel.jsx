@@ -94,6 +94,7 @@ export default function Appel() {
                     <label className="full-width">
                         Chantier Choisi :
                         <select
+                            className="select-chantier"
                             value={numero_chantier}
                             onChange={e => setNumeroChantier(Number(e.target.value))}
                         >
@@ -113,7 +114,6 @@ export default function Appel() {
     
                     {numero_chantier && (
                         <>
-                            <hr />
     
                             {appels.length > 0 ? (
                                 appels.map((appel) => (
@@ -148,7 +148,9 @@ export default function Appel() {
                                                         <span className="attente">
                                                             En attente
                                                         </span>
-                                                        <button onClick={()=>(payer(appel.noappel))}>
+                                                        <button 
+                                                            className="btn-payer"
+                                                            onClick={()=>(payer(appel.noappel))}>
                                                             Marqué comme payé
                                                         </button>
                                                     </>
