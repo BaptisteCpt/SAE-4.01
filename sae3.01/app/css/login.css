@@ -4,14 +4,17 @@
 
 /* Container principal */
 .login-container {
-  min-height: 100vh;
+  flex: 1; /* Prend l'espace disponible mais ne force pas min-height: 100vh */
   /* Utilisation de la variable, ou directement #2c3e50 */
   background-color: var(--couleur-fond-page); 
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start; /* Remonte le contenu */
   padding: 2rem;
+  padding-top: 8rem; /* Ajoute un padding-top pour remonter le formulaire */
   position: relative;
+  width: 100%;
 }
 
 /* Logo container */
@@ -171,7 +174,8 @@
 
   .login-container {
     padding: 1rem;
-    justify-content: center;
+    padding-top: 4rem; /* Remonte le formulaire sur petits écrans */
+    justify-content: flex-start;
   }
 
   .login-form {
@@ -193,6 +197,7 @@
 
   .login-container {
     padding: 0.5rem;
+    padding-top: 3rem; /* Remonte le formulaire sur très petits écrans */
   }
 
   .login-form {
