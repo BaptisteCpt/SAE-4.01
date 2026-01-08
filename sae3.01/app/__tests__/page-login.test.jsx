@@ -1,16 +1,21 @@
 import '@testing-library/jest-dom'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import Page from '/app/page.jsx'
-import { useRouter } from 'next/navigation';
 
+const pushMock = jest.fn();
 
 jest.mock("next/navigation", () => ({
-    useRouter: jest.fn(),
-  }));
+  useRouter: () => ({
+    push: pushMock
+  })
+}));
 
-// Pour acceder à la route
-const pushMock = jest.fn();
-useRouter.mockReturnValue({ push: pushMock });
+import Page from '../page.jsx'
+
+beforeEach(() => {
+  Storage.prototype.setItem = jest.fn();
+  Storage.prototype.getItem = jest.fn(() => "admin");
+});
+
  
 describe('Page de connexion', () => {
 
@@ -94,29 +99,38 @@ describe('Page de connexion', () => {
 
     // Test Login et Mot de passe correct
     test("Redirige sur la page acceuil", async () => {
-        global.fetch = jest.fn(() =>
-          Promise.resolve({
-            ok: true,
-            json: () => Promise.resolve({}),
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: async () => ({
+            user: {
+              role: "admin",
+              login: "tajeri"
+            }
           })
-        );
+        })
+      );
 
-        render(<Page />);
 
-        // Rempli les champs identifiants et mot de passe avec des valeurs de tests
-        fireEvent.change(screen.getByPlaceholderText(/Votre Identifiant.../i), {
-          target: { value: "admin" },
-        });
-        fireEvent.change(screen.getByPlaceholderText(/Votre mot de passe.../i), {
-          target: { value: "admin" },
-        });
+      render(<Page />);
 
-        // Simule un click sur le bouton connexion
-        fireEvent.click(screen.getByRole("button", { name: /Connexion/i }));
-        
-        // On attends de voir si la redirection se fait
-        await waitFor(() => {
-            expect(pushMock).toHaveBeenCalledWith("/accueil_admin"); // Vérifie que la redirection a eu lieu
-          });
+      fireEvent.change(
+        screen.getByPlaceholderText(/Votre Identifiant.../i),
+        { target: { value: "tajeri" } }
+      );
+
+      fireEvent.change(
+        screen.getByPlaceholderText(/Votre mot de passe.../i),
+        { target: { value: "tajeri" } }
+      );
+
+      fireEvent.click(
+        screen.getByRole("button", { name: /Connexion/i })
+      );
+
+      await waitFor(() => {
+        expect(pushMock).toHaveBeenCalledWith("/accueil_admin");
+      });
     });
+
 })
