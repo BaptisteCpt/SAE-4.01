@@ -1,7 +1,25 @@
+:root {
+  --couleur-fond-page: #2c3e50;
+  --couleur-fond-bulle: #ffffff;
+  --couleur-fond-carte: #ffffff;
+  --couleur-texte-sombre: #2c3e50;
+  --couleur-texte-secondaire: #7f8c8d;
+  --couleur-principale: #f39c12;
+  --couleur-principale-hover: #e67e22;
+  --couleur-bordure: #d5d8dc;
+  --couleur-bordure-grise: #e0e0e0;
+  --shadow-leger: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --shadow-survol: 0 8px 30px rgba(0, 0, 0, 0.25);
+  --transition-rapide: all 0.3s ease;
+  --radius: 8px;
+}
 
 body {
-    background-color: #21272c;
+    background-color: var(--couleur-fond-page);
     color: var(--couleur-texte-sombre);
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
 }
 
 /* --- Formulaire de Filtres (Ajouté pour le style du form vide) --- */
@@ -25,7 +43,7 @@ body {
 /* --- Carte Individuelle du Modèle (.img_modele) --- */
 .img_modele {
     background-color: var(--couleur-fond-carte);
-    border-radius: 8px;
+    border-radius: var(--radius);
     overflow: hidden; 
     box-shadow: var(--shadow-leger);
     cursor: pointer;
@@ -36,6 +54,7 @@ body {
 .img_modele:hover {
     transform: translateY(-7px); 
     box-shadow: var(--shadow-survol);
+    border-color: var(--couleur-principale);
 }
 
 /* --- Image du Modèle --- */

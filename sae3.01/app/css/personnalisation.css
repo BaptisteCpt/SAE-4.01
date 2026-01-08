@@ -1,5 +1,16 @@
+:root {
+  --couleur-fond-page: #2c3e50;
+  --couleur-fond-bulle: #ffffff;
+  --couleur-texte-sombre: #2c3e50;
+  --couleur-texte-secondaire: #7f8c8d;
+  --couleur-principale: #f39c12;
+  --couleur-principale-hover: #e67e22;
+  --couleur-bordure: #d5d8dc;
+  --radius: 8px;
+}
+
 body {
-  background-color: #37485c;
+  background-color: var(--couleur-fond-page);
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
@@ -49,7 +60,8 @@ header select {
 
 header select:focus {
   outline: none;
-  border-color: #ff8c42;
+  border-color: var(--couleur-principale);
+  box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.12);
 }
 
 .card-container {
@@ -101,7 +113,8 @@ header select:focus {
 
 .left-section select:focus {
   outline: none;
-  border-color: #ff8c42;
+  border-color: var(--couleur-principale);
+  box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.12);
 }
 
 .reserve-section {
@@ -170,22 +183,22 @@ header select:focus {
 }
 
 .button-section button {
-  background-color: #ff8c42;
+  background-color: var(--couleur-principale);
   color: white;
   font-size: 16px;
   font-weight: 600;
   padding: 14px 80px;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius);
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.25);
 }
 
 .button-section button:hover {
-  background-color: #ff7a2e;
+  background-color: var(--couleur-principale-hover);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255, 140, 66, 0.5);
+  box-shadow: 0 6px 20px rgba(243, 156, 18, 0.35);
 }
 
 .button-section button:active {
@@ -293,7 +306,7 @@ footer {
 }
 
 .popup-content {
-  background-color: #ff8c42;
+  background-color: var(--couleur-principale);
   color: white;
   padding: 30px;
   border-radius: 12px;
@@ -312,10 +325,10 @@ footer {
 
 .popup-content button {
   background-color: white;
-  color: #ff8c42;
+  color: var(--couleur-principale);
   border: none;
   padding: 10px 30px;
-  border-radius: 6px;
+  border-radius: var(--radius);
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
