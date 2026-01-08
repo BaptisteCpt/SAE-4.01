@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2';
-import Footer from '../components/Footer';
 
 export default function PageModifChantier() {
     const router = useRouter();
@@ -143,7 +142,6 @@ export default function PageModifChantier() {
                     </div>
                 </form>
             </div>
-            <Footer />
         </>
     )
 }

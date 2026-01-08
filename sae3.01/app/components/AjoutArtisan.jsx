@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Swal from 'sweetalert2';
-import Footer from '../components/Footer';
 
 export default function AjoutArtisan() {
     const searchParams = useSearchParams();
@@ -191,7 +190,6 @@ export default function AjoutArtisan() {
                     </div>
                 </form>
             </div>
-            <Footer />
         </>
     )
 }

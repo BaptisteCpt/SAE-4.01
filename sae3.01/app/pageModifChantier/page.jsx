@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Modif from '../components/AdminModifChantier'
 import Nav_Admin from '../components/Nav_admin'
+import Footer from '../components/Footer'
+import Foot from "../components/Footer";
 
 export default function page() {
   const router = useRouter();
@@ -27,6 +29,7 @@ export default function page() {
     <>
       <Nav_Admin/>
       <Modif/>
+      <Footer/>
     </>
   )
 }

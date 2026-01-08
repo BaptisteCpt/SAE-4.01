@@ -56,6 +56,7 @@ export async function GET(request) {
         let dateFin = null;
         let nomA = null;
         let prenomA = null;
+        let montantMax = null;
 
         if (perso) {
           isReserved = perso.reservee;
@@ -63,6 +64,7 @@ export async function GET(request) {
           dateTheo = perso.datedebuttheorique;
           dateDebut = perso.datedebut;
           dateFin = perso.datefin;
+          montantMax = 0.30 * perso.montanttheoriquefacture;
 
           if (perso?.noartisan != null) {
             const artisan = await prisma.artisan.findUnique({
@@ -89,11 +91,11 @@ export async function GET(request) {
           idchantier: idChantier,
           id: toutesEtapes.noetape,
           nom: toutesEtapes.nometape.trim(),
-          description:
-            chantierData.modele.descriptionmodele || "Étape standard",
+          description: chantierData.modele.descriptionmodele || "Étape standard",
           reservee: isReserved,
           isReservable: toutesEtapes.reservable,
           supplements: supplements,
+          montantmax: montantMax,
           dateTheo: dateTheo,
           dateDebut: dateDebut,
           dateFin: dateFin,

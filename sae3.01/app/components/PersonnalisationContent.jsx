@@ -2,18 +2,16 @@
 import { useState, useEffect } from 'react';
 import Formsupplement from '../components/PersonnalisationSupplement';
 import '../css/personnalisation.css';
+import Swal from 'sweetalert2';
 
 export default function PersonnalisationContent() {
 
     const [numChantier, setNumChantier] = useState("");
     const [ChantierSelect, setChantierSelect] = useState([]);
-    const [etapes, setEtapes] = useState([]); 
-    const [EtapeCourrante, setEtapeCourrante] = useState(""); 
-    const [showPopup, setShowPopup] = useState(false);
-    const [popupMessage, setPopupMessage] = useState("");
+    const [etapes, setEtapes] = useState([]);
+    const [EtapeCourrante, setEtapeCourrante] = useState("");
 
-
-    useEffect(() => { // Chargement des chantier de la base et récupération de leur numéro dans la liste ChantierSelect
+    useEffect(() => { 
         async function fetchChantiers() {
           const res = await fetch('/api/numero_chantier');
           setChantierSelect(await res.json());
@@ -21,7 +19,7 @@ export default function PersonnalisationContent() {
         fetchChantiers();
       }, []);
 
-    useEffect(() => { // Chargement des étapes du chantier selectionner et récupération dans la liste etapes
+    useEffect(() => { 
         async function fetchEtapes() {
             if (!numChantier) return;
             try {
@@ -29,7 +27,7 @@ export default function PersonnalisationContent() {
                 const data = await response.json();
                 if (response.ok) {
                     setEtapes(data);
-                    if (data.length > 0) setEtapeCourrante(data[0].id); // si on a au moins une étapes on la séléctionne par défaut
+                    if (data.length > 0) setEtapeCourrante(data[0].id); 
                 } else {
                     setEtapes([]);
                 }
@@ -38,40 +36,35 @@ export default function PersonnalisationContent() {
         fetchEtapes();
     }, [numChantier]);
 
-    const EtapeSelected = etapes.find(e => e.id === EtapeCourrante) || null; // récupération de l'objet étape correspondant à l'id EtapeCourrante
+    const EtapeSelected = etapes.find(e => e.id === EtapeCourrante) || null; 
 
-    // Inversion de la valeur de reservee de notre étape lorsque l'on coche / decoche
     const ReserverEtape = () => {
         if (!EtapeSelected) return;
-
         setEtapes(etapes.map(e => e.id === EtapeSelected.id ? { ...e, reservee: !e.reservee } : e));
     };
 
-    // Ajouter un supplément ou une réduction 
     const handleAddSupplement = (name, priceStr, type) => {
-        if (!EtapeSelected) return; // on verifie qu'on a bien une étape séléctionnée
-        const newItem = { 
-            id: Date.now(), label: name, price: parseFloat(priceStr), type: type 
-        }; 
-        setEtapes(etapes.map(e =>  // On parcourt nos etapes jusqu'à tomber sur celle sélectionnée puis on lui ajoute notre supplément/réduction
+        if (!EtapeSelected) return; 
+        const newItem = {
+            id: Date.now(), label: name, price: parseFloat(priceStr), type: type
+        };
+        setEtapes(etapes.map(e =>  
             e.id === EtapeSelected.id ? { ...e, supplements: [...e.supplements, newItem] } : e
         ));
     };
 
-    // Supprimer un supplément ou une réduction
     const handleRemoveSupplement = (idToDelete) => {
-        if (!EtapeSelected) return; // on verifie qu'on a bien une étape séléctionnée
-        setEtapes(etapes.map(step => // On parcourt nos etapes jusqu'à tomber sur celle sélectionnée puis on filtre les suppléments/réductions pour enlever celui à l'id voulu
+        if (!EtapeSelected) return; 
+        setEtapes(etapes.map(step => 
             step.id === EtapeSelected.id ? { ...step, supplements: step.supplements.filter(s => s.id !== idToDelete) } : step
         ));
     };
 
-    // Sauvegarder dans la base de données
     const handleSave = async () => {
-        if (!EtapeSelected) return; // on verifie qu'on a bien une étape séléctionnée
+        if (!EtapeSelected) return; 
 
         try {
-            const response = await fetch('/api/personnalisation_chantier', { // on envoie à l'API les données requises pour sauvegarder
+            const response = await fetch('/api/personnalisation_chantier', { 
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -85,16 +78,30 @@ export default function PersonnalisationContent() {
             const result = await response.json();
 
             if (!response.ok) {
-                setPopupMessage("Erreur : " + result.error);
-                setShowPopup(true);
+                Swal.fire({
+                    title: 'Erreur',
+                    text: "Le montant est supérieur au montant maximal de Réduction/Supplément",
+                    icon: 'error',
+                    confirmButtonText: 'Fermer'
+                }).then(
+                    
+                );
             } else {
-                setPopupMessage("Modifications enregistrées !");
-                setShowPopup(true);
+                Swal.fire({
+                    title: 'Succès !',
+                    text: "Modifications enregistrées avec succès !",
+                    icon: 'success',
+                    confirmButtonText: 'Super'
+                });
             }
         } catch (error) {
             console.error(error);
-            setPopupMessage("Erreur réseau");
-            setShowPopup(true);
+            Swal.fire({
+                title: 'Erreur réseau',
+                text: "Impossible de contacter le serveur.",
+                icon: 'error',
+                confirmButtonText: 'Fermer'
+            });
         }
     };
 
@@ -117,79 +124,69 @@ export default function PersonnalisationContent() {
             </header>
 
             <div className="card-container">
-                <main>
-                    {
-                        EtapeSelected &&
-                        <>
-                        <section className="left-section">
-                            <div className="etape-select-card">
-                                <label>Étape à Modifier</label>
-                                <select 
-                                    value={EtapeCourrante} 
-                                    onChange={(e) => setEtapeCourrante(Number(e.target.value))}>
-                                    {etapes.map(etape => (
-                                        <option key={etape.id} value={etape.id}>
-                                            Numéro {etape.id} - {etape.nom}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className="reserve-card">
-                                <div className="reserve-header">
-                                    <label>Statut de réservation</label>
-                                    {EtapeSelected.isReservable ? (
-                                        <div className="reserve-toggle">
-                                            <input 
-                                                type="checkbox" 
-                                                id="reserve-checkbox"
-                                                checked={EtapeSelected.reservee}
-                                                onChange={ReserverEtape}
-                                            />
-                                            <label htmlFor="reserve-checkbox" className="toggle-label">
-                                                <span className={EtapeSelected.reservee ? 'active' : ''}>
-                                                    {EtapeSelected.reservee ? 'Réservé' : 'Disponible'}
-                                                </span>
-                                            </label>
-                                        </div>
-                                    ) : (
-                                        <div className="reserve-info">
-                                            <span className="info-badge">Non réservable</span>
-                                        </div>
-                                    )}
+            {
+                EtapeSelected &&
+                    <main>
+                            <section className="left-section">
+                                <div className="etape-select-card">
+                                    <label>Étape à Modifier</label>
+                                    <select
+                                        value={EtapeCourrante}
+                                        onChange={(e) => setEtapeCourrante(Number(e.target.value))}>
+                                        {etapes.map(etape => (
+                                            <option key={etape.id} value={etape.id}>
+                                                Numéro {etape.id} - {etape.nom}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
-                            </div>
 
-                            <Formsupplement
-                                supplements={EtapeSelected.supplements}
-                                onAdd={handleAddSupplement}
-                                onRemove={handleRemoveSupplement}
-                            />
-                        </section>
+                                <div className="reserve-card">
+                                    <div className="reserve-header">
+                                        <label>Statut de réservation</label>
+                                        {EtapeSelected.isReservable ? (
+                                            <div className="reserve-toggle">
+                                                <input
+                                                    type="checkbox"
+                                                    id="reserve-checkbox"
+                                                    checked={EtapeSelected.reservee}
+                                                    onChange={ReserverEtape}
+                                                />
+                                                <label htmlFor="reserve-checkbox" className="toggle-label">
+                                                    <span className={EtapeSelected.reservee ? 'active' : ''}>
+                                                        {EtapeSelected.reservee ? 'Réservé' : 'Disponible'}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        ) : (
+                                            <div className="reserve-info">
+                                                <span className="info-badge">Non réservable</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
 
-                        <section className="right-section">
-                            <h2>Description de ce modèle :</h2>
-                            <p>{EtapeSelected.description || "Description des éléments qui composent cette étape."}</p>
+                                <Formsupplement
+                                     montantmax={EtapeSelected.montantmax}
+                                     supplements={EtapeSelected.supplements}
+                                     onAdd={handleAddSupplement}
+                                     onRemove={handleRemoveSupplement}
+                                />
+                            </section>
+
+                            <section className="right-section">
+                                <h2>Description de ce modèle :</h2>
+                                <p>{EtapeSelected.description || "Description des éléments qui composent cette étape."}</p>
+                            </section>
+                          
+                        <section className="button-section">
+                            <button onClick={handleSave}>
+                                Valider
+                            </button>
                         </section>
-                        </>
-                    }
-                        
-                    <section className="button-section">
-                        <button onClick={handleSave}>
-                            Valider
-                        </button>
-                    </section>
-                </main>
+                    </main>
+                }
             </div>
-
-            {showPopup && (
-                <div className="popup-overlay">
-                    <div className="popup-content">
-                        <p>{popupMessage}</p>
-                        <button onClick={() => setShowPopup(false)}>OK</button>
-                    </div>
-                </div>
-            )}
         </>
     );
 }

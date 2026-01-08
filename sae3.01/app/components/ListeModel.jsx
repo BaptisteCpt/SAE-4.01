@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
-import Footer from '../components/Footer';
 
 export default function PageListeModele() {
     const [liste, setListe] = useState([])
@@ -89,7 +88,6 @@ export default function PageListeModele() {
                 </div>
                 {liste.length === 0 && <p>Aucun modèle trouvé.</p>}
             </div>
-            <Footer />
         </>
     )
 }

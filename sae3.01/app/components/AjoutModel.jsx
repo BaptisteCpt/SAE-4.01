@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
-import Footer from '../components/Footer';
 
 export default function PageAjoutModele() {
     const router = useRouter();
@@ -81,7 +80,6 @@ export default function PageAjoutModele() {
                     </div>
                 </form>
             </div>
-            <Footer />
         </>
     )
 }

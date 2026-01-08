@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Swal from 'sweetalert2';
-import Footer from '../components/Footer';
 
 export default function AjoutAdmin() {
 
@@ -82,7 +81,6 @@ export default function AjoutAdmin() {
                     </div>
                 </form>
             </div>
-            <Footer />
         </>
     )
 }
