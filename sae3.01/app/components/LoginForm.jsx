@@ -6,7 +6,11 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import '../css/login.css'
 
-/* Fonction qui construit et renvoie un formulaire, qui effectue aussi des appels au back end grace à l'Api login. */
+/**
+ * Composant de formulaire de connexion
+ * Gère l'authentification des utilisateurs et redirige selon leur rôle
+ * @returns {JSX.Element} Le formulaire de connexion
+ */
 export default function LoginForm() {
     const [login,setlogin] = useState("")
     const [error,setError] = useState()
@@ -14,7 +18,10 @@ export default function LoginForm() {
     const [success,setSuccess] = useState(false)
     const router = useRouter()
 
-    /* Vérification du login est mot de passe, taille et présence dans la base de données */
+    /**
+     * Vérifie les identifiants de connexion et authentifie l'utilisateur
+     * Enregistre le rôle et le nom dans le localStorage et redirige selon le rôle
+     */
     async function check() {
         if(login.length == 0 || mdp.length == 0)
             {
@@ -39,12 +46,14 @@ export default function LoginForm() {
 
           /* Enregistrement du role et du nom prénom de l'utilisateur */
           if (res.ok) {
+            // Stocke le rôle et le login dans le localStorage pour les utiliser dans l'application
             localStorage.setItem("role", data.user.role);
             localStorage.setItem("nom", data.user.login);
 
-            setSuccess(true);
+            setSuccess(true); // Déclenche la redirection via useEffect
           }
       
+          // Note: setSuccess(true) est appelé deux fois (doublon à corriger)
           setSuccess(true);
         } catch (err) {
           setError('Erreur serveur');

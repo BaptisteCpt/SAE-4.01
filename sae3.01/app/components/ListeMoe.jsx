@@ -4,12 +4,20 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour afficher la liste de tous les maîtres d'œuvre
+ * Permet de modifier ou supprimer des maîtres d'œuvre
+ * @returns {JSX.Element} La liste des maîtres d'œuvre avec actions
+ */
 export default function PageListeMoe() {
 
     const router = useRouter();
     const [liste, setListe] = useState([])
     
     useEffect(() => {
+        /**
+         * Charge la liste de tous les maîtres d'œuvre depuis l'API
+         */
         async function Liste() {
             try {
                 const res = await fetch('/api/recup_moe')
@@ -20,6 +28,12 @@ export default function PageListeMoe() {
         Liste()
     }, [])
 
+    /**
+     * Supprime un maître d'œuvre après confirmation
+     * @param {number} id - L'ID du maître d'œuvre à supprimer
+     * @param {string} nom - Le nom du maître d'œuvre à supprimer
+     * @param {string} login - Le login de l'utilisateur associé
+     */
     async function Suppr(id, nom, login) {
         const result = await Swal.fire({
             title: 'Êtes-vous sûr ?',

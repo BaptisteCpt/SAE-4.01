@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../lib/prisma';
 
+/**
+ * Récupère les informations d'un artisan spécifique par son numéro d'artisan
+ * @param {Request} request - La requête HTTP contenant l'ID de l'artisan
+ * @returns {Promise<NextResponse>} Réponse JSON avec les informations de l'artisan ou un message d'erreur
+ */
 export async function POST(request) {
   try {
     const { id } = await request.json();

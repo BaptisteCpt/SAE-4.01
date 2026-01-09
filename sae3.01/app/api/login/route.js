@@ -3,28 +3,56 @@ import prisma from "../../lib/prisma";
 import bcrypt from "bcrypt";
 
 /**
- * Fonction permettant de verifier si l'identifiant et le mot de passe saisie sont bons
+ * Gère les requêtes POST pour l'authentification des utilisateurs.
+ * Vérifie les identifiants (login et mot de passe) en utilisant bcrypt pour comparer le mot de passe hashé.
+ * Retourne les informations de l'utilisateur si l'authentification réussit.
+ * 
+ * @param {object} request - L'objet de la requête Next.js contenant les identifiants de connexion.
+ * @param {string} request.body.login - L'identifiant (login) de l'utilisateur.
+ * @param {string} request.body.mot_de_passe - Le mot de passe en clair de l'utilisateur (sera comparé avec le hash stocké).
+ * @param {string} [request.body.role] - Le rôle de l'utilisateur (optionnel, non utilisé actuellement).
+ * @returns {NextResponse} Une réponse JSON contenant :
+ *   - En cas de succès : { success: true, user: { id, login, role, ... } }
+ *   - En cas d'échec : { error: 'Identifiants invalides' } avec un statut HTTP 401
  */
 export async function POST(request) {
-  /*Creation de la fonction POST prenant en parametre une requette*/
-  const { login, mot_de_passe, role } =
-    await request.json(); /*Recuperation des données du body de la requette HTTP puis decoupage en 2 variables*/
+  // Récupère les données d'authentification depuis le corps de la requête
+  const { login, mot_de_passe, role } = await request.json();
+  
+  // Recherche l'utilisateur dans la base de données par son login
+  // Utilise findUnique pour une recherche optimisée par index (login est unique)
   const user = await prisma.user.findUnique({
     where: { login },
-  }); /**Requete qui tente de trouver un login correspondant a la requete dans la table USER */
+  });
 
-  const isValid = await bcrypt.compare(mot_de_passe, user.mot_de_passe); // on verifie si le mot de passe hashé est égal au mot de passe donnée
-
-  if (!user || !isValid) {
-    /*Verification : si l'utilisateur n'a pas été trouvé ou que le mot de passe de cet utilisateur est different de celui saisie*/
+  // Vérifie d'abord si l'utilisateur existe dans la base de données
+  // Si l'utilisateur n'existe pas, on retourne une erreur sans vérifier le mot de passe
+  // Cela évite de révéler si un login existe ou non (sécurité)
+  if (!user) {
     return NextResponse.json(
       { error: "Identifiants invalides" },
       { status: 401 }
-    ); /*Renvoi une reponse JSON Erreur si la condition est verifie*/
+    );
   }
 
+  // Compare le mot de passe fourni (en clair) avec le hash stocké dans la base de données
+  // bcrypt.compare() effectue une comparaison sécurisée qui résiste aux attaques par timing
+  // Retourne true si le mot de passe correspond, false sinon
+  const isValid = await bcrypt.compare(mot_de_passe, user.mot_de_passe);
+
+  // Si le mot de passe ne correspond pas, on retourne une erreur d'authentification
+  // On utilise le même message d'erreur que pour un utilisateur inexistant (sécurité)
+  if (!isValid) {
+    return NextResponse.json(
+      { error: "Identifiants invalides" },
+      { status: 401 }
+    );
+  }
+
+  // Si l'authentification réussit, retourne les informations de l'utilisateur
+  // Le client pourra utiliser ces informations pour déterminer les permissions et afficher l'interface appropriée
   return NextResponse.json({
     success: true,
     user: user,
-  }); /* Renvoi d'une reponse JSON de Succes*/
+  });
 }

@@ -8,10 +8,18 @@ import styles from '../css/pmodel.css'
 import PModel from '../components/PModel'
 import { useRouter } from 'next/navigation'
 
+/**
+ * Page de liste des modèles pour commerciaux et maîtres d'œuvre
+ * Affiche la barre de navigation appropriée selon le rôle de l'utilisateur
+ * @returns {JSX.Element} La page de liste des modèles
+ */
 export default function page() {
   const [navBar, setNavBar] = useState(null); 
   const router = useRouter();
 
+  /**
+   * Détermine quelle barre de navigation afficher selon le rôle de l'utilisateur
+   */
   useEffect(() => {
     const role = localStorage.getItem("role");
 

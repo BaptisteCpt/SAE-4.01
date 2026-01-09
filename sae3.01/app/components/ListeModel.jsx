@@ -3,10 +3,18 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour afficher la liste de tous les modèles de maison
+ * Permet de modifier ou supprimer des modèles
+ * @returns {JSX.Element} La liste des modèles avec actions
+ */
 export default function PageListeModele() {
     const [liste, setListe] = useState([])
     const router = useRouter();
     useEffect(() => {
+        /**
+         * Charge la liste de tous les modèles depuis l'API
+         */
         async function charger() {
             try {
                 const res = await fetch('/api/recup_model')
@@ -16,6 +24,11 @@ export default function PageListeModele() {
         }
         charger()
     }, [])
+    /**
+     * Supprime un modèle après confirmation
+     * @param {number} id - L'ID du modèle à supprimer
+     * @param {string} nom - Le nom du modèle à supprimer
+     */
     async function Suppr(id, nom) {
         const result = await Swal.fire({
             title: 'Êtes-vous sûr ?',

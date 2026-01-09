@@ -4,12 +4,20 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour afficher la liste de tous les administrateurs
+ * Permet de modifier ou supprimer des administrateurs
+ * @returns {JSX.Element} La liste des administrateurs avec actions
+ */
 export default function PageListAdmin() {
 
     const router = useRouter();
     const [liste, setListe] = useState([])
 
     useEffect(() => {
+        /**
+         * Charge la liste des administrateurs depuis l'API
+         */
         async function Liste() {
             try {
                 const res = await fetch('/api/recup_admin') 
@@ -20,9 +28,17 @@ export default function PageListAdmin() {
         Liste()
     }, [])
 
+    /**
+     * Supprime un administrateur après confirmation
+     * Empêche la suppression de son propre compte
+     * @param {number} id - L'ID de l'administrateur à supprimer
+     * @param {string} login - Le login de l'administrateur à supprimer
+     */
     async function Suppr(id, login) {
         const monLoginActuel = localStorage.getItem("nom");
         
+        // Vérifie si l'utilisateur essaie de supprimer son propre compte
+        // Utilise toLowerCase() pour une comparaison insensible à la casse
         if (monLoginActuel && login) {
             if (monLoginActuel.toLowerCase() === login.toLowerCase()) {
                 Swal.fire({
@@ -54,14 +70,16 @@ export default function PageListAdmin() {
                     body: JSON.stringify({ id: id }),
                 });
 
-                if (res.ok) {
-                    setListe(prevListe => prevListe.filter(user => user.id !== id));
-                    Swal.fire(
-                        'Supprimé !',
-                        'Administrateur supprimé !',
-                        'success'
-                    );
-                } else {
+                    if (res.ok) {
+                        // Met à jour la liste en retirant l'administrateur supprimé
+                        // Utilise filter pour créer un nouveau tableau sans l'élément supprimé (pattern immutabilité)
+                        setListe(prevListe => prevListe.filter(user => user.id !== id));
+                        Swal.fire(
+                            'Supprimé !',
+                            'Administrateur supprimé !',
+                            'success'
+                        );
+                    } else {
                     const info = await res.json();
                     Swal.fire(
                         'Erreur',

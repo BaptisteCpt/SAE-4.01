@@ -4,6 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour modifier un modèle de maison existant
+ * Charge les données du modèle et permet de modifier le nom, la description et les étapes
+ * @returns {JSX.Element} Le formulaire de modification de modèle
+ */
 export default function ModifModele() {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -17,11 +22,16 @@ export default function ModifModele() {
             router.push('/pageListeModel');
             return;
         }
+        /**
+         * Charge les données du modèle et des étapes depuis l'API
+         */
         async function charger() {
             try {
                 const resEtapes = await fetch('/api/recup_etapes');
                 if (resEtapes.ok) {
                     const data = await resEtapes.json();
+                    // Élimine les doublons en utilisant une Map avec noetape comme clé
+                    // Map garantit l'unicité des clés, puis on récupère les valeurs
                     const etapesunique = Array.from(new Map(data.map(item => [item.noetape, item])).values());
                     setToutesEtap(etapesunique);
                 }
@@ -44,12 +54,21 @@ export default function ModifModele() {
         charger();
     }, [idModele, router]);
 
+    /**
+     * Gère la sélection/désélection d'une étape pour le modèle
+     * @param {number} idEtape - L'ID de l'étape à cocher/décocher
+     */
     function chocher(idEtape) {
         if (etapesSelect.includes(idEtape)) {
             setEtapesSelect(prev => prev.filter(id => id !== idEtape));
         } else {
             setEtapesSelect(prev => [...prev, idEtape]);
         }}
+    /**
+     * Valide et soumet les modifications du modèle
+     * Vérifie que le nom est rempli, puis appelle l'API pour mettre à jour
+     * @param {Event} e - L'événement de soumission du formulaire
+     */
     async function validerModif(e) {
         e.preventDefault();
         if (!nom) return Swal.fire('Erreur', 'Nom obligatoire', 'warning');

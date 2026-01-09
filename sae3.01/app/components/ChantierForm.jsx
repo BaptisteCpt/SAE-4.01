@@ -4,19 +4,27 @@ import React, { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useChantier } from '../../context/ChantierContext'
 
+/**
+ * Composant pour créer un nouveau chantier
+ * Utilise le contexte ChantierContext pour récupérer les données du client
+ * @returns {JSX.Element} Le formulaire de création de chantier
+ */
 export default function ChantierForm() {
 
     const { data } = useChantier();
     const router = useRouter();
     const searchParams = useSearchParams();
+    // Récupère l'ID du client depuis l'URL (si passé en paramètre)
     const urlId = searchParams.get('client_id');
     let contextId = null;
+    // Récupère l'ID du client depuis le contexte (si disponible)
+    // Vérifie que noclient n'est pas une fonction pour éviter les erreurs
     if (data && data.noclient) {
-  
         if (typeof data.noclient !== 'function') {
             contextId = data.noclient;
         }
     }
+    // Priorise l'ID de l'URL, sinon utilise celui du contexte
     const clientID = urlId || contextId;
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
     const [maitre_doeuvre, setMaitre_oeuvre] = useState(""); 
@@ -29,9 +37,17 @@ export default function ChantierForm() {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
 
+    /**
+     * Charge les listes de maîtres d'œuvre et de modèles au chargement du composant
+     * Utilise Promise.all pour charger les deux listes en parallèle (optimisation)
+     */
     useEffect(() => {
+        /**
+         * Récupère les maîtres d'œuvre et les modèles depuis l'API en parallèle
+         */
         async function fetchData() {
             try {
+                // Charge les deux listes simultanément pour améliorer les performances
                 const [resMaitre, resModele] = await Promise.all([
                     fetch('/api/liste_maitre'),
                     fetch('/api/modele_maison')
@@ -40,6 +56,7 @@ export default function ChantierForm() {
                 const maitres = await resMaitre.json();
                 const modelesData = await resModele.json();
 
+                // Vérifie que les données sont bien des tableaux avant de les utiliser
                 if (Array.isArray(maitres)) setListeMaitre(maitres);
                 if (Array.isArray(modelesData)) setModeles(modelesData);
             } catch (err) {
@@ -51,12 +68,19 @@ export default function ChantierForm() {
 
 
  
+    /**
+     * Valide et crée le chantier dans la base de données
+     * Vérifie que tous les champs obligatoires sont remplis et qu'un client est associé
+     */
     async function finalise_chantier() {
         setError(null);
+        // Vérifie que tous les champs obligatoires sont remplis
+        // Utilise trim() pour vérifier que les chaînes ne sont pas vides (espaces uniquement)
         if (!date || !maitre_doeuvre || !modele_maison || adresse_du_chantier.trim() === "" || villechantier.trim() === "" || code_postal_chantier.trim() === "") {
             setError("Veuillez compléter tous les champs manquants");
             return;
         }
+        // Vérifie qu'un client est bien associé (depuis l'URL ou le contexte)
         if (!clientID) {
             setError("Erreur : Aucun client n'est associé. Veuillez retourner à la liste des clients.");
             return;
@@ -73,7 +97,7 @@ export default function ChantierForm() {
                     adresse_du_chantier,
                     villechantier,
                     code_postal_chantier,
-                    noclient: clientID 
+                    noclient: clientID // ID du client récupéré depuis l'URL ou le contexte
                 }),
             });
 
@@ -82,7 +106,7 @@ export default function ChantierForm() {
             if (!res.ok) {
                 setError(info.error || 'Erreur de connexion');
             } else {
-                setSuccess(true);
+                setSuccess(true); // Déclenche la redirection via useEffect
             }
         } catch (err) {
             setError('Erreur serveur');
@@ -90,6 +114,9 @@ export default function ChantierForm() {
     }
 
 
+    /**
+     * Redirige vers l'accueil commercial après la création réussie du chantier
+     */
     useEffect(() => {
         if (success) {
             router.push("/accueil_commerciale"); 

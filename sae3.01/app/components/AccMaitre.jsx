@@ -4,6 +4,11 @@ import "../css/accueil.css";
 import { useState, useEffect } from 'react' 
 import { useRouter } from 'next/navigation'
 
+/**
+ * Composant de page d'accueil pour les maîtres d'œuvre
+ * Affiche un menu avec des boutons pour accéder aux différentes sections
+ * @returns {JSX.Element} La page d'accueil maître d'œuvre
+ */
 export default function AccMaitre() { 
 
     const [nom, setNom] = useState("");
@@ -16,22 +21,37 @@ export default function AccMaitre() {
         }
     }, []); 
 
+    /**
+     * Redirige vers la page de liste des modèles
+     */
     function pageModele() {
         router.push('/page_model');
     }
 
+    /**
+     * Redirige vers la page de personnalisation des étapes
+     */
     function pagePerso(){
          router.push('/personnalisation');
     }
 
+    /**
+     * Redirige vers la page de suivi de chantier
+     */
     function pageSuivi(){
         router.push('/suivi');
     }
 
+    /**
+     * Redirige vers la page d'affectation des artisans
+     */
     function pageArti(){
          router.push('/artisan');
     }
 
+    /**
+     * Redirige vers la page d'appel de fonds
+     */
     function pageAppel(){
         router.push('/appel');
     }

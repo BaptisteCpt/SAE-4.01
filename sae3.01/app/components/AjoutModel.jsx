@@ -4,6 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour créer un nouveau modèle de maison
+ * Permet de définir le nom, la description et les étapes de construction du modèle
+ * @returns {JSX.Element} Le formulaire de création de modèle
+ */
 export default function PageAjoutModele() {
     const router = useRouter();
     const [nom, setNom] = useState("");
@@ -11,11 +16,17 @@ export default function PageAjoutModele() {
     const [toutesLesEtapes, setToutesLesEtapes] = useState([]);
     const [etapesSelectionnees, setEtapesSelectionnees] = useState([]);
     useEffect(() => {
+        /**
+         * Récupère la liste de toutes les étapes disponibles depuis l'API
+         */
         async function recupetape() {
             try {
                 const res = await fetch('/api/recup_etapes');
                 if (res.ok) {
-                    const data = await res.json();const etapesUniques = Array.from(new Map(data.map(item => [item.noetape, item])).values());
+                    const data = await res.json();
+                    // Élimine les doublons en utilisant une Map avec noetape comme clé
+                    // Map garantit l'unicité des clés, puis on récupère les valeurs
+                    const etapesUniques = Array.from(new Map(data.map(item => [item.noetape, item])).values());
                     setToutesLesEtapes(etapesUniques);
                 }
             } catch (err) {
@@ -23,6 +34,10 @@ export default function PageAjoutModele() {
         }
         recupetape();
     }, []);
+    /**
+     * Gère la sélection/désélection d'une étape pour le modèle
+     * @param {number} idEtape - L'ID de l'étape à cocher/décocher
+     */
     function cocher(idEtape) {
         if (etapesSelectionnees.includes(idEtape)) {
             setEtapesSelectionnees(prev => prev.filter(id => id !== idEtape));
@@ -30,6 +45,11 @@ export default function PageAjoutModele() {
             setEtapesSelectionnees(prev => [...prev, idEtape]);
         }
     }
+    /**
+     * Valide et soumet le formulaire de création de modèle
+     * Vérifie que le nom est rempli, puis appelle l'API pour créer le modèle
+     * @param {Event} e - L'événement de soumission du formulaire
+     */
     async function validerForm(e) {
         e.preventDefault();
         if (!nom) {

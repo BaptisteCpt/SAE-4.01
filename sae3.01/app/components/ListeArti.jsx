@@ -4,12 +4,20 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour afficher la liste de tous les artisans
+ * Permet de modifier ou supprimer des artisans
+ * @returns {JSX.Element} La liste des artisans avec actions
+ */
 export default function PageListeArti() {
 
     const router = useRouter();
     const [liste, setListe] = useState([])
 
     useEffect(() => {
+        /**
+         * Récupère la liste de tous les artisans depuis l'API
+         */
         async function recupListe() {
             try {
                 const res = await fetch('/api/recup_arti_bis')
@@ -20,6 +28,11 @@ export default function PageListeArti() {
         recupListe()
     }, [])
 
+    /**
+     * Supprime un artisan après confirmation
+     * @param {number} id - L'ID de l'artisan à supprimer
+     * @param {string} nom - Le nom de l'artisan à supprimer
+     */
     async function Suppr(id, nom) {
         const result = await Swal.fire({
             title: 'Êtes-vous sûr ?',

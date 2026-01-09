@@ -7,12 +7,20 @@ import Nav_admin from '../components/Nav_admin'
 import EmployeForm from "../components/EmployeForm"
 import Footer from "../components/Footer"
 
+/**
+ * Page de gestion des employés
+ * Vérifie que l'utilisateur est bien un administrateur avant d'afficher la page
+ * @returns {JSX.Element} La page de gestion des employés ou null si non autorisé
+ */
 export default function AccCommercial() { 
 
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false); 
   const [nom, setNom] = useState("");
 
+  /**
+   * Vérifie le rôle de l'utilisateur et autorise l'accès si c'est un administrateur
+   */
   useEffect(() => {
     const role = localStorage.getItem("role");
     const nomStocke = localStorage.getItem("nom");

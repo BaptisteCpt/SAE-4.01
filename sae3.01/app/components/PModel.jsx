@@ -8,14 +8,27 @@ const IMAGES_MAP = {
     "Premium 1": "/img/modele3.png",
 }
 
+/**
+ * Composant pour afficher le catalogue des modèles de maison
+ * Affiche chaque modèle avec son image et la liste de ses étapes de construction
+ * @returns {JSX.Element} La page de catalogue des modèles
+ */
 export default function PageModeles() {
 
     const [modeles, setModeles] = useState([]);     
     const [etapes, setEtapes] = useState([]);
 
+    /**
+     * Charge les modèles et les étapes au chargement du composant
+     * Utilise Promise.all pour charger les deux listes en parallèle (optimisation)
+     */
     useEffect(() => {
+        /**
+         * Récupère les modèles et les étapes depuis l'API en parallèle
+         */
         async function chargerDonnees() {
             try {
+                // Charge les deux listes simultanément pour améliorer les performances
                 const [resModeles, resEtapes] = await Promise.all([
                     fetch('/api/modele_maison'),
                     fetch('/api/recup_etapes')
@@ -24,6 +37,7 @@ export default function PageModeles() {
                 const dataModeles = await resModeles.json();
                 const dataEtapes = await resEtapes.json();
 
+                // Vérifie que les données sont bien des tableaux avant de les utiliser
                 if (Array.isArray(dataModeles)) setModeles(dataModeles);
                 if (Array.isArray(dataEtapes)) setEtapes(dataEtapes);
 
@@ -39,10 +53,13 @@ export default function PageModeles() {
             <h1>Catalogue Des Modèles</h1>
             <div className="grille_img">
                 {modeles.map((modele, index) => {
+                    // Nettoie le nom du modèle (supprime les espaces) ou utilise un nom par défaut
                     const nom = modele.nommodele ? modele.nommodele.trim() : "Modèle Inconnu";
+                    // Filtre les étapes pour ne garder que celles du modèle actuel
+                    // Puis les trie par numéro d'étape croissant pour un affichage ordonné
                     const steps = etapes
-                        .filter(e => e.nomodele === modele.nomodele)
-                        .sort((a, b) => a.noetape - b.noetape);
+                        .filter(e => e.nomodele === modele.nomodele) // Filtre par modèle
+                        .sort((a, b) => a.noetape - b.noetape); // Trie par numéro d'étape
 
                     return (
                         <div key={modele.nomodele || index} className="img_modele">

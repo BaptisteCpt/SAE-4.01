@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../lib/prisma'; // Fixed import
 
+/**
+ * Supprime un commercial de la base de données par son ID
+ * Vérifie d'abord que l'utilisateur existe avant de le supprimer
+ * @param {Request} request - La requête HTTP contenant l'ID du commercial à supprimer
+ * @returns {Promise<NextResponse>} Réponse JSON indiquant le succès ou l'échec de la suppression
+ */
 export async function DELETE(request) {
   try {
     const body = await request.json();

@@ -8,10 +8,18 @@ import styles from '../css/accueil.css'
 import Pclient from '../components/Pclient'
 import { useRouter } from 'next/navigation'
 
+/**
+ * Page de liste des clients pour commerciaux et administrateurs
+ * Affiche la barre de navigation appropriée selon le rôle de l'utilisateur
+ * @returns {JSX.Element} La page de liste des clients
+ */
 export default function page() {
   const [navBar, setNavBar] = useState(null); 
   const router = useRouter();
 
+  /**
+   * Détermine quelle barre de navigation afficher selon le rôle de l'utilisateur
+   */
   useEffect(() => {
     const role = localStorage.getItem("role");
 
