@@ -45,7 +45,7 @@ Ce projet a été réalisé dans le cadre de la **SAÉ 3.01 : Développement d'u
 
 4.  **Lancer le serveur :**
     ```bash
-    npm run deploy
+    npm run build
     npm run start
     ```
     Ouvrez [http://localhost:3000](http://localhost:3000) pour voir l'application.
