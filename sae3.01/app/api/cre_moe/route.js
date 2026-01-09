@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import prisma from '../../lib/prisma'; 
+import prisma from '../../lib/prisma';
+import bcrypt from "bcrypt";
 
 export async function POST(request) {
   try {
@@ -10,6 +11,10 @@ export async function POST(request) {
        return NextResponse.json({ error: "Nom et Prénom sont requis." }, { status: 400 });
     }
 
+    const pre = prenom.charAt(0).toLowerCase();
+    const nn = nom.toLowerCase();
+    let loginMoe = nn + pre;
+
     const aggs = await prisma.maitre_oeuvre.aggregate({
       _max: { nomoe: true },
     });
@@ -19,8 +24,20 @@ export async function POST(request) {
         nomoe: nextId,
         nommoe: nom,
         prenommoe: prenom,
+        login: loginMoe,
       },
     });
+
+    const hashedMdp = await bcrypt.hash(loginMoe, 12);
+
+    const nouveauMaitreUser = await prisma.user.create({
+      data: {
+        login: loginMoe,
+        mot_de_passe: hashedMdp, 
+        role: "maitre Oeuvre",
+      },
+    });
+
     return NextResponse.json(nouvMoe);
   } catch (error) {
     console.error("Erreur création MOE:", error);

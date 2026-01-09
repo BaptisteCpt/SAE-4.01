@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../lib/prisma';
+import bcrypt from "bcrypt";
 
 export async function POST(request) {
   try {
@@ -12,11 +13,11 @@ export async function POST(request) {
 
     const pre = prenom.charAt(0).toLowerCase();
     const nn = nom.toLowerCase();
-    let loginCom = nn + pre;
+    let loginAdmin = nn + pre;
 
     const utilisateurExistant = await prisma.user.findUnique({
       where: {
-        login: loginCom,
+        login: loginAdmin,
       },
     });
 
@@ -26,10 +27,12 @@ export async function POST(request) {
         );
     }
 
+    const hashedMdp = await bcrypt.hash(loginAdmin, 12);
+
     const newAdmin = await prisma.user.create({
       data: {
-        login: loginCom,
-        mot_de_passe: loginCom, 
+        login: loginAdmin,
+        mot_de_passe: hashedMdp, 
         role: "admin",
       },
     });
