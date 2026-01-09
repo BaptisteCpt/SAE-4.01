@@ -172,7 +172,7 @@ export default function AjoutArtisan() {
                 <form>
                     <label>Sélectionner un artisan (ou Nouveau) :</label>
                     <select value={idSelectionne} onChange={Selectionner}>
-                        <option value="">-- Créer un Nouveau Artisan --</option>
+                        <option value="">-- Créer un Nouvel Artisan --</option>
                         {listeArti.map((arti) => (
                             <option key={arti.noartisan} value={arti.noartisan}>
                                 {arti.nomartisan} {arti.prenomartisan}
