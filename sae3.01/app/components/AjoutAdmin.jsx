@@ -4,6 +4,11 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour ajouter un nouvel administrateur
+ * Formulaire permettant de créer un administrateur avec nom et prénom
+ * @returns {JSX.Element} Le formulaire d'ajout d'administrateur
+ */
 export default function AjoutAdmin() {
 
     const [nom, setNom] = useState('')
@@ -11,6 +16,11 @@ export default function AjoutAdmin() {
     
     const router = useRouter()
     
+    /**
+     * Valide et soumet le formulaire d'ajout d'administrateur
+     * Vérifie que tous les champs sont remplis, puis appelle l'API pour créer l'administrateur
+     * @param {Event} e - L'événement de soumission du formulaire
+     */
     async function validerForm(e) {
         e.preventDefault();
 

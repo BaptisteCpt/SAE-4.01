@@ -4,6 +4,11 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour ajouter un nouveau maître d'œuvre
+ * Formulaire permettant de créer un maître d'œuvre avec nom et prénom
+ * @returns {JSX.Element} Le formulaire d'ajout de maître d'œuvre
+ */
 export default function AjoutMoe() {
 
     const [nom, setNom] = useState('')
@@ -12,6 +17,11 @@ export default function AjoutMoe() {
     
     const router = useRouter()
     
+    /**
+     * Valide et soumet le formulaire d'ajout de maître d'œuvre
+     * Vérifie que tous les champs sont remplis, puis appelle l'API pour créer le maître d'œuvre
+     * @param {Event} e - L'événement de soumission du formulaire
+     */
     async function validerForm(e) {
         e.preventDefault();
         setError("");

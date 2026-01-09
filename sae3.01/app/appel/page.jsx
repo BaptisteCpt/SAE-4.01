@@ -6,9 +6,17 @@ import Nav from '../components/Nav_maitreO'
 import Footer from '../components/Footer'
 import { useRouter } from 'next/navigation'
 
+/**
+ * Page de gestion des appels de fonds
+ * Réservée aux maîtres d'œuvre pour gérer les appels de fonds des chantiers
+ * @returns {JSX.Element} La page d'appels de fonds
+ */
 export default function page() {
   const router = useRouter();
 
+  /**
+   * Vérifie le rôle de l'utilisateur et redirige si ce n'est pas un maître d'œuvre
+   */
   useEffect(() => {
     const role = localStorage.getItem("role");
     if (role !== "maitre Oeuvre") {

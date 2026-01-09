@@ -4,6 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour modifier les informations d'un maître d'œuvre
+ * Charge les données du maître d'œuvre et permet de modifier le nom et le prénom
+ * @returns {JSX.Element} Le formulaire de modification de maître d'œuvre
+ */
 export default function ModifMoe() {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -16,6 +21,9 @@ export default function ModifMoe() {
             router.push('/pageListeMoe');
             return;
         }
+        /**
+         * Charge les données du maître d'œuvre depuis l'API
+         */
         async function charger() {
             try {
                 const res = await fetch('/api/recup_un_moe', {
@@ -40,6 +48,11 @@ export default function ModifMoe() {
         charger();
     }, [idMoe, router]);
 
+    /**
+     * Valide et soumet les modifications du maître d'œuvre
+     * Vérifie que tous les champs sont remplis, puis appelle l'API pour mettre à jour
+     * @param {Event} e - L'événement de soumission du formulaire
+     */
     async function validerModif(e) {
         e.preventDefault();
         if (!nom || !prenom) {

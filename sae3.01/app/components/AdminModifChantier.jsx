@@ -4,6 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour modifier les informations d'un chantier
+ * Charge les données du chantier et permet de modifier toutes ses informations
+ * @returns {JSX.Element} Le formulaire de modification de chantier
+ */
 export default function PageModifChantier() {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -23,8 +28,18 @@ export default function PageModifChantier() {
             router.push('/pageListeChantier');
             return;
         }
+        /**
+         * Charge toutes les données nécessaires pour le formulaire de modification
+         * Effectue 4 appels API en parallèle pour optimiser les performances :
+         * - Liste des clients
+         * - Liste des modèles
+         * - Liste des maîtres d'œuvre
+         * - Données du chantier à modifier
+         */
         async function chargerDonnees() {
             try {
+                // Utilisation de Promise.all pour charger toutes les données en parallèle
+                // Cela améliore les performances en évitant d'attendre chaque requête séquentiellement
                 const [resCli, resMod, resMoe, resChantier] = await Promise.all([
                     fetch('/api/recup_client'), 
                     fetch('/api/modele_maison'), 
@@ -35,11 +50,14 @@ export default function PageModifChantier() {
                         body: JSON.stringify({ id: idChantier })
                     })
                 ]);
+                // Mise à jour des listes si les requêtes sont réussies
                 if (resCli.ok) setClients(await resCli.json());
                 if (resMod.ok) setModeles(await resMod.json());
                 if (resMoe.ok) setMoes(await resMoe.json());
+                // Remplissage du formulaire avec les données du chantier
                 if (resChantier.ok) {
                     const data = await resChantier.json();
+                    // Utilisation de || "" pour éviter les valeurs null/undefined
                     setAdresse(data.adressechantier || "");
                     setVille(data.villechantier || "");
                     setCp(data.cpchantier || "");
@@ -57,8 +75,14 @@ export default function PageModifChantier() {
         }
         chargerDonnees();
     }, [idChantier, router]);
+    /**
+     * Valide et soumet les modifications du chantier
+     * Vérifie que les champs obligatoires sont remplis, puis appelle l'API pour mettre à jour
+     * @param {Event} e - L'événement de soumission du formulaire
+     */
     async function validerModif(e) {
         e.preventDefault();
+        // Vérification des champs obligatoires (adresse, ville, CP, client)
         if (!adresse || !ville || !cp || !selectedClient) {
             Swal.fire({
                 title: 'Champs manquants',
@@ -69,6 +93,7 @@ export default function PageModifChantier() {
             return;
         }
         try {
+            // Envoi des données modifiées à l'API
             const res = await fetch('/api/maj_chantier', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -92,6 +117,7 @@ export default function PageModifChantier() {
                 });
                 router.push('/pageAdminChantier');
             } else {
+                // Récupération du message d'erreur de l'API
                 const info = await res.json();
                 Swal.fire('Erreur', info.error || "Erreur lors de la modification", 'error');
             }

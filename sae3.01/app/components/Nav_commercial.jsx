@@ -3,6 +3,11 @@ import "../css/navLogin.css";
 import { useRouter } from 'next/navigation'
 
 
+/**
+ * Composant de barre de navigation pour les commerciaux
+ * Affiche le menu de navigation avec les différentes sections accessibles
+ * @returns {JSX.Element} La barre de navigation commercial
+ */
 export default function Nav() {
     const [openMenu, setOpenMenu] = useState(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -10,48 +15,80 @@ export default function Nav() {
     const [roleDisplay, setRoleDisplay] = useState("Commercial");
     const router = useRouter()
 
+    /**
+     * Récupère le rôle de l'utilisateur depuis le localStorage et l'affiche de manière lisible
+     * Utilise un mapping pour convertir les codes de rôle en libellés français
+     */
     useEffect(() => {
         const role = localStorage.getItem("role");
         if (role) {
+            // Mapping des codes de rôle vers leurs libellés affichés
             const roleMap = {
                 "admin": "Administrateur",
                 "commercial": "Commercial",
                 "maitre Oeuvre": "Maître d'œuvre"
             };
+            // Affiche le libellé correspondant ou le code original si non trouvé
             setRoleDisplay(roleMap[role] || role);
         }
     }, []);
 
+    /**
+     * Bascule l'affichage du menu mobile (hamburger)
+     */
     function toggleMobileMenu() {
         setMobileMenuOpen(!mobileMenuOpen);
     }
 
+    /**
+     * Bascule l'affichage d'un menu déroulant spécifique
+     * Met à jour le texte du bouton avec une flèche pour indiquer l'état (ouvert/fermé)
+     * @param {string} menu - Le nom du menu à basculer
+     */
     function toggleMenu(menu) {
+        // Si le menu est déjà ouvert, on le ferme, sinon on l'ouvre
         setOpenMenu(openMenu === menu ? null : menu);
+        // Mise à jour du texte du bouton avec une flèche selon l'état
         switch(menu){
           case "Chantier" : 
+            // Change la flèche : ⮟ (bas) quand fermé, ⮝ (haut) quand ouvert
             setPage1(pageOne === "Chantier ⮟" ? "Chantier ⮝" : "Chantier ⮟")
             break;
         }
       }   
       
+      /**
+       * Déconnecte l'utilisateur en vidant le localStorage et redirige vers la page d'accueil
+       */
       async function logout() {
         localStorage.clear()
         router.push('/');
       }
       
+      /**
+       * Redirige vers la page d'accueil commercial
+       */
       async function goAcc() {
         router.push('/accueil_commerciale')
       }
 
+      /**
+       * Redirige vers la page de liste des clients
+       */
       async function goListeClient() {
         router.push('/page_client')
       }
 
+      /**
+       * Redirige vers la page de création de chantier
+       */
       async function goStartChantier() {
         router.push('/creation_de_chantier')
       }
 
+      /**
+       * Redirige vers la page de catalogue des modèles
+       */
       async function goModel() {
         router.push('/page_model')
       }

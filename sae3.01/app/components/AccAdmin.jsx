@@ -3,6 +3,11 @@ import "../css/accueil.css";
 import { useState, useEffect } from 'react' 
 import { useRouter } from 'next/navigation'
 
+/**
+ * Composant de page d'accueil pour les administrateurs
+ * Affiche un menu avec des boutons pour accéder aux différentes sections
+ * @returns {JSX.Element} La page d'accueil administrateur
+ */
 export default function AccAdmin() { 
 
     const [nom, setNom] = useState("");
@@ -15,14 +20,23 @@ export default function AccAdmin() {
         }
     }, []); 
 
+    /**
+     * Redirige vers la page de liste des employés
+     */
     function pageEmploye(){
         router.push('/pageListeEmp')
     }
 
+    /**
+     * Redirige vers la page de gestion des chantiers
+     */
     function pageChantier(){
         router.push('/pageAdminChantier')
     }
 
+    /**
+     * Redirige vers la page de liste des modèles
+     */
     function pageModel(){
         router.push('/pageListeModel')
     }

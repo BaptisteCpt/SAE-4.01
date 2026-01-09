@@ -3,11 +3,19 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
+/**
+ * Composant de page d'accueil pour la gestion des employés
+ * Affiche un menu avec des boutons pour accéder à la gestion de chaque type d'employé
+ * @returns {JSX.Element} La page d'accueil de gestion des employés
+ */
 export default function EmployeForm() {
 
     const [nom, setNom] = useState("");
     const router = useRouter();
 
+    /**
+     * Récupère le nom de l'utilisateur depuis le localStorage au chargement du composant
+     */
     useEffect(() => {
         const nomStocke = localStorage.getItem("nom");
         if (nomStocke) {
@@ -15,18 +23,30 @@ export default function EmployeForm() {
         }
     }, []); 
 
+    /**
+     * Redirige vers la page de gestion des commerciaux
+     */
     function pageCom(){
         router.push('/pageCommerciale')
     }
 
+    /**
+     * Redirige vers la page de gestion des artisans
+     */
     function pageArti(){
         router.push('/pageArtisant')
     }
 
+    /**
+     * Redirige vers la page de gestion des maîtres d'œuvre
+     */
     function pageMOE(){
         router.push('/pageMoe')
     }
 
+    /**
+     * Redirige vers la page de gestion des administrateurs
+     */
     function pageAdmin(){
         router.push('/pageAdmin')
     }

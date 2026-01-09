@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../lib/prisma'; 
 
+/**
+ * Assigne un artisan à une étape d'un chantier
+ * Vérifie que l'étape existe et qu'elle est associée au chantier avant de mettre à jour
+ * @param {Request} request - La requête HTTP contenant l'ID du chantier, l'ID de l'étape et le numéro d'artisan
+ * @returns {Promise<NextResponse>} Réponse JSON indiquant le succès de la sauvegarde ou un message d'erreur
+ */
 export async function POST(request) {
     try {
         const body = await request.json();
@@ -22,19 +28,23 @@ export async function POST(request) {
         const idChantier = parseInt(chantierId);
         const idEtape = parseInt(etapeId);
 
-        // On vérifie qu'il existe l'étape donnée dans le chantier donné
+        // Vérifie que l'étape est bien associée au chantier avant de pouvoir assigner un artisan
         const existing = await prisma.etape_chantier.findFirst({
             where: { nochantier: idChantier, noetape: idEtape }
         });
 
-        if (existing) { // Si elle existe on la modifie avec nos données
+        if (existing) {
+            // Si l'étape existe dans le chantier, on met à jour l'artisan assigné
+            // Utilise updateMany pour mettre à jour toutes les lignes correspondantes
             await prisma.etape_chantier.updateMany({
                 where: { nochantier: idChantier, noetape: idEtape },
                 data: {
+                    // Convertit l'ID de l'artisan en nombre (peut être null si aucun artisan n'est assigné)
                     noartisan: parseInt(noartisan)
                 }
             });
         } else {
+            // L'étape doit d'abord être créée dans le chantier avant de pouvoir assigner un artisan
             return NextResponse.json(
                 { error: "étape non existante dans ce chantier" },
                 { status: 500 }

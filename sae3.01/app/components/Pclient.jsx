@@ -4,18 +4,30 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import '../css/pclient.css' 
 
+/**
+ * Composant pour afficher la liste des clients
+ * Permet de sélectionner un client et de créer un chantier pour ce client
+ * @returns {JSX.Element} La page de liste des clients
+ */
 export default function PageClients() { 
     const [clients, setClients] = useState([]); 
     const [idclient, setIdclient] = useState(null);
     
     const router = useRouter();
 
+    /**
+     * Charge la liste de tous les clients au chargement du composant
+     */
     useEffect(() => {
+        /**
+         * Récupère la liste de tous les clients depuis l'API
+         */
         async function fetchClients() {
             try {
                 const res = await fetch('/api/recup_client', { method: 'GET' });
                 if (res.ok) {
                     const data = await res.json();
+                    // Vérifie que la réponse est bien un tableau avant de l'utiliser
                     if (Array.isArray(data)) {
                         setClients(data);
                     }
@@ -29,17 +41,28 @@ export default function PageClients() {
         fetchClients();
     }, []);
 
+    /**
+     * Gère le clic sur une ligne du tableau pour sélectionner/désélectionner un client
+     * Si le client est déjà sélectionné, on le désélectionne (toggle)
+     * @param {number} id - L'ID du client cliqué
+     */
     const handleRowClick = (id) => {
+        // Si le client est déjà sélectionné, on le désélectionne
         if (idclient === id) {
             setIdclient(null);
         } else {
+            // Sinon, on sélectionne le nouveau client
             setIdclient(id);
         }
     };
 
-
+    /**
+     * Redirige vers la page de création de chantier avec l'ID du client sélectionné
+     * Passe l'ID du client en paramètre d'URL pour l'utiliser dans le formulaire suivant
+     */
     const GoCreaChantier = () => {
         if (idclient) {
+            // Passe l'ID du client en paramètre d'URL
             router.push(`/creation_de_chantier/crea_chantier?client_id=${idclient}`);
         }
     };

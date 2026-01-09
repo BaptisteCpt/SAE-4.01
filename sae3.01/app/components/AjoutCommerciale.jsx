@@ -4,6 +4,11 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour ajouter un nouveau commercial
+ * Formulaire permettant de créer un commercial avec nom et prénom
+ * @returns {JSX.Element} Le formulaire d'ajout de commercial
+ */
 export default function AjoutCommerciale() {
 
     const [nomCom, setNom] = useState('')
@@ -11,6 +16,11 @@ export default function AjoutCommerciale() {
     
     const router = useRouter()
     
+    /**
+     * Valide et soumet le formulaire d'ajout de commercial
+     * Vérifie que tous les champs sont remplis, puis appelle l'API pour créer le commercial
+     * @param {Event} e - L'événement de soumission du formulaire
+     */
     async function validerForm(e) {
         e.preventDefault();
 

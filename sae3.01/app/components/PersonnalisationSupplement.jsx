@@ -2,19 +2,42 @@
 import { useState } from 'react';
 
 
+/**
+ * Composant pour gérer les suppléments et réductions d'une étape
+ * Affiche la liste des suppléments/réductions et permet d'en ajouter/supprimer
+ * @param {number} montantmax - Le montant maximum autorisé pour les suppléments/réductions
+ * @param {Array} supplements - La liste des suppléments/réductions actuels
+ * @param {Function} onAdd - Fonction callback pour ajouter un supplément/réduction
+ * @param {Function} onRemove - Fonction callback pour supprimer un supplément/réduction
+ * @returns {JSX.Element} Le formulaire de gestion des suppléments/réductions
+ */
 export default function PersonnalisationSupplement({ montantmax, supplements, onAdd, onRemove }) {
     const [name, setName] = useState('');
     const [prix, setPrix] = useState('');
 
+    /**
+     * Calcule le total des suppléments/réductions
+     * Additionne les suppléments (type 'plus') et soustrait les réductions (type 'moins')
+     * Le résultat peut être positif (supplément net) ou négatif (réduction nette)
+     */
     const total = supplements.reduce((acc, item) => {
+        // Si c'est un supplément, on additionne, sinon on soustrait
         return item.type === 'plus' ? acc + item.price : acc - item.price;
-    }, 0);
+    }, 0); // Valeur initiale à 0
 
-    const handleClickAdd = (e, type) => { // Fonction appelé au click d'un bouton (ajouter / enlever) qui vérifie si un prix et un nom on était entré
-                                          // Si oui alors elle appel la fonction handleAddSupplement du composant PersonnalisationContent
+    /**
+     * Gère l'ajout d'un supplément ou d'une réduction
+     * Vérifie que le nom et le prix sont remplis avant d'appeler la fonction parent
+     * @param {Event} e - L'événement de clic sur le bouton
+     * @param {string} type - Le type : 'plus' pour supplément, 'moins' pour réduction
+     */
+    const handleClickAdd = (e, type) => {
         e.preventDefault();
+        // Vérifie que les champs sont remplis avant d'ajouter
         if (name && prix) {
+            // Appelle la fonction parent pour ajouter le supplément/réduction
             onAdd(name, prix, type);
+            // Réinitialise les champs du formulaire après l'ajout
             setName('');
             setPrix('');
         }

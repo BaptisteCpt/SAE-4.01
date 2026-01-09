@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../lib/prisma';
 
+/**
+ * Récupère les informations d'un maître d'œuvre spécifique par son numéro
+ * @param {Request} request - La requête HTTP contenant l'ID du maître d'œuvre
+ * @returns {Promise<NextResponse>} Réponse JSON avec les informations du maître d'œuvre ou un message d'erreur
+ */
 export async function POST(request) {
   try {
     const { id } = await request.json();

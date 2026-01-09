@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../lib/prisma';
 
+/**
+ * Récupère la liste de tous les appels d'offres associés à un chantier spécifique
+ * @param {Request} request - La requête HTTP contenant le numéro de chantier en paramètre de requête
+ * @returns {Promise<NextResponse>} Réponse JSON contenant la liste des appels d'offres du chantier ou un message d'erreur
+ */
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
     const idChantier = parseInt(searchParams.get('chantier'));

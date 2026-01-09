@@ -5,6 +5,11 @@ import '../css/appel.css';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 
+/**
+ * Composant pour gérer les appels de fonds d'un chantier
+ * Permet de visualiser et de marquer comme payés les appels de fonds
+ * @returns {JSX.Element} La page de gestion des appels de fonds
+ */
 export default function Appel() {
 
     const [appels, setAppels] = useState([]);
@@ -13,14 +18,23 @@ export default function Appel() {
     const router = useRouter();
 
 
-    useEffect(() => { // Chargement des chantier et récupérations dans la liste chantiers
-
+    /**
+     * Charge la liste des chantiers au chargement du composant
+     * Vérifie aussi si un chantier a été sauvegardé dans le localStorage (après rechargement)
+     */
+    useEffect(() => {
+        // Récupère un chantier sauvegardé depuis une navigation précédente
+        // Permet de restaurer la sélection après un rechargement de page
         const reloadChantier = localStorage.getItem('chantier');
         if (reloadChantier) {
             setNumeroChantier(reloadChantier);
+            // Supprime la valeur du localStorage après l'avoir utilisée (nettoyage)
             localStorage.removeItem('chantier');
         }
 
+        /**
+         * Récupère la liste de tous les chantiers depuis l'API
+         */
         async function fetchChantier(){
             try {
                 const res =  await fetch('/api/numero_chantier');
@@ -33,10 +47,18 @@ export default function Appel() {
         fetchChantier();
     }, []);
 
+    /**
+     * Charge les appels de fonds du chantier sélectionné
+     * Se déclenche automatiquement quand un chantier est sélectionné
+     */
     useEffect(()=>{
-        if (!numero_chantier) return;
+        if (!numero_chantier) return; // Ne fait rien si aucun chantier n'est sélectionné
+        /**
+         * Récupère les appels de fonds du chantier sélectionné depuis l'API
+         */
         async function fetchAppel(){
             try {
+                // Utilise un paramètre de requête pour filtrer par chantier
                 const res =  await fetch(`/api/appels?chantier=${numero_chantier}`);
                 const data = await res.json();
                 setAppels(data);
@@ -45,43 +67,50 @@ export default function Appel() {
             }
         }
         fetchAppel();
-    }, [numero_chantier]);
+    }, [numero_chantier]); // Se déclenche à chaque changement de numero_chantier
 
+    /**
+     * Marque un appel de fonds comme payé en enregistrant la date de règlement
+     * @param {number} noappel - Le numéro de l'appel à marquer comme payé
+     */
     const payer = async (noappel) => {
+        // Utilise la date actuelle comme date de règlement
         const aujourdhui = new Date();
         try {
-                    const response = await fetch('/api/sauv_appel', { // on envoie à l'API les données requises pour sauvegarder
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chantierId: numero_chantier,
-                            noappel: noappel,
-                            date: aujourdhui
-                        })
-                    });
-        
-                    const result = await response.json();
-        
-                    if (!response.ok) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oups...',
-                            text: result.error,
-                            confirmButtonText: 'OK'
-                        })
-                    } else {
-                        Swal.fire({
-                                    icon: 'success',
-                                    title: 'Réussi',
-                                    text: "Appel payé",
-                                    confirmButtonText: 'OK'
-                        }).then(() => {
-                            localStorage.setItem("chantier",numero_chantier);
-                            window.location.reload();
-                        });
-                    }
-                } catch (error) {
-                    console.error(error);
+            const response = await fetch('/api/sauv_appel', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chantierId: numero_chantier,
+                    noappel: noappel,
+                    date: aujourdhui // Date de règlement = date actuelle
+                })
+            });
+    
+            const result = await response.json();
+    
+            if (!response.ok) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oups...',
+                    text: result.error,
+                    confirmButtonText: 'OK'
+                })
+            } else {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Réussi',
+                    text: "Appel payé",
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    // Sauvegarde le chantier dans le localStorage pour le restaurer après rechargement
+                    localStorage.setItem("chantier",numero_chantier);
+                    // Recharge la page pour afficher la date de règlement mise à jour
+                    window.location.reload();
+                });
+            }
+        } catch (error) {
+            console.error(error);
         }        
     }
 

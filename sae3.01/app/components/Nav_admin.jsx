@@ -3,6 +3,11 @@ import "../css/navLogin.css";
 import { useRouter } from 'next/navigation'
 
 
+/**
+ * Composant de barre de navigation pour les administrateurs
+ * Affiche le menu de navigation avec les différentes sections accessibles
+ * @returns {JSX.Element} La barre de navigation administrateur
+ */
 export default function Nav() {
     const [openMenu, setOpenMenu] = useState(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -22,10 +27,17 @@ export default function Nav() {
         }
     }, []);
 
+    /**
+     * Bascule l'affichage du menu mobile
+     */
     function toggleMobileMenu() {
         setMobileMenuOpen(!mobileMenuOpen);
     }
 
+    /**
+     * Bascule l'affichage d'un menu déroulant spécifique
+     * @param {string} menu - Le nom du menu à basculer
+     */
     function toggleMenu(menu) {
         if (openMenu === menu) {
             setOpenMenu(null);
@@ -36,11 +48,17 @@ export default function Nav() {
         }
     }   
       
+    /**
+     * Déconnecte l'utilisateur en vidant le localStorage et redirige vers la page d'accueil
+     */
     async function logout() {
         localStorage.clear()
         router.push('/');
     }
 
+    /**
+     * Redirige vers la page d'accueil administrateur
+     */
     function goAccAdmin() {
         router.push('/accueil_admin');
     }

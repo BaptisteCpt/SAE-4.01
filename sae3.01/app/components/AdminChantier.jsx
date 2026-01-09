@@ -4,12 +4,20 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour afficher la liste de tous les chantiers
+ * Permet de modifier ou supprimer des chantiers
+ * @returns {JSX.Element} La liste des chantiers avec actions
+ */
 export default function PageListeChantier() {
 
     const [liste, setListe] = useState([]);
     const router = useRouter();
 
     useEffect(() => {
+        /**
+         * Récupère la liste de tous les chantiers depuis l'API
+         */
         async function recupChantier() {
             try {
                 const res = await fetch('/api/recup_chantier');
@@ -20,6 +28,10 @@ export default function PageListeChantier() {
         recupChantier();
     }, []);
 
+    /**
+     * Supprime un chantier après confirmation
+     * @param {number} id - L'ID du chantier à supprimer
+     */
     async function Suppr(id) {
         const result = await Swal.fire({
             title: 'Êtes-vous sûr ?',
@@ -53,10 +65,19 @@ export default function PageListeChantier() {
         }
     }
 
+    /**
+     * Redirige vers la page de modification d'un chantier
+     * @param {number} id - L'ID du chantier à modifier
+     */
     function modif(id) {
         router.push(`/pageModifChantier?id=${id}`);
     }
 
+    /**
+     * Formate une date au format français
+     * @param {string} dateString - La date à formater
+     * @returns {string} La date formatée ou "-" si la date est vide
+     */
     function formatDate(dateString) {
         if (!dateString) return "-";
         return new Date(dateString).toLocaleDateString('fr-FR');

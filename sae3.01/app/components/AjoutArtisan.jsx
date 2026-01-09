@@ -4,6 +4,11 @@ import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour ajouter ou modifier un artisan
+ * Permet de créer un nouvel artisan ou de modifier un existant avec ses qualifications
+ * @returns {JSX.Element} Le formulaire de gestion des artisans
+ */
 export default function AjoutArtisan() {
     const searchParams = useSearchParams();
     const [idSelectionne, setIdSelectionne] = useState(searchParams.get('id') || "") 
@@ -18,6 +23,9 @@ export default function AjoutArtisan() {
     const [etapesSelectionnees, setEtapesSelectionnees] = useState([])
     const router = useRouter()
     
+    /**
+     * Récupère la liste de tous les artisans depuis l'API
+     */
     async function getArti(){
         try{
             const res = await fetch('/api/recup_arti_bis');
@@ -34,6 +42,8 @@ export default function AjoutArtisan() {
             try {
                 const res = await fetch('/api/recup_etapes');
                 const data = await res.json();
+                // Élimine les doublons en utilisant une Map avec noetape comme clé
+                // Map garantit l'unicité des clés, puis on récupère les valeurs
                 const etapesUniques = Array.from(new Map(data.map(item => [item.noetape, item])).values());
                 setToutesLesEtapes(etapesUniques);
             } catch (err) {}
@@ -41,6 +51,11 @@ export default function AjoutArtisan() {
         fetchEtapes();
     }, []);
 
+    /**
+     * Gère la sélection d'un artisan dans la liste déroulante
+     * Charge les informations de l'artisan sélectionné dans le formulaire
+     * @param {Event} e - L'événement de changement de sélection
+     */
     function Selectionner(e) {
         const id = e.target.value;
         setIdSelectionne(id);
@@ -56,6 +71,8 @@ export default function AjoutArtisan() {
                 setAdresse(artisan.adresseartisan || "");
                 setCp(artisan.cpartisan || "");
                 setVille(artisan.villeartisan || "");
+                // Extrait les IDs des étapes pour lesquelles l'artisan est qualifié
+                // Utilise map pour transformer la relation en simple ID
                 if (artisan.etre_qualifie_pour) {
                     const idsEtapes = artisan.etre_qualifie_pour.map(relation => relation.noetape);
                     setEtapesSelectionnees(idsEtapes);
@@ -66,6 +83,10 @@ export default function AjoutArtisan() {
         }
     }
 
+    /**
+     * Gère la sélection/désélection d'une étape (qualification) pour l'artisan
+     * @param {number} idEtape - L'ID de l'étape à cocher/décocher
+     */
     function caseCocher(idEtape) {
         if (etapesSelectionnees.includes(idEtape)) {
             setEtapesSelectionnees(prev => prev.filter(id => id !== idEtape));
@@ -74,6 +95,11 @@ export default function AjoutArtisan() {
         }
     }
 
+    /**
+     * Valide et soumet le formulaire d'artisan
+     * Crée un nouvel artisan ou met à jour un existant selon l'ID sélectionné
+     * @param {Event} e - L'événement de soumission du formulaire
+     */
     async function validerForm(e) {
         e.preventDefault();
 

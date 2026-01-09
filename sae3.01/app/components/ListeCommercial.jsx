@@ -4,12 +4,20 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour afficher la liste de tous les commerciaux
+ * Permet de modifier ou supprimer des commerciaux
+ * @returns {JSX.Element} La liste des commerciaux avec actions
+ */
 export default function PageListeCom() {
 
     const router = useRouter();
     const [liste, setListe] = useState([])
 
     useEffect(() => {
+        /**
+         * Récupère la liste de tous les commerciaux depuis l'API
+         */
         async function liste() {
             try {
                 const res = await fetch('/api/recup_commerciale') 
@@ -22,6 +30,11 @@ export default function PageListeCom() {
         liste()
     }, [])
 
+    /**
+     * Supprime un commercial après confirmation
+     * @param {number} id - L'ID du commercial à supprimer
+     * @param {string} nom - Le login du commercial à supprimer
+     */
     async function Suppr(id, nom) {
         const result = await Swal.fire({
             title: 'Êtes-vous sûr ?',

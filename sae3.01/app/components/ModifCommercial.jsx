@@ -4,6 +4,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour modifier les informations d'un commercial
+ * Charge les données du commercial et permet de modifier le login et le mot de passe
+ * @returns {JSX.Element} Le formulaire de modification de commercial
+ */
 export default function ModifCommercial() {
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -16,6 +21,9 @@ export default function ModifCommercial() {
             router.push('/pageListeCom');
             return;
         }
+        /**
+         * Charge les données du commercial depuis l'API
+         */
         async function charger() {
             try {
                 const res = await fetch('/api/recup_un_commercial', {
@@ -40,6 +48,11 @@ export default function ModifCommercial() {
         charger();
     }, [idCom, router]);
 
+    /**
+     * Valide et soumet les modifications du commercial
+     * Vérifie que tous les champs sont remplis, puis appelle l'API pour mettre à jour
+     * @param {Event} e - L'événement de soumission du formulaire
+     */
     async function validerModif(e) {
         e.preventDefault();
         if (!login || !mdp) {

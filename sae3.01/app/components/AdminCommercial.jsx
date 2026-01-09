@@ -4,11 +4,19 @@ import "../css/accueil.css";
 import { useState, useEffect } from 'react' 
 import { useRouter } from 'next/navigation'
 
+/**
+ * Composant de page d'accueil pour la gestion des commerciaux
+ * Affiche un menu avec des boutons pour ajouter ou lister les commerciaux
+ * @returns {JSX.Element} La page d'accueil de gestion des commerciaux
+ */
 export default function AdminCommercial() { 
 
     const [nom, setNom] = useState("");
     const router = useRouter();
 
+    /**
+     * Récupère le nom de l'utilisateur depuis le localStorage au chargement du composant
+     */
     useEffect(() => {
         const nomStocke = localStorage.getItem("nom");
         if (nomStocke) {
@@ -16,10 +24,16 @@ export default function AdminCommercial() {
         }
     }, []); 
 
+    /**
+     * Redirige vers la page d'ajout d'un nouveau commercial
+     */
     function pageAjoutCom(){
         router.push('/pageAjoutCom') 
     }
 
+    /**
+     * Redirige vers la page de liste des commerciaux
+     */
     function pageListeCom(){
         router.push('/pageListeCom')
     }

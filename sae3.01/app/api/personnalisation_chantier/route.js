@@ -1,6 +1,13 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../lib/prisma'; 
 
+/**
+ * Sauvegarde les personnalisations d'une étape d'un chantier (réservation, suppléments/réductions)
+ * Vérifie que l'étape est réservable avant de permettre la réservation
+ * Calcule le montant total des suppléments/réductions et construit une description
+ * @param {Request} request - La requête HTTP contenant l'ID du chantier, l'ID de l'étape, le statut de réservation et les suppléments
+ * @returns {Promise<NextResponse>} Réponse JSON indiquant le succès de la sauvegarde ou un message d'erreur
+ */
 export async function POST(request) {
     try {
         const body = await request.json();
@@ -32,14 +39,17 @@ export async function POST(request) {
         let totalMontant = 0;
         let description = "";
         
-        // On vérifie si on a au moins un supplément/réduction
+        // Traite les suppléments/réductions si au moins un est fourni
         if (supplements && supplements.length > 0) {
-            // Calcul du prix total pour avoir qu'une valeur si on a plusieurs suppléments/réductions
+            // Calcule le montant total net en additionnant les suppléments et soustrayant les réductions
+            // Utilise reduce pour parcourir tous les suppléments et accumuler le total
             totalMontant = supplements.reduce((acc, item) => {
+                // Si c'est un supplément (type 'plus'), on additionne, sinon on soustrait
                 return item.type === 'plus' ? acc + item.price : acc - item.price;
-            }, 0);
+            }, 0); // Valeur initiale à 0
             
-            // On construit la description en fusionnant les descriptions récupérées au cas où on a plusieurs suppléments/réductions
+            // Construit une description unique en fusionnant toutes les descriptions
+            // Utilise map pour extraire les labels, puis join pour les séparer par des virgules
             description = supplements.map(s => s.label).join(', ');
         }
 
@@ -52,16 +62,19 @@ export async function POST(request) {
             where: { nochantier: idChantier, noetape: idEtape }
         });
 
-        if (existing) { // Si elle existe on la modifie avec nos données
+        if (existing) {
+            // Si l'étape est déjà personnalisée, on met à jour ses informations
+            // Utilise updateMany pour mettre à jour toutes les lignes correspondantes
             await prisma.etape_chantier.updateMany({
                 where: { nochantier: idChantier, noetape: idEtape },
                 data: {
-                    reservee: reservee,
-                    reducsuppl: totalMontant,
-                    descriptionreducsuppl: description
+                    reservee: reservee, // Statut de réservation
+                    reducsuppl: totalMontant, // Montant total net (peut être négatif pour une réduction)
+                    descriptionreducsuppl: description // Description combinée de tous les suppléments/réductions
                 }
             });
         } else {
+            // L'étape doit d'abord être créée dans le chantier avant d'être personnalisée
             return NextResponse.json(
                 { error: "étape non existante dans ce chantier" },
                 { status: 500 }

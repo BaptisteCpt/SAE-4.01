@@ -4,6 +4,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import "../css/artisan.css";
 import Swal from 'sweetalert2';
 
+/**
+ * Composant pour affecter un artisan à une étape d'un chantier
+ * Permet de sélectionner un chantier, une étape non réservée, puis un artisan qualifié
+ * @returns {JSX.Element} Le formulaire d'affectation d'artisan
+ */
 export default function artisanForm() {
 
     const [Chantiers,setChantiers] = useState([]);
@@ -15,17 +20,26 @@ export default function artisanForm() {
     const [error,setError] = useState()
       
 
-    useEffect(() => { // Chargement des chantier et récupérations dans la liste chantiers
-
+    /**
+     * Charge la liste des chantiers au chargement du composant
+     * Vérifie aussi si un chantier et une étape ont été sauvegardés dans le localStorage
+     */
+    useEffect(() => {
+        // Récupère un chantier et une étape sauvegardés depuis une navigation précédente
+        // Permet de restaurer la sélection après un rechargement de page
         const chantierGiven = localStorage.getItem('chantier');
         const etapeGiven = localStorage.getItem('etape');
         if (chantierGiven) {
             setNumeroChantier(chantierGiven);
             setEtapeCourrante(etapeGiven);
+            // Supprime les valeurs du localStorage après les avoir utilisées (nettoyage)
             localStorage.removeItem('chantier');
             localStorage.removeItem('etape');
         }
 
+        /**
+         * Récupère la liste de tous les chantiers depuis l'API
+         */
         async function fetchChantier(){
             try {
                 const res =  await fetch('/api/numero_chantier');
@@ -38,36 +52,58 @@ export default function artisanForm() {
         fetchChantier();
     }, []);
 
-    useEffect(() => { // Chargement des étapes du chantier selectionner et récupération dans la liste etapes
+    /**
+     * Charge les étapes non réservées du chantier sélectionné
+     * Filtre pour n'afficher que les étapes disponibles (non réservées)
+     * Sélectionne automatiquement la première étape si disponible
+     */
+    useEffect(() => {
+        /**
+         * Récupère les étapes du chantier et filtre pour ne garder que celles non réservées
+         */
         async function fetchEtapes() {
-            if (!numero_chantier) return;
+            if (!numero_chantier) return; // Ne fait rien si aucun chantier n'est sélectionné
             try {
                 const response = await fetch(`/api/etapes?chantier=${numero_chantier}`);
                 const data = await response.json();
                 let datatrie;
                 if (response.ok) {
+                    // Filtre les étapes pour ne garder que celles qui ne sont pas réservées
+                    // Seules les étapes non réservées peuvent recevoir un artisan
                     datatrie = data.filter((etape) => etape.reservee == false);
                     setEtapes(datatrie);
-                    if (datatrie.length > 0) setEtapeCourrante(datatrie[0].id); // si on a au moins une étapes on la séléctionne par défaut
+                    // Sélectionne automatiquement la première étape disponible pour faciliter l'utilisation
+                    if (datatrie.length > 0) setEtapeCourrante(datatrie[0].id);
                 } else {
                     setEtapes([]);
                 }
             } catch (err) { console.error(err); }
         }
         fetchEtapes();
-    }, [numero_chantier]);
+    }, [numero_chantier]); // Se déclenche à chaque changement de numero_chantier
 
-    useEffect(() => { // Chargement des artisan qualifié pour l'étape courrante
+    /**
+     * Charge les artisans qualifiés pour l'étape sélectionnée
+     * Se déclenche automatiquement quand une étape est sélectionnée
+     * Sélectionne automatiquement le premier artisan si disponible
+     */
+    useEffect(() => {
+        /**
+         * Récupère les artisans qualifiés pour l'étape sélectionnée depuis l'API
+         */
         async function fetchartisan() {
-            if (!EtapeCourrante) return;
+            if (!EtapeCourrante) return; // Ne fait rien si aucune étape n'est sélectionnée
             try {
+                // Utilise un paramètre de requête pour filtrer par étape
                 const response = await fetch(`/api/recup_artisan?etape=${EtapeCourrante}`);
                 const data = await response.json();
                 if (response.ok) {
                     setArtisans(data);
                     if (data.length > 0){
-                        setArtisanCourrant(data[0].noartisan); // si on a au moins un artisan on le séléctionne par défaut
+                        // Sélectionne automatiquement le premier artisan pour faciliter l'utilisation
+                        setArtisanCourrant(data[0].noartisan);
                     }else{
+                        // Aucun artisan qualifié disponible pour cette étape
                         setArtisanCourrant(undefined);
                     }
                 } else {
@@ -76,21 +112,24 @@ export default function artisanForm() {
             } catch (err) { console.error(err); }
         }
         fetchartisan();
-    }, [EtapeCourrante]);
+    }, [EtapeCourrante]); // Se déclenche à chaque changement de EtapeCourrante
 
 
-    // Sauvegarder dans la base de données
+    /**
+     * Sauvegarde l'affectation de l'artisan à l'étape dans la base de données
+     * Vérifie qu'une étape est sélectionnée avant de sauvegarder
+     */
     const Sauvegarder = async () => {
-        if (!EtapeCourrante) return; // on verifie qu'on a bien une étape séléctionnée
+        if (!EtapeCourrante) return; // Vérifie qu'une étape est bien sélectionnée
 
         try {
-            const response = await fetch('/api/sauv_artisan', { // on envoie à l'API les données requises pour sauvegarder
+            const response = await fetch('/api/sauv_artisan', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     chantierId: numero_chantier,
                     etapeId: EtapeCourrante,
-                    noartisan: ArtisanCourrant
+                    noartisan: ArtisanCourrant // Peut être undefined si aucun artisan n'est disponible
                 })
             });
 
@@ -105,10 +144,10 @@ export default function artisanForm() {
                 })
             } else {
                 Swal.fire({
-                            icon: 'success',
-                            title: 'Réussi',
-                            text: "Modification Sauvegardé",
-                            confirmButtonText: 'OK'
+                    icon: 'success',
+                    title: 'Réussi',
+                    text: "Modification Sauvegardé",
+                    confirmButtonText: 'OK'
                 })
             }
         } catch (error) {
