@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../lib/prisma';
+import bcrypt from "bcrypt";
 
 /**
  * Met à jour les informations d'un commercial (login et mot de passe)
@@ -30,11 +31,13 @@ export async function PUT(request) {
       return NextResponse.json({ error: "Ce login est déjà utilisé." }, { status: 409 });
     }
 
+    const hashedMdp = await bcrypt.hash(mot_de_passe, 12);
+
     const updatedUser = await prisma.user.update({
       where: { id: Number(id) },
       data: {
         login: login,
-        mot_de_passe: mot_de_passe
+        mot_de_passe: hashedMdp
       }
     });
 
