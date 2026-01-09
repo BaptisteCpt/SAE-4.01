@@ -50,6 +50,20 @@ Ce projet a été réalisé dans le cadre de la **SAÉ 3.01 : Développement d'u
     ```
     Ouvrez [http://localhost:3000](http://localhost:3000) pour voir l'application.
 
+
+5.  **Pour se login**
+    En Commercial :
+        login: coupatb
+        mdp: coupatb
+    
+    En Maitre d'Oeuvre :
+        login: blancm
+        mdp: blancm
+    
+    En Administrateur :
+        login: admin
+        mdp: admin
+
 ##  Auteurs
 * Doisy Noa (doisyn)
 * Coupat Baptiste (coupatb)
