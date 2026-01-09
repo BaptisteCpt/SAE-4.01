@@ -41,11 +41,12 @@ Ce projet a été réalisé dans le cadre de la **SAÉ 3.01 : Développement d'u
     npm install
 
 3.  **Configuration BDD :**
-    Renommez le fichier `.env.example` en `.env.local` et renseignez vos identifiants de base de données.
+    Renseignez vos identifiants de base de données dans le .env.
 
 4.  **Lancer le serveur :**
     ```bash
-    npm run dev
+    npm run deploy
+    npm run start
     ```
     Ouvrez [http://localhost:3000](http://localhost:3000) pour voir l'application.
 
