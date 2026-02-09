@@ -1,10 +1,10 @@
-# Bâti'Parti - SAÉ 3.01
+# Bâti'Parti - SAÉ 4.01
 
 ## Description
 
 Application web de gestion de chantiers développée pour l'entreprise de construction de maisons individuelles **Bâti'Parti**.
 
-Ce projet a été réalisé dans le cadre de la **SAÉ 3.01 : Développement d'une application**. Il permet de centralisé le suivi complet d'une construction.
+Ce projet a été réalisé dans le cadre de la **SAÉ 4.01 : Développement d'une application**. Il permet de centralisé le suivi complet d'une construction.
 
 ## Information Technique
 * **Framework :** Next.js (React)
