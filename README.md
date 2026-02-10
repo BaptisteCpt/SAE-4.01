@@ -39,11 +39,17 @@ Ce projet a été réalisé dans le cadre de la **SAÉ 4.01 : Développement d'u
 2.  **Installer les dépendances :**
     ```bash
     npm install
-
+    ```
 3.  **Configuration BDD :**
-    Renseignez vos identifiants de base de données dans le .env.
+    Renseignez vos identifiants de base de données dans le .env.exemple
 
-4.  **Lancer le serveur :**
+4.  **Importer les données de votre base :**
+    ```bash
+    npx prisma db pull
+    npx prisma generate
+    ```   
+
+5.  **Lancer le serveur :**
     ```bash
     npm run build
     npm run start
@@ -51,7 +57,7 @@ Ce projet a été réalisé dans le cadre de la **SAÉ 4.01 : Développement d'u
     Ouvrez [http://localhost:3000](http://localhost:3000) pour voir l'application.
 
 
-5.  **Pour se login**
+6.  **Pour se login**
     En Commercial :
         login: coupatb
         mdp: coupatb
