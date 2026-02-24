@@ -255,17 +255,29 @@ export default function Suivi() {
 
                         <div>
                             <label>
-                                Artisan : <br/> 
-                                {etape.nomartisan ? (
-                                    <>{etape.nomartisan} {etape.prenomartisan} 
-                                    {" "}
-                                    <button onClick={() => redirect(etape.id,etape.idchantier)}>
-                                        Modifier
-                                    </button></>) 
-                                    :( 
-                                    <button onClick={()=> redirect(etape.id,etape.idchantier)}>
-                                        Affecter
-                                    </button>
+                                
+                                {etape.id !== 1 && (
+                                    <div>
+                                        <label>Artisan :</label>
+                                        <br />
+
+                                        {etape.nomartisan ? (
+                                        <>
+                                            {etape.nomartisan} {etape.prenomartisan}
+                                            <button
+                                            onClick={() => redirect(etape.id, etape.idchantier)}
+                                            >
+                                            Modifier
+                                            </button>
+                                        </>
+                                        ) : (
+                                        <button
+                                            onClick={() => redirect(etape.id, etape.idchantier)}
+                                        >
+                                            Affecter
+                                        </button>
+                                        )}
+                                    </div>
                                 )}
                             </label>
                         </div>
