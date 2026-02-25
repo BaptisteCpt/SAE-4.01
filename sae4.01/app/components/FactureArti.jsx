@@ -10,10 +10,10 @@ import Swal from "sweetalert2";
  */
 export default function artisanForm() {
   const [Chantiers, setChantiers] = useState([]);
-  const [Etapes, setEtapes] = useState([]);
+  const [Factures, setFactures] = useState([]);
   const [Artisans, setArtisans] = useState([]);
   const [numero_chantier, setNumeroChantier] = useState();
-  const [EtapeCourrante, setEtapeCourrante] = useState();
+  const [FactureCourrante, setFactureCourrante] = useState();
   const [ArtisanCourrant, setArtisanCourrant] = useState();
   const [error, setError] = useState();
 
@@ -55,6 +55,7 @@ export default function artisanForm() {
         const data = await response.json();
         if (response.ok) {
           setArtisans(data);
+          setArtisanCourrant(data[0]);
         } else {
           setArtisans([]);
         }
@@ -64,6 +65,34 @@ export default function artisanForm() {
     }
     fetchartisan();
   }, [numero_chantier]); // Se déclenche à chaque changement de numero_chantier
+
+   /**
+   * Charge les factures d'un artisan
+   * Se déclenche automatiquement quand un artisan est sélectionné
+   */
+  useEffect(() => {
+    /**
+     * Récupère les factures depuis l'API
+     */
+    async function fetchfactures() {
+      if (!ArtisanCourrant) return; // Ne fait rien si aucun chantier n'est sélectionné
+      try {
+        // Utilise un paramètre de requête pour filtrer par étape
+        const response = await fetch(
+          `/api/factures?num_artisan=${ArtisanCourrant}`,
+        );
+        const data = await response.json();
+        if (response.ok) {
+          setFactures(data);
+        } else {
+          setFactures([]);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchfactures();
+  }, [ArtisanCourrant]); // Se déclenche à chaque changement de numero_chantier
 
   return (
     <div className="factureArti">
@@ -111,24 +140,7 @@ export default function artisanForm() {
 
               <div className="full-width">
                 {ArtisanCourrant !== undefined ? (
-                  <label>
-                    Artisan disponible :
-                    <select
-                      value={ArtisanCourrant}
-                      onChange={(e) =>
-                        setArtisanCourrant(Number(e.target.value))
-                      }
-                    >
-                      {Artisans.map((artisan) => (
-                        <option
-                          key={artisan.noartisan}
-                          value={artisan.noartisan}
-                        >
-                          {artisan.nomartisan} - {artisan.prenomartisan}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
+                  <h1>Factures à afficher</h1>
                 ) : (
                   <div className="no-data">Aucune facture disponible.</div>
                 )}
