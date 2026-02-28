@@ -55,7 +55,7 @@ export default function artisanForm() {
         const data = await response.json();
         if (response.ok) {
           setArtisans(data);
-          setArtisanCourrant(data[0]);
+          setArtisanCourrant(data[0].noartisan);
         } else {
           setArtisans([]);
         }
@@ -66,7 +66,7 @@ export default function artisanForm() {
     fetchartisan();
   }, [numero_chantier]); // Se déclenche à chaque changement de numero_chantier
 
-   /**
+  /**
    * Charge les factures d'un artisan
    * Se déclenche automatiquement quand un artisan est sélectionné
    */
@@ -75,15 +75,16 @@ export default function artisanForm() {
      * Récupère les factures depuis l'API
      */
     async function fetchfactures() {
-      if (!ArtisanCourrant) return; // Ne fait rien si aucun chantier n'est sélectionné
+      if (!ArtisanCourrant) return; // Ne fait rien si aucun artisan n'est sélectionné
       try {
         // Utilise un paramètre de requête pour filtrer par étape
         const response = await fetch(
-          `/api/factures?num_artisan=${ArtisanCourrant}`,
+          `/api/factures?num_artisan=${ArtisanCourrant}&num_chantier=${numero_chantier}`,
         );
         const data = await response.json();
         if (response.ok) {
           setFactures(data);
+          setFactureCourrante(data[0]);
         } else {
           setFactures([]);
         }
@@ -92,7 +93,7 @@ export default function artisanForm() {
       }
     }
     fetchfactures();
-  }, [ArtisanCourrant]); // Se déclenche à chaque changement de numero_chantier
+  }, [ArtisanCourrant]); // Se déclenche à chaque changement de numero_artisan
 
   return (
     <div className="factureArti">
@@ -139,10 +140,63 @@ export default function artisanForm() {
               <hr />
 
               <div className="full-width">
-                {ArtisanCourrant !== undefined ? (
-                  <h1>Factures à afficher</h1>
+                {FactureCourrante !== undefined ? (
+                  <>
+                    <h1 className="factures-title">Factures</h1>
+
+                    <div className="factures-grid">
+                      {Factures.map((fac) => {
+                        const nomEtape =
+                          fac.etape_chantier.etape.nometape.trim();
+                        const dateFacture = new Date(
+                          fac.datefacture,
+                        ).toLocaleDateString("fr-FR");
+                        const montant = fac.montantfacture;
+                        const estPayee = fac.datereglfacture !== null;
+
+                        return (
+                          <div key={fac.nofacture} className="facture-card">
+                            <div className="facture-header">
+                              <h2>{nomEtape}</h2>
+                              <span
+                                className={`badge ${estPayee ? "paid" : "unpaid"}`}
+                              >
+                                {estPayee ? "Payée" : "Non payée"}
+                              </span>
+                            </div>
+
+                            <div className="facture-content">
+                              <p>
+                                <strong>Facture :</strong> #{fac.nofacture}
+                              </p>
+                              <p>
+                                <strong>Date :</strong> {dateFacture}
+                              </p>
+                              <p>
+                                <strong>Montant :</strong> {montant} €
+                              </p>
+                              <p>
+                                <strong>Jours :</strong> {fac.nbjourstravail}
+                              </p>
+                            </div>
+
+                            <button
+                              className="facture-button"
+                              onClick={() =>
+                                router.push(`/facture/${fac.nofacture}`)
+                              }
+                            >
+                              Voir facture
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
                 ) : (
-                  <div className="no-data">Aucune facture disponible.</div>
+                  <>
+                    <div className="no-data">Aucune facture disponible.</div>
+                  </>
                 )}
               </div>
             </>

@@ -9,23 +9,26 @@ import prisma from "../../lib/prisma";
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const num_artisan = Number(searchParams.get("num_artisan"));
+  const num_chantier = Number(searchParams.get("num_chantier"));
 
-  if (!num_chantier) {
+  if (!num_artisan) {
     return NextResponse.json({ error: "Numéro d'artisan requis." });
   }
   try {
     const factures = await prisma.facture_artisan.findMany({
       include: {
-        etape_chantier: true,
+        etape_chantier: {include: {
+          etape: true,
+        }},
       },
       where: {
+        nochantier: num_chantier,
         etape_chantier: {
-          some: {
-            noartisan: num_artisan,
-          },
+          noartisan: num_artisan,
         },
       },
     });
+    
     return NextResponse.json(factures);
   } catch (err) {
     return NextResponse.json({ error: `Erreur serveur, ${err}` });

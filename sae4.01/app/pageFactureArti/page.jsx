@@ -5,6 +5,7 @@ import Facture from '../components/FactureArti'
 import Nav from '../components/Nav_maitreO'
 import Footer from '../components/Footer'
 import { useRouter } from 'next/navigation'
+import "../css/bench.css";
 
 /**
  * Page de gestion des factures des artisans
