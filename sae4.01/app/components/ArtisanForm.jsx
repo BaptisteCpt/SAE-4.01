@@ -15,7 +15,7 @@ export default function artisanForm() {
     const [Etapes,setEtapes] = useState([]);
     const [Artisans,setArtisans] = useState([]);
     const[numero_chantier, setNumeroChantier] = useState();
-    const[EtapeCourrante, setEtapeCourrante] = useState();
+    const[EtapeCourrante, setEtapeCourrante] = useState(null);
     const[ArtisanCourrant, setArtisanCourrant] = useState();
     const [error,setError] = useState()
       
@@ -73,7 +73,9 @@ export default function artisanForm() {
                     datatrie = data.filter((etape) => etape.reservee == false);
                     setEtapes(datatrie);
                     // Sélectionne automatiquement la première étape disponible pour faciliter l'utilisation
-                    if (datatrie.length > 0) setEtapeCourrante(datatrie[0].id);
+                    if (EtapeCourrante === null){
+                        if (datatrie.length > 0) setEtapeCourrante(datatrie[0].id);
+                    }
                 } else {
                     setEtapes([]);
                 }
