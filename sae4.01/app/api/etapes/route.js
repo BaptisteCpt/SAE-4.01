@@ -67,6 +67,7 @@ export async function GET(request) {
         let nomA = null;
         let prenomA = null;
         let montantMax = null;
+        let montantTheo = null;
 
         // Si l'étape a été personnalisée, on récupère toutes ses informations
         if (perso) {
@@ -77,7 +78,8 @@ export async function GET(request) {
           dateDebut = perso.datedebut;
           dateFin = perso.datefin;
           // Le montant maximum autorisé est 30% du montant théorique de facturation
-          montantMax = 0.30 * perso.montanttheoriquefacture;
+          montantMax = 0.3 * perso.montanttheoriquefacture;
+          montantTheo = parseFloat(perso.montanttheoriquefacture);
 
           // Si un artisan a été assigné à cette étape, on récupère ses informations
           if (perso?.noartisan != null) {
@@ -108,7 +110,8 @@ export async function GET(request) {
           idchantier: idChantier,
           id: toutesEtapes.noetape,
           nom: toutesEtapes.nometape.trim(), // Supprime les espaces en début/fin
-          description: chantierData.modele.descriptionmodele || "Étape standard",
+          description:
+            chantierData.modele.descriptionmodele || "Étape standard",
           reservee: isReserved,
           isReservable: toutesEtapes.reservable,
           supplements: supplements,
@@ -118,6 +121,7 @@ export async function GET(request) {
           dateFin: dateFin,
           nomartisan: nomA,
           prenomartisan: prenomA,
+          montantTheo: montantTheo,
         };
       })
     );

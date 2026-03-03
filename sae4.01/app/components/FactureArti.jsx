@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
+
 
 /**
  * Composant pour affecter un artisan à une étape d'un chantier
@@ -12,11 +13,14 @@ export default function artisanForm() {
   const [Chantiers, setChantiers] = useState([]);
   const [Factures, setFactures] = useState([]);
   const [Artisans, setArtisans] = useState([]);
+  const [Etapes, setEtapes] = useState([]);
   const [numero_chantier, setNumeroChantier] = useState();
   const [FactureCourrante, setFactureCourrante] = useState();
   const [ArtisanCourrant, setArtisanCourrant] = useState();
+  const [EtapeCourrante, setEtapeCourrante] = useState();
   const [error, setError] = useState();
 
+  const router = useRouter();
   /**
    * Charge la liste des chantiers au chargement du composant
    * Vérifie aussi si un chantier et une étape ont été sauvegardés dans le localStorage
@@ -38,6 +42,34 @@ export default function artisanForm() {
   }, []);
 
   /**
+   * Charge les étapes non réservées du chantier sélectionné
+   * Filtre pour n'afficher que les étapes disponibles (non réservées)
+   * Sélectionne automatiquement la première étape si disponible
+   */
+  useEffect(() => {
+    /**
+     * Récupère les étapes du chantier et filtre pour ne garder que celles non réservées
+     */
+    async function fetchEtapes() {
+      if (!numero_chantier) return; // Ne fait rien si aucun chantier n'est sélectionné
+      try {
+        const response = await fetch(`/api/etapes?chantier=${numero_chantier}`);
+        const data = await response.json();
+        if (response.ok) {
+          setEtapes(data);
+          // Sélectionne automatiquement la première étape disponible pour faciliter l'utilisation
+          if (data.length > 0) setEtapeCourrante(data[0].id);
+        } else {
+          setEtapes([]);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchEtapes();
+  }, [numero_chantier]); // Se déclenche à chaque changement de numero_chantier
+
+  /**
    * Charge les artisans
    * Se déclenche automatiquement quand un chantier est sélectionné
    */
@@ -50,7 +82,7 @@ export default function artisanForm() {
       try {
         // Utilise un paramètre de requête pour filtrer par étape
         const response = await fetch(
-          `/api/artisans?num_chantier=${numero_chantier}`,
+          `/api/artisans?num_chantier=${numero_chantier}`
         );
         const data = await response.json();
         if (response.ok) {
@@ -79,7 +111,7 @@ export default function artisanForm() {
       try {
         // Utilise un paramètre de requête pour filtrer par étape
         const response = await fetch(
-          `/api/factures?num_artisan=${ArtisanCourrant}&num_chantier=${numero_chantier}`,
+          `/api/factures_by_artisan?num_artisan=${ArtisanCourrant}&num_chantier=${numero_chantier}`
         );
         const data = await response.json();
         if (response.ok) {
@@ -123,63 +155,78 @@ export default function artisanForm() {
           {numero_chantier && (
             <>
               <label className="full-width">
-                Nom Artisan:
+                Etape :
                 <select
-                  value={ArtisanCourrant}
-                  onChange={(e) => setArtisanCourrant(Number(e.target.value))}
+                  value={EtapeCourrante}
+                  onChange={(e) => setEtapeCourrante(Number(e.target.value))}
                 >
-                  {Artisans.map((artisan) => (
-                    <option key={artisan.noartisan} value={artisan.noartisan}>
-                      {artisan.noartisan} - {artisan.nomartisan} -{" "}
-                      {artisan.prenomartisan}
+                  {Etapes.map((etape) => (
+                    <option key={etape.id} value={etape.id}>
+                      {etape.id} - {etape.nom}
                     </option>
                   ))}
                 </select>
               </label>
 
               <hr />
+              {EtapeCourrante !== undefined && (
+                <>
+                  {Factures.map((fac) => {
+                    if (fac.etape_chantier.noetape == EtapeCourrante) {
+                      const etapechantier = fac.etape_chantier;
 
-              <div className="full-width">
-                {FactureCourrante !== undefined ? (
-                  <>
-                    <h1 className="factures-title">Factures</h1>
+                      // Diff des prix
+                      const montantTheorique = Number(
+                        etapechantier.montanttheoriquefacture
+                      );
+                      const montantReel = Number(fac.montantfacture);
+                      const ecartPrix = montantReel - montantTheorique;
+                      const margePourcent = (
+                        (ecartPrix / montantTheorique) *
+                        100
+                      ).toFixed(1);
 
-                    <div className="factures-grid">
-                      {Factures.map((fac) => {
-                        const nomEtape =
-                          fac.etape_chantier.etape.nometape.trim();
-                        const dateFacture = new Date(
-                          fac.datefacture,
-                        ).toLocaleDateString("fr-FR");
-                        const montant = fac.montantfacture;
-                        const estPayee = fac.datereglfacture !== null;
+                      // diff des délais
+                      const debutTheo = new Date(
+                        etapechantier.datedebuttheorique
+                      );
+                      const debutReel = new Date(etapechantier.datedebut);
+                      const finReel = new Date(etapechantier.datefin);
 
-                        return (
-                          <div key={fac.nofacture} className="facture-card">
-                            <div className="facture-header">
-                              <h2>{nomEtape}</h2>
-                              <span
-                                className={`badge ${estPayee ? "paid" : "unpaid"}`}
-                              >
-                                {estPayee ? "Payée" : "Non payée"}
-                              </span>
-                            </div>
+                      const retardDebut = Math.round(
+                        (debutReel - debutTheo) / (1000 * 60 * 60 * 24)
+                      );
 
+                      const dureeReelle = Math.round(
+                        (finReel - debutReel) / (1000 * 60 * 60 * 24)
+                      );
+
+                      return (
+                        <div key={fac.nofacture} className="factures-grid">
+                          <div className="facture-card">
+                            <h3 className="factures-title">
+                              {etapechantier.etape.nometape.trim()}
+                            </h3>
                             <div className="facture-content">
                               <p>
-                                <strong>Facture :</strong> #{fac.nofacture}
+                                💰 Écart prix : {ecartPrix.toFixed(2)} € (
+                                {margePourcent}%)
                               </p>
+
                               <p>
-                                <strong>Date :</strong> {dateFacture}
+                                📅 Retard démarrage :{" "}
+                                {retardDebut > 0
+                                  ? `+${retardDebut} jours`
+                                  : `${retardDebut} jours`}
                               </p>
+
+                              <p>🕓 Durée réelle : {dureeReelle} jours</p>
+
                               <p>
-                                <strong>Montant :</strong> {montant} €
-                              </p>
-                              <p>
-                                <strong>Jours :</strong> {fac.nbjourstravail}
+                                📊 Résultat :{" "}
+                                {ecartPrix >= 0 ? "Surcoût" : "Économie"}
                               </p>
                             </div>
-
                             <button
                               className="facture-button"
                               onClick={() =>
@@ -189,16 +236,18 @@ export default function artisanForm() {
                               Voir facture
                             </button>
                           </div>
-                        );
-                      })}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="no-data">Aucune facture disponible.</div>
-                  </>
-                )}
-              </div>
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div key={EtapeCourrante} className="no-data">
+                          Facture indisponible pour cette étape.
+                        </div>
+                      );
+                    }
+                  })}
+                </>
+              )}
             </>
           )}
         </div>
