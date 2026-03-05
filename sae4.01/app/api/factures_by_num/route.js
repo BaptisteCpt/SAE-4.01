@@ -15,6 +15,7 @@ export async function GET(request) {
       etape_chantier: {
         include: {
           etape: true,
+          chantier: true,
         },
       },
     },
