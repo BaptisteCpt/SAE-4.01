@@ -8,11 +8,11 @@ import prisma from "../../lib/prisma";
  */
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
-  const num_artisan = Number(searchParams.get("num_artisan"));
+  const num_etape = Number(searchParams.get("num_etape"));
   const num_chantier = Number(searchParams.get("num_chantier"));
 
-  if (!num_artisan) {
-    return NextResponse.json({ error: "Numéro d'artisan requis." });
+  if (!num_chantier || !num_etape) {
+    return NextResponse.json({ error: "Numéro de chantier et d'étape requis." });
   }
   try {
     const factures = await prisma.facture_artisan.findMany({
