@@ -15,6 +15,7 @@ export default function ModifMoe() {
     const idMoe = searchParams.get('id');
     const [nom, setNom] = useState("");
     const [prenom, setPrenom] = useState("");
+    const [mdp, setmdp] = useState("");
 
     useEffect(() => {
         if (!idMoe) {
@@ -67,7 +68,8 @@ export default function ModifMoe() {
                 body: JSON.stringify({
                     id: idMoe,
                     nom: nom,
-                    prenom: prenom
+                    prenom: prenom,
+                    mdp: mdp
                 })
             });
 
@@ -93,6 +95,9 @@ export default function ModifMoe() {
                     
                     <label>Prénom :</label>
                     <input type="text" value={prenom} onChange={(e) => setPrenom(e.target.value)} />
+
+                    <label>Mot de passe :</label>
+                    <input type="text" placeholder='Veuillez entrez un mot de passe' onChange={(e) => setmdp(e.target.value)} />
                     
                     <div className="form-buttons">
                         <button type="button" className="but" onClick={validerModif}>Enregistrer</button>

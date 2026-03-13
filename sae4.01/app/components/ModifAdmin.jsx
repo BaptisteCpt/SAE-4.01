@@ -34,8 +34,7 @@ export default function ModifAdmin() {
 
                 if (res.ok) {
                     const data = await res.json();
-                    setLogin(data.login || "");
-                    setMdp(data.mot_de_passe || "");
+                    setLogin(data || "");
                 } else {
                     Swal.fire('Erreur', 'Administrateur introuvable', 'error');
                     router.push('/pageListeAdmin');
@@ -92,7 +91,7 @@ export default function ModifAdmin() {
                     <input type="text" value={login} onChange={(e) => setLogin(e.target.value)} />
                     
                     <label>Mot de passe :</label>
-                    <input type="text" value={mdp} onChange={(e) => setMdp(e.target.value)} />
+                    <input type="text" placeholder='Veuillez entrez un nouveau mot de passe...' onChange={(e) => setMdp(e.target.value)} />
                     
                     <div className="form-buttons">
                         <button type="button" className="but" onClick={validerModif}>Enregistrer</button>

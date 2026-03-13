@@ -1,35 +1,85 @@
 import { NextResponse } from "next/server";
 import prisma from "../../lib/prisma";
 
-/**
- * Met à jour les informations d'un maître d'œuvre existant (nom et prénom)
- * @param {Request} request - La requête HTTP contenant l'ID et les nouvelles informations du maître d'œuvre
- * @returns {Promise<NextResponse>} Réponse JSON avec le maître d'œuvre mis à jour ou un message d'erreur
- */
 export async function PUT(request) {
   try {
-    const { id, nom, prenom } = await request.json();
+    const { id, nom, prenom, mdp } = await request.json();
 
-    if (!id || !nom || !prenom) {
+    if (!id || !nom || !prenom || !mdp) {
       return NextResponse.json(
         { error: "Tous les champs sont requis." },
         { status: 400 }
       );
     }
 
-    const updatedMoe = await prisma.maitre_oeuvre.update({
-      where: { nomoe: Number(id) },
-      data: {
-        nommoe: nom,
-        prenommoe: prenom,
-      },
+    const moeId = Number(id);
+
+    const result = await prisma.$transaction(async (tx) => {
+      
+      // 1. On cherche le MOE
+      const currentMoe = await tx.maitre_oeuvre.findUnique({
+        where: { nomoe: moeId },
+      });
+
+      console.log("1. MOE trouvé :", currentMoe);
+
+      if (!currentMoe || !currentMoe.login) {
+        throw new Error("MOE_NOT_FOUND");
+      }
+
+      // 2. On vérifie MANUELLEMENT si le User existe avant d'essayer de le mettre à jour
+      const userToUpdate = await tx.user.findUnique({
+        where: { login: currentMoe.login }
+      });
+
+      console.log("2. User trouvé avec le login", currentMoe.login, ":", userToUpdate);
+
+      if (!userToUpdate) {
+        throw new Error("USER_NOT_FOUND");
+      }
+
+      const newLogin = `${nom.toLowerCase()}${prenom[0].toLowerCase()}`;
+
+      // 3. Mise à jour du MOE
+      const updatedMoe = await tx.maitre_oeuvre.update({
+        where: { nomoe: moeId },
+        data: {
+          nommoe: nom,
+          prenommoe: prenom,
+          login: newLogin,
+        },
+      });
+
+      console.log("3. MOE mis à jour avec succès");
+
+      // 4. Mise à jour du User (C'est ici que ça plantait)
+      const updatedMoeUser = await tx.user.update({
+        where: { login: currentMoe.login },
+        data: {
+          login: newLogin,
+          mot_de_passe: mdp,
+        },
+      });
+
+      console.log("4. User mis à jour avec succès");
+
+      return { updatedMoe, updatedMoeUser };
     });
 
-    return NextResponse.json(updatedMoe);
+    return NextResponse.json(result);
+
   } catch (error) {
-    console.error("Erreur mise à jour MOE:", error);
+    console.error("Erreur détaillée :", error);
+    
+    if (error.message === "MOE_NOT_FOUND") {
+      return NextResponse.json({ error: "MOE introuvable ou pas de login." }, { status: 404 });
+    }
+    if (error.message === "USER_NOT_FOUND") {
+      return NextResponse.json({ error: "Le User lié à ce MOE n'existe pas en base." }, { status: 404 });
+    }
+
     return NextResponse.json(
-      { error: "Erreur serveur lors de la mise à jour." },
+      { error: "Erreur serveur", details: error.message },
       { status: 500 }
     );
   }

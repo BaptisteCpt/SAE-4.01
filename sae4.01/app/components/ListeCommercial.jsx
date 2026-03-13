@@ -90,7 +90,6 @@ export default function PageListeCom() {
                         <thead>
                             <tr>
                                 <th>Identifiant</th>
-                                <th>Mot de passe</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -98,7 +97,6 @@ export default function PageListeCom() {
                             {liste.map((com) => (
                                 <tr key={com.id}>
                                     <td data-label="Identifiant">{com.login}</td>
-                                    <td data-label="Mot de passe">{com.mot_de_passe}</td>
                                     <td data-label="Action">
                                         <button className='but' onClick={() => router.push(`/pageModifCom?id=${com.id}`)}>Modifier</button>
                                         <button className='but' onClick={() => Suppr(com.id, com.login)}>Supprimer</button>

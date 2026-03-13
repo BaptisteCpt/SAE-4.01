@@ -24,7 +24,8 @@ export async function POST(request) {
       return NextResponse.json({ error: "Administrateur non trouvé" }, { status: 404 });
     }
 
-    return NextResponse.json(admin);
+    const nom = admin.login;
+    return NextResponse.json(nom);
 
   } catch (error) {
     console.error("Erreur récupération Admin:", error);
