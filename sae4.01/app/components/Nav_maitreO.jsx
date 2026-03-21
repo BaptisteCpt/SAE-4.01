@@ -102,6 +102,7 @@ export default function Nav() {
               <a href="/suivi">Suivi</a>
               <a href="/personnalisation">Personnalisation</a>
               <a href="/artisan">Artisan</a>
+              <a href="/AnalyseEtapes">Analyse Des Etapes</a>
             </div>
           )}
         </div>
@@ -114,7 +115,6 @@ export default function Nav() {
           {openMenu === "Appel" && (
             <div className="menuderoulantcontent">
               <a href="/appel">Appel de fond</a>
-              <a href="/pageFactureArti">Facture artisan</a>
             </div>
           )}
         </div>

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import SearchableSelect from "./SearchableSelect";
 
 /**
  * Composant pour affecter un artisan à une étape d'un chantier
@@ -10,7 +11,7 @@ import { useRouter } from "next/navigation";
  */
 export default function artisanForm() {
   const [Chantiers, setChantiers] = useState([]);
-  const [Factures, setFactures] = useState([]);
+  const [Factures, setFactures] = useState({});
   const [Etapes, setEtapes] = useState([]);
   const [numero_chantier, setNumeroChantier] = useState();
   const [error, setError] = useState();
@@ -65,55 +66,59 @@ export default function artisanForm() {
   /**
    * Récupère les factures depuis l'API
    */
-  async function fetchfactures(netape) {
-    if (!numero_chantier) return; // Ne fait rien si aucun chantier n'est sélectionné
-    try {
-      const response = await fetch(
-        `/api/factures_by_chantier?num_chantier=${numero_chantier}&num_etape=${netape}`
+  useEffect(() => {
+    if (!numero_chantier || Etapes.length === 0) return;
+
+    async function fetchfactures() {
+      // Promise.all pour attendre tous les fetch
+      const results = await Promise.all(
+        Etapes.map(async (et) => {
+          try {
+            const response = await fetch(
+              `/api/facture_by_chantier?num_chantier=${numero_chantier}&num_etape=${et.id}`,
+            );
+            const data = await response.json();
+            if (!response.ok || data == null) return null;
+            return [et.id, data];
+          } catch (err) {
+            console.error(err);
+            return null;
+          }
+        }),
       );
-      const data = await response.json();
-      if (response.ok) {
-        setFactures(data);
-      } else {
-        setFactures([]);
-      }
-    } catch (err) {
-      console.error(err);
+
+      // Reconstruction du dictionnaire après résolution de toutes les promesses
+      const factures = Object.fromEntries(results.filter(Boolean));
+      console.log(factures);
+      setFactures(factures);
     }
-  }
+
+    fetchfactures();
+  }, [Etapes]); // Se déclenche à chaque changement de etapes
+
   return (
     <div className="factureArti">
       <div className="BulleFactureArti">
         <h1>Factures Des Artisans</h1>
 
         <div className="form-grid">
-          <label className="full-width">
-            Chantier Choisi :
-            <select
-              value={numero_chantier}
-              onChange={(e) => {
-                setNumeroChantier(Number(e.target.value));
-              }}
-            >
-              <option value="" hidden>
-                -- Sélectionnez un chantier --
-              </option>
-              {Chantiers.map((Chantier) => (
-                <option key={Chantier.nochantier} value={Chantier.nochantier}>
-                  {Chantier.nochantier} - {Chantier.adressechantier}
-                </option>
-              ))}
-            </select>
-          </label>
+          <SearchableSelect
+            options={Chantiers}
+            value={numero_chantier}
+            onChange={(value) => setNumeroChantier(Number(value))}
+            getOptionValue={(chantier) => chantier.nochantier}
+            getOptionLabel={(chantier) =>
+              `${chantier.nochantier} - ${chantier.adressechantier}`
+            }
+            placeholder="Choisir un chantier..."
+          />
 
           {numero_chantier && (
             <>
               <hr />
 
               {Etapes.map((etape, index) => {
-                const fac = Factures.find(
-                  (f) => f.etape_chantier.noetape === etape.id
-                );
+                const fac = Factures[etape.id];
 
                 if (!fac) {
                   return (
@@ -128,7 +133,7 @@ export default function artisanForm() {
 
                 const etapechantier = fac.etape_chantier;
                 const montantTheorique = Number(
-                  etapechantier.montanttheoriquefacture
+                  etapechantier.montanttheoriquefacture,
                 );
                 const montantReel = Number(fac.montantfacture);
                 const ecartPrix = montantReel - montantTheorique;
@@ -141,10 +146,10 @@ export default function artisanForm() {
                 const debutReel = new Date(etapechantier.datedebut);
                 const finReel = new Date(etapechantier.datefin);
                 const retardDebut = Math.round(
-                  (debutReel - debutTheo) / (1000 * 60 * 60 * 24)
+                  (debutReel - debutTheo) / (1000 * 60 * 60 * 24),
                 );
                 const dureeReelle = Math.round(
-                  (finReel - debutReel) / (1000 * 60 * 60 * 24)
+                  (finReel - debutReel) / (1000 * 60 * 60 * 24),
                 );
 
                 return (

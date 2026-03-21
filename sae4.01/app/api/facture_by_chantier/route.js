@@ -12,23 +12,27 @@ export async function GET(request) {
   const num_chantier = Number(searchParams.get("num_chantier"));
 
   if (!num_chantier || !num_etape) {
-    return NextResponse.json({ error: "Numéro de chantier et d'étape requis." });
+    return NextResponse.json({
+      error: "Numéro de chantier et d'étape requis.",
+    });
   }
   try {
-    const factures = await prisma.facture_artisan.findMany({
+    const factures = await prisma.facture_artisan.findUnique({
       include: {
-        etape_chantier: {include: {
-          etape: true,
-        }},
+        etape_chantier: {
+          include: {
+            etape: true,
+          },
+        },
       },
       where: {
-        nochantier: num_chantier,
-        etape_chantier: {
-          noartisan: num_artisan,
+        nochantier_noetape: {
+          nochantier: num_chantier,
+          noetape: num_etape,
         },
       },
     });
-    
+
     return NextResponse.json(factures);
   } catch (err) {
     return NextResponse.json({ error: `Erreur serveur, ${err}` });

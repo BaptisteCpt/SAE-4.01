@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import Facture from '../components/FactureArti'
+import Facture from '../components/AnalyseEtapes'
 import Nav from '../components/Nav_maitreO'
 import Footer from '../components/Footer'
 import { useRouter } from 'next/navigation'
