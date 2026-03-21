@@ -101,6 +101,6 @@ export default function FactureDetail({ nofacture }) {
           Télécharger la facture (PDF)
         </button>
       </div>
-    </div>
+    </div> 
   );
 }
