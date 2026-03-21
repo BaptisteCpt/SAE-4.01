@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import "../css/navLogin.css";
 import { useRouter } from 'next/navigation'
 
@@ -13,7 +13,8 @@ export default function Nav() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [employeMenuText, setEmployeMenuText] = useState("Employés ▼");
     const [roleDisplay, setRoleDisplay] = useState("Admin");
-    const router = useRouter()
+    const router = useRouter();
+    const dropdownRef = useRef(null);
 
     useEffect(() => {
         const role = localStorage.getItem("role");
@@ -26,6 +27,19 @@ export default function Nav() {
             setRoleDisplay(roleMap[role] || role);
         }
     }, []);
+
+    useEffect(() => {
+    function handleClickOutside(e) {
+        if (openMenu && dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpenMenu(null);
+        setEmployeMenuText("Employés ▼");
+        }
+    }
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+    }, [openMenu]);
+      
 
     /**
      * Bascule l'affichage du menu mobile
@@ -80,7 +94,7 @@ export default function Nav() {
 
         <a href="/pageAdminChantier">Chantiers</a>
 
-        <div className="menuderoulant" onClick={() => toggleMenu("employes")}>
+        <div className="menuderoulant" ref={dropdownRef} onClick={() => toggleMenu("employes")}>
             <span className="nav-item">{employeMenuText}</span>
             {openMenu === "employes" && (
                 <div className="menuderoulantcontent">

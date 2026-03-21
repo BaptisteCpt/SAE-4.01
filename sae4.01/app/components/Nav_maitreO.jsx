@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import "../css/navLogin.css";
 import { useRouter } from 'next/navigation';
 
@@ -12,6 +12,7 @@ export default function Nav() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [roleDisplay, setRoleDisplay] = useState("Maître d'œuvre");
   const router = useRouter();
+  const dropdownRef = useRef(null);
 
   /**
    * Récupère le rôle de l'utilisateur depuis le localStorage et l'affiche de manière lisible
@@ -30,6 +31,22 @@ export default function Nav() {
       setRoleDisplay(roleMap[role] || role);
     }
   }, []);
+
+  useEffect(() => {
+  /**
+   * Ferme automatiquement le menu deroulant si l'utilisateur clique
+   * en dehors de sa zone d'affichage 
+   * @param {*} e - L'evenement qui est associé aux infos du clic
+   */
+  function handleClickOutside(e) {
+    if (openMenu && dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setOpenMenu(null);
+    }
+  }
+
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [openMenu]);
 
   /**
    * Bascule l'affichage d'un menu déroulant spécifique
@@ -75,7 +92,7 @@ export default function Nav() {
       <div className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
         <a href="#" onClick={goToAccMaitre}>Accueil</a>
 
-        <div className="menuderoulant">
+        <div className="menuderoulant" ref={dropdownRef}>
           <p className="nav-item" onClick={() => toggleMenu("Chantier")}>
             Chantier {openMenu === "Chantier" ? "⮝  " : "⮟"}
           </p>

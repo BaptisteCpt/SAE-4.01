@@ -86,11 +86,11 @@ export default function PageClients() {
                         {clients.map((client, index) => (
                             <tr key={client.noclient || index} onClick={() => handleRowClick(client.noclient)}
                                 className={idclient === client.noclient ? "row-selected" : ""}>
-                                <td data-label="Nom">{client.nomclient}</td>
-                                <td data-label="Prénom">{client.prenomclient}</td>
-                                <td data-label="Adresse">{client.adresseclient}</td>
-                                <td data-label="Ville">{client.villeclient}</td>
-                                <td data-label="Code Postal">{client.cpclient}</td>
+                                <td data-label="Nom">{client.nomclient.trim().toUpperCase()}</td>
+                                <td data-label="Prénom">{client.prenomclient.trim().toUpperCase()}</td>
+                                <td data-label="Adresse">{client.adresseclient.trim().toUpperCase()}</td>
+                                <td data-label="Ville">{client.villeclient.trim().toUpperCase()}</td>
+                                <td data-label="Code Postal">{client.cpclient.trim().toUpperCase()}</td>
                             </tr>
                         ))}
                     </tbody>
