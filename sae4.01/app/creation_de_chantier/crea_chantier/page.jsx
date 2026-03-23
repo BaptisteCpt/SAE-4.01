@@ -15,24 +15,6 @@ import '../../css/creation_chantier.css'
  * @returns {JSX.Element} La page de création de chantier ou null si non autorisé
  */
 export default function page_de_creation_de_chantier() {
-  const router = useRouter();
-  const [authorized, setAuthorized] = useState(false);
-
-  /**
-   * Vérifie le rôle de l'utilisateur et autorise l'accès si c'est un commercial
-   */
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-    if (role === "commercial") {
-      setAuthorized(true);
-    } else {
-      router.push('/');
-    }
-  }, [router]);
-
-  if (!authorized) {
-    return null;
-  }
 
   return (
     <>

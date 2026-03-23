@@ -12,7 +12,12 @@
   "dependencies": {
     "@prisma/client": "^6.19.0",
     "bcrypt": "^6.0.0",
+<<<<<<< HEAD
     "next": "^16.0.1",
+=======
+    "jose": "^6.2.2",
+    "next": "16.0.1",
+>>>>>>> e0f1f4e (Renforcement de la securite en cours manque partie admin : Tout dans le middleware.js et lib/auth)
     "prisma": "^6.19.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
