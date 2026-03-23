@@ -53,7 +53,7 @@ export default function AjoutMoe() {
                     icon: 'success',
                     confirmButtonText: 'Super !'
                 });
-                router.push('/pageMoe'); 
+                router.push('/pageListeEmp'); 
             } else {
                 const info = await res.json();
                 Swal.fire({

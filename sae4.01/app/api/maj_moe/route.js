@@ -16,7 +16,6 @@ export async function PUT(request) {
 
     const result = await prisma.$transaction(async (tx) => {
       
-      // 1. On cherche le MOE
       const currentMoe = await tx.maitre_oeuvre.findUnique({
         where: { nomoe: moeId },
       });
@@ -27,7 +26,6 @@ export async function PUT(request) {
         throw new Error("MOE_NOT_FOUND");
       }
 
-      // 2. On vérifie MANUELLEMENT si le User existe avant d'essayer de le mettre à jour
       const userToUpdate = await tx.user.findUnique({
         where: { login: currentMoe.login }
       });
@@ -51,13 +49,13 @@ export async function PUT(request) {
       });
 
       console.log("3. MOE mis à jour avec succès");
+      const hashedMdp = await bcrypt.hash(mdp, 12);
 
-      // 4. Mise à jour du User (C'est ici que ça plantait)
       const updatedMoeUser = await tx.user.update({
         where: { login: currentMoe.login },
         data: {
           login: newLogin,
-          mot_de_passe: mdp,
+          mot_de_passe: hashedMdp,
         },
       });
 

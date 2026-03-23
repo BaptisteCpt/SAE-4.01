@@ -160,7 +160,7 @@ export default function AjoutArtisan() {
           icon: "success",
           confirmButtonText: "Parfait",
         });
-        router.push("/pageArtisant");
+        router.push("/pageListeEmp");
       } else {
         const info = await res.json();
         Swal.fire({

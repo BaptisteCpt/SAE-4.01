@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../lib/prisma'; 
+import bcrypt from "bcrypt";
+
 
 /**
  * Crée un nouvel artisan dans la base de données
@@ -40,13 +42,27 @@ export async function POST(request) {
         adresseartisan: adresse,
         cpartisan: cp,
         villeartisan: ville,
+        login: nom.toLowerCase() + prenom.charAt(0).toLowerCase(), // Génère un login simple (ex: "DupontJ")
         // Utilise le spread operator pour ajouter les qualifications seulement si elles existent
         // Cela évite d'envoyer undefined à Prisma
         ...(listeQualif && { etre_qualifie_pour: listeQualif }),
       },
     });
 
-    return NextResponse.json(NouvelArtisan);
+    const loginArtisan = nom.toLowerCase() + prenom.charAt(0).toLowerCase(); // Doit correspondre au login de l'artisan
+    const hashedMdp = await bcrypt.hash(loginArtisan, 12);
+    
+    const NouvelArtisantUser = await prisma.user.create({
+      data: {
+        login: loginArtisan, // Doit correspondre au login de l'artisan
+        mot_de_passe: hashedMdp,
+        role: "artisan",
+        nom: nom,
+        prenom: prenom,
+      },
+    });
+
+    return NextResponse.json([NouvelArtisan, NouvelArtisantUser]);
   } catch (error){
     console.error("Erreur création artisan:", error);
     return NextResponse.json("Erreur serveur lors de la création.");

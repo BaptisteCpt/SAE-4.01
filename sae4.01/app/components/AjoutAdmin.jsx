@@ -51,7 +51,7 @@ export default function AjoutAdmin() {
                     icon: 'success',
                     confirmButtonText: 'Parfait'
                 });
-                router.push('/pageAdmin'); 
+                router.push('/pageListeEmp'); 
             } else {
                 const info = await res.json();
                 Swal.fire({
