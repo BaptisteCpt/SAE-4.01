@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import "../css/artisan.css";
 import Swal from "sweetalert2";
 import SearchableSelect from "./SearchableSelect";
@@ -10,7 +11,7 @@ import SearchableSelect from "./SearchableSelect";
  * Permet de sélectionner un chantier, une étape non réservée, puis un artisan qualifié
  * @returns {JSX.Element} Le formulaire d'affectation d'artisan
  */
-export default function artisanForm() {
+export default function ArtisanForm() {
   const [Chantiers, setChantiers] = useState([]);
   const [Etapes, setEtapes] = useState([]);
   const [Artisans, setArtisans] = useState([]);
@@ -18,6 +19,7 @@ export default function artisanForm() {
   const [EtapeCourrante, setEtapeCourrante] = useState(null);
   const [ArtisanCourrant, setArtisanCourrant] = useState();
   const [error, setError] = useState();
+  const router = useRouter();
 
   /**
    * Charge la liste des chantiers au chargement du composant
@@ -29,7 +31,7 @@ export default function artisanForm() {
     const chantierGiven = localStorage.getItem("chantier");
     const etapeGiven = localStorage.getItem("etape");
     if (chantierGiven) {
-      setNumeroChantier(chantierGiven);
+      setNumeroChantier(Number(chantierGiven));
       setEtapeCourrante(etapeGiven);
       // Supprime les valeurs du localStorage après les avoir utilisées (nettoyage)
       localStorage.removeItem("chantier");
@@ -50,6 +52,30 @@ export default function artisanForm() {
     }
     fetchChantier();
   }, []);
+
+  useEffect(() => {
+    if (!numero_chantier) return;
+
+    const chantier = Chantiers.find((c) => c.nochantier == numero_chantier);
+
+    if (!chantier) return;
+
+    if (!chantier.isperso) {
+      Swal.fire({
+        icon: "error",
+        title: "Oups...",
+        text: "Ce chantier n'est pas encore personnalisé",
+        confirmButtonText: "Aller à l'accueil",
+        denyButtonText: "Personnaliser le chantier",
+        showDenyButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) router.push("/accueil_maitre");
+        else if (result.isDenied) {
+          /* TO DO */
+        }
+      });
+    }
+  }, [numero_chantier]);
 
   /**
    * Charge les étapes non réservées du chantier sélectionné
@@ -99,7 +125,7 @@ export default function artisanForm() {
       try {
         // Utilise un paramètre de requête pour filtrer par étape
         const response = await fetch(
-          `/api/recup_artisan?etape=${EtapeCourrante}`,
+          `/api/recup_artisan?etape=${EtapeCourrante}`
         );
         const data = await response.json();
         if (response.ok) {

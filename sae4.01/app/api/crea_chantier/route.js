@@ -38,7 +38,8 @@ export async function POST(request) {
         // Convertit les IDs en nombres pour les relations avec les autres tables
         nomoe: parseInt(maitre_doeuvre),
         nomodele: parseInt(modele_maison),
-        noclient: parseInt(noclient), 
+        noclient: parseInt(noclient),
+        isperso: false,
       },
     });
     return NextResponse.json(nouveauChantier);

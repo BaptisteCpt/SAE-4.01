@@ -20,8 +20,17 @@ export default function PersonnalisationContent() {
 
   /**
    * Charge la liste de tous les chantiers disponibles au chargement du composant
+   * Vérifie aussi si un chantier a été sauvegardé dans le localStorage (après rechargement)
    */
   useEffect(() => {
+
+    const reloadChantier = localStorage.getItem("chantier");
+    if (reloadChantier) {
+      setNumChantier(reloadChantier);
+      // Supprime la valeur du localStorage après l'avoir utilisée (nettoyage)
+      localStorage.removeItem("chantier");
+    }
+
     async function fetchChantiers() {
       const res = await fetch("/api/numero_chantier");
       setChantierSelect(await res.json());

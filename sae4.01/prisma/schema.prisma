@@ -30,6 +30,7 @@ model artisan {
   adresseartisan     String?              @db.Char(50)
   cpartisan          String?              @db.Char(5)
   villeartisan       String?              @db.Char(50)
+  login              String?              @unique(map: "login") @db.VarChar
   etape_chantier     etape_chantier[]
   etre_qualifie_pour etre_qualifie_pour[]
 
@@ -45,6 +46,7 @@ model chantier {
   nomoe           Int
   noclient        Int
   nomodele        Int
+  isperso         Boolean
   appel           appel[]
   client          client           @relation(fields: [noclient], references: [noclient], onDelete: NoAction, onUpdate: NoAction)
   modele          modele           @relation(fields: [nomodele], references: [nomodele], onDelete: NoAction, onUpdate: NoAction)
@@ -163,6 +165,8 @@ model User {
   login        String @unique
   mot_de_passe String
   role         String
+  nom          String
+  prenom       String
 
   @@schema("Bati_Parti")
 }
