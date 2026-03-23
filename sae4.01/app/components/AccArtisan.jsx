@@ -28,7 +28,7 @@ export default function AccArtisan() {
    * Action front temporaire pour la génération de facture.
    */
   function genererFacture() {
-    window.alert("Generation de facture (front en cours)");
+    router.push("/generer_facture_artisan");
   }
 
   return (

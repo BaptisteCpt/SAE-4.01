@@ -41,7 +41,7 @@ export default function NavArtisan() {
       <div className="nav-links">
         <a href="/accueil_artisan">Accueil</a>
         <a href="/liste_chantiers_artisan">Liste des chantiers</a>
-        <a href="/accueil_artisan#generer-facture">Generer une facture</a>
+        <a href="/generer_facture_artisan">Generer une facture</a>
 
         <div className="profil-div">
           <div className="profil">

@@ -13,7 +13,7 @@ export default function Foot() {
 
     return (
         <footer className='foot'>
-            © 2025 - {year} Tout droits réservés.
+            © 2025 - {year} | Tous droits réservés.
         </footer>
     );
 }
