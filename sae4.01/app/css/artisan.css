@@ -81,8 +81,32 @@
     transition: all 0.3s ease;
     font-weight: 500;
   }
+
+  .BulleArtisan input[type="date"],
+  .BulleArtisan input[type="number"],
+  .BulleArtisan input[type="text"] {
+    padding: 12px 14px;
+    border: 1.5px solid var(--couleur-bordure);
+    border-radius: var(--radius);
+    font-size: 15px;
+    color: var(--couleur-texte-sombre);
+    background-color: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
   
   .BulleArtisan select:focus {
+    border-color: var(--couleur-principale);
+    box-shadow: 0 0 0 4px rgba(255, 145, 0, 0.12);
+    background-color: #fafbfc;
+  }
+
+  .BulleArtisan input[type="date"]:focus,
+  .BulleArtisan input[type="number"]:focus,
+  .BulleArtisan input[type="text"]:focus {
     border-color: var(--couleur-principale);
     box-shadow: 0 0 0 4px rgba(255, 145, 0, 0.12);
     background-color: #fafbfc;
@@ -170,6 +194,13 @@
     }
 
     .BulleArtisan select {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    .BulleArtisan input[type="date"],
+    .BulleArtisan input[type="number"],
+    .BulleArtisan input[type="text"] {
         padding: 10px 12px;
         font-size: 14px;
     }
