@@ -18,7 +18,7 @@ export default function ModifAdmin() {
 
     useEffect(() => {
         if (!idAdmin) {
-            router.push('/pageListeAdmin');
+            router.push('/pageListeEmp');
             return;
         }
         /**
@@ -37,7 +37,7 @@ export default function ModifAdmin() {
                     setLogin(data || "");
                 } else {
                     Swal.fire('Erreur', 'Administrateur introuvable', 'error');
-                    router.push('/pageListeAdmin');
+                    router.push('/pageListeEmp');
                 }
             } catch (err) {
                 console.error(err);
@@ -72,7 +72,7 @@ export default function ModifAdmin() {
 
             if (res.ok) {
                 await Swal.fire('Succès', 'Administrateur mis à jour', 'success');
-                router.push('/pageListeAdmin');
+                router.push('/pageListeEmp');
             } else {
                 const info = await res.json();
                 Swal.fire('Erreur', info.error || "Échec de la mise à jour", 'error');

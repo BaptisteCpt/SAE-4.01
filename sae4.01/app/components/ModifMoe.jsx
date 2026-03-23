@@ -4,27 +4,18 @@ import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Swal from 'sweetalert2';
 
-/**
- * Composant pour modifier les informations d'un maître d'œuvre
- * Charge les données du maître d'œuvre et permet de modifier le nom et le prénom
- * @returns {JSX.Element} Le formulaire de modification de maître d'œuvre
- */
 export default function ModifMoe() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const idMoe = searchParams.get('id');
     const [nom, setNom] = useState("");
     const [prenom, setPrenom] = useState("");
-    const [mdp, setmdp] = useState("");
 
     useEffect(() => {
         if (!idMoe) {
             router.push('/pageListeMoe');
             return;
         }
-        /**
-         * Charge les données du maître d'œuvre depuis l'API
-         */
         async function charger() {
             try {
                 const res = await fetch('/api/recup_un_moe', {
@@ -39,7 +30,7 @@ export default function ModifMoe() {
                     setPrenom(data.prenommoe || "");
                 } else {
                     Swal.fire('Erreur', "Maître d'œuvre introuvable", 'error');
-                    router.push('/pageListeMoe');
+                    router.push('/pageListeEmp');
                 }
             } catch (err) {
                 console.error(err);
@@ -49,11 +40,6 @@ export default function ModifMoe() {
         charger();
     }, [idMoe, router]);
 
-    /**
-     * Valide et soumet les modifications du maître d'œuvre
-     * Vérifie que tous les champs sont remplis, puis appelle l'API pour mettre à jour
-     * @param {Event} e - L'événement de soumission du formulaire
-     */
     async function validerModif(e) {
         e.preventDefault();
         if (!nom || !prenom) {
@@ -68,14 +54,13 @@ export default function ModifMoe() {
                 body: JSON.stringify({
                     id: idMoe,
                     nom: nom,
-                    prenom: prenom,
-                    mdp: mdp
+                    prenom: prenom
                 })
             });
 
             if (res.ok) {
                 await Swal.fire('Succès', "Maître d'œuvre mis à jour", 'success');
-                router.push('/pageListeMoe');
+                router.push('/pageListeEmp');
             } else {
                 const info = await res.json();
                 Swal.fire('Erreur', info.error || "Échec de la mise à jour", 'error');
@@ -95,9 +80,6 @@ export default function ModifMoe() {
                     
                     <label>Prénom :</label>
                     <input type="text" value={prenom} onChange={(e) => setPrenom(e.target.value)} />
-
-                    <label>Mot de passe :</label>
-                    <input type="text" placeholder='Veuillez entrez un mot de passe' onChange={(e) => setmdp(e.target.value)} />
                     
                     <div className="form-buttons">
                         <button type="button" className="but" onClick={validerModif}>Enregistrer</button>

@@ -18,7 +18,7 @@ export default function ModifCommercial() {
 
     useEffect(() => {
         if (!idCom) {
-            router.push('/pageListeCom');
+            router.push('/pageListeEmp');
             return;
         }
         /**
@@ -37,7 +37,7 @@ export default function ModifCommercial() {
                     setLogin(data || "");
                 } else {
                     Swal.fire('Erreur', 'Commercial introuvable', 'error');
-                    router.push('/pageListeCom');
+                    router.push('/pageListeEmp');
                 }
             } catch (err) {
                 console.error(err);
@@ -72,7 +72,7 @@ export default function ModifCommercial() {
 
             if (res.ok) {
                 await Swal.fire('Succès', 'Commercial mis à jour', 'success');
-                router.push('/pageListeCom');
+                router.push('/pageListeEmp');
             } else {
                 const info = await res.json();
                 Swal.fire('Erreur', info.error || "Échec de la mise à jour", 'error');

@@ -45,6 +45,7 @@ model chantier {
   nomoe           Int
   noclient        Int
   nomodele        Int
+  isperso         Boolean
   appel           appel[]
   client          client           @relation(fields: [noclient], references: [noclient], onDelete: NoAction, onUpdate: NoAction)
   modele          modele           @relation(fields: [nomodele], references: [nomodele], onDelete: NoAction, onUpdate: NoAction)
@@ -163,6 +164,8 @@ model User {
   login        String @unique
   mot_de_passe String
   role         String
+  nom          String
+  prenom       String
 
   @@schema("Bati_Parti")
 }
