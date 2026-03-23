@@ -46,6 +46,30 @@ export default function Suivi() {
     fetchChantier();
   }, []);
 
+  useEffect(() => {
+    if (!numero_chantier) return;
+
+    const chantier = Chantiers.find((c) => c.nochantier == numero_chantier);
+
+    if (!chantier) return;
+
+    if (!chantier.isperso) {
+      Swal.fire({
+        icon: "error",
+        title: "Oups...",
+        text: "Ce chantier n'est pas encore personnalisé",
+        confirmButtonText: "Aller à l'accueil",
+        denyButtonText: "Personnaliser le chantier",
+        showDenyButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) router.push("/accueil_maitre");
+        else if (result.isDenied) {
+          redirectP(numero_chantier);
+        }
+      });
+    }
+  }, [numero_chantier]);
+
   /**
    * Charge les étapes du chantier sélectionné
    * Se déclenche automatiquement quand un chantier est sélectionné
@@ -191,6 +215,17 @@ export default function Suivi() {
     router.push("/artisan");
   };
 
+    /**
+   * Redirige vers la page de personnalisation pour un chantier spécifique
+   * Sauvegarde le chantier dans le localStorage pour les restaurer sur la page suivante
+   * @param {number} chantierid - L'ID du chantier
+   */
+    const redirectP = (chantierid) => {
+      // Sauvegarde les informations dans le localStorage pour les passer à la page suivante
+      localStorage.setItem("chantier", chantierid);
+      router.push("/personnalisation");
+    };
+
   /**
    * Valide et termine le suivi du chantier
    * Affiche un message de succès puis redirige vers l'accueil maître d'œuvre
@@ -214,11 +249,7 @@ export default function Suivi() {
         <SearchableSelect
           options={Chantiers}
           value={numero_chantier}
-          onChange={(value) => {
-            const selected = Number(value);
-            localStorage.setItem("chantierSelectionne", selected);
-            window.location.reload();
-          }}
+          onChange={(value) => setNumeroChantier(Number(value))}
           getOptionValue={(chantier) => chantier.nochantier}
           getOptionLabel={(chantier) =>
             `${chantier.nochantier} - ${chantier.adressechantier}`

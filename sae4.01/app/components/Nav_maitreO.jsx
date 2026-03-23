@@ -102,11 +102,22 @@ export default function Nav() {
               <a href="/suivi">Suivi</a>
               <a href="/personnalisation">Personnalisation</a>
               <a href="/artisan">Artisan</a>
+              <a href="/AnalyseEtapes">Analyse Des Etapes</a>
             </div>
           )}
         </div>
 
-        <a href="/appel">Appel de fond</a>
+        <div className="menuderoulant">
+          <p className="nav-item" onClick={() => toggleMenu("Appel")}>
+            Appel de fond {openMenu === "Appel" ? "⮝  " : "⮟"}
+          </p>
+
+          {openMenu === "Appel" && (
+            <div className="menuderoulantcontent">
+              <a href="/appel">Appel de fond</a>
+            </div>
+          )}
+        </div>
 
         <div className="profil-div">
           <div className='profil'>
