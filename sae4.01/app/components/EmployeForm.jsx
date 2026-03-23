@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Swal from 'sweetalert2';
 import SearchableSelect from './SearchableSelect';
+import "../css/PageListUtilisateurs.css";
 
 export default function PageListUtilisateurs() {
 
