@@ -108,15 +108,7 @@ export default function Nav() {
         </div>
 
         <div className="menuderoulant">
-          <p className="nav-item" onClick={() => toggleMenu("Appel")}>
-            Appel de fond {openMenu === "Appel" ? "⮝  " : "⮟"}
-          </p>
-
-          {openMenu === "Appel" && (
-            <div className="menuderoulantcontent">
               <a href="/appel">Appel de fond</a>
-            </div>
-          )}
         </div>
 
         <div className="profil-div">
