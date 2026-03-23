@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import prisma from "../../lib/prisma";
 import bcrypt from "bcrypt";
+import { SignJWT } from "jose";
+
+const SECRET = new TextEncoder().encode(process.env.JWT_SECRET); // pour generer les tokens JWT
 
 /**
  * Gère les requêtes POST pour l'authentification des utilisateurs.
@@ -49,10 +52,27 @@ export async function POST(request) {
     );
   }
 
+  // Générer le JWT et le placer dans un cookie HTTP-only
+  const token = await new SignJWT({ role: user.role, login: user.login })
+    .setProtectedHeader({ alg: "HS256" })
+    .setExpirationTime("8h")
+    .sign(SECRET);
+
+
   // Si l'authentification réussit, retourne les informations de l'utilisateur
   // Le client pourra utiliser ces informations pour déterminer les permissions et afficher l'interface appropriée
-  return NextResponse.json({
+  const response = NextResponse.json({
     success: true,
-    user: user,
+    role: user.role,
   });
+
+  response.cookies.set("session", token, { // création du cookie avec un age max de 8h
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+    maxAge: 60 * 60 * 8,
+    path: "/",
+  });
+
+  return response;
 }

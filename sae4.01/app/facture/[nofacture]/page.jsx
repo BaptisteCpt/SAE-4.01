@@ -8,15 +8,6 @@ import styles from '../../css/facture.css'
 import { useRouter } from "next/navigation";
 
 export default function Page({ params }) {
-  const router = useRouter();
-  
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-
-    if (role !== "maitre Oeuvre") {
-      router.push("/");
-    }
-  }, [router]);
 
   const resolvedParams =  React.use(params);
 

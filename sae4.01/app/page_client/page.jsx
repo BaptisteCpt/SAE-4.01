@@ -1,42 +1,7 @@
-'use client'
+import { getSession } from "../lib/auth";
+import ListeClientsPage from "./ListeClientsPage";
 
-import React, { useEffect, useState } from 'react'
-import Nav_commercial from '../components/Nav_commercial'
-import Nav_admin from '../components/Nav_admin'
-import Footer from '../components/Footer'
-import styles from '../css/accueil.css'
-import Pclient from '../components/Pclient'
-import { useRouter } from 'next/navigation'
-
-/**
- * Page de liste des clients pour commerciaux et administrateurs
- * Affiche la barre de navigation appropriée selon le rôle de l'utilisateur
- * @returns {JSX.Element} La page de liste des clients
- */
-export default function page() {
-  const [navBar, setNavBar] = useState(null); 
-  const router = useRouter();
-
-  /**
-   * Détermine quelle barre de navigation afficher selon le rôle de l'utilisateur
-   */
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-
-    if (role === "commercial") {
-      setNavBar(<Nav_commercial/>);
-    } else if(role === "admin") {
-      setNavBar(<Nav_admin/>);
-    } else {
-      router.push('/');
-    }
-  }, [router]);
-
-  return (
-    <div className="page-wrapper">
-      { navBar } 
-      <Pclient/>
-      <Footer/>
-    </div>
-  )
+export default async function Page() {
+  const session = await getSession();
+  return <ListeClientsPage role={session.role} />;
 }

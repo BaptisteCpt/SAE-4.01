@@ -15,17 +15,6 @@ import '../css/creation_chantier.css'
  * @returns {JSX.Element} La page de création de chantier
  */
 export default function page() {
-  const router = useRouter();
-
-  /**
-   * Vérifie le rôle de l'utilisateur et redirige si ce n'est pas un commercial
-   */
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-    if (role !== "commercial") {
-      router.push('/');
-    }
-  }, [router]);
 
   return (
     <div className="page-wrapper">
