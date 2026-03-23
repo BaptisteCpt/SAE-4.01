@@ -107,7 +107,7 @@
 .menuderoulantcontent a:hover {
     background: #fff3e0;
     color: var(--couleur-principale);
-    transform: translateX(5px);
+    padding-left: 20px; 
 }
   
 .profil-div {
