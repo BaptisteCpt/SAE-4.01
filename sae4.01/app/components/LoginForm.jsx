@@ -70,6 +70,9 @@ export default function LoginForm() {
           }else if(role === "maitre Oeuvre"){
             router.push('/accueil_maitre')
           }
+          else if(role === "artisan"){
+            router.push('/accueil_artisan');
+          }
         }
       }, [success, router]); /* execute le useEffect à chauqe modif d'une de ces variables */
 
