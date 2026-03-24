@@ -26,7 +26,7 @@ export default function PageModifChantier() {
 
   useEffect(() => {
     if (!idChantier) {
-      router.push("/pageListeChantier");
+      router.push("/pageAdminChantier");
       return;
     }
     /**
@@ -67,7 +67,7 @@ export default function PageModifChantier() {
           setSelectedMoe(data.nomoe || "");
         } else {
           Swal.fire("Erreur", "Chantier introuvable", "error");
-          router.push("/pageListeChantier");
+          router.push("/pageAdminChantier");
         }
       } catch (err) {
         console.error(err);

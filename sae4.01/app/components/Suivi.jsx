@@ -212,7 +212,7 @@ export default function Suivi() {
     // Sauvegarde les informations dans le localStorage pour les passer à la page suivante
     localStorage.setItem("chantier", chantierid);
     localStorage.setItem("etape", etapeid);
-    router.push("/artisan");
+    router.push("/affectation");
   };
 
   /**

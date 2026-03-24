@@ -51,7 +51,7 @@ export default function AjoutCommerciale() {
                     icon: 'success',
                     confirmButtonText: 'Super !'
                 });
-                router.push('/pageListeEmp'); 
+                router.push('/pageListeUtilisateurs'); 
             } else {
                 const info = await res.json();
                 Swal.fire({

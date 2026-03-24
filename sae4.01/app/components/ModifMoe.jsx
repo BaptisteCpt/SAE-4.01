@@ -13,7 +13,7 @@ export default function ModifMoe() {
 
     useEffect(() => {
         if (!idMoe) {
-            router.push('/pageListeMoe');
+            router.push('/pageListeUtilisateurs');
             return;
         }
         async function charger() {
@@ -30,7 +30,7 @@ export default function ModifMoe() {
                     setPrenom(data.prenommoe || "");
                 } else {
                     Swal.fire('Erreur', "Maître d'œuvre introuvable", 'error');
-                    router.push('/pageListeEmp');
+                    router.push('/pageListeUtilisateurs');
                 }
             } catch (err) {
                 console.error(err);
@@ -60,7 +60,7 @@ export default function ModifMoe() {
 
             if (res.ok) {
                 await Swal.fire('Succès', "Maître d'œuvre mis à jour", 'success');
-                router.push('/pageListeEmp');
+                router.push('/pageListeUtilisateurs');
             } else {
                 const info = await res.json();
                 Swal.fire('Erreur', info.error || "Échec de la mise à jour", 'error');
