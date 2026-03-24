@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import "../css/admin-list.css";
 
 /**
@@ -8,6 +9,7 @@ import "../css/admin-list.css";
  * @returns {JSX.Element}
  */
 export default function ListeChantiersArtisan({ login }) {
+  const router = useRouter();
   const [chantiers, setChantiers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -42,7 +44,7 @@ export default function ListeChantiersArtisan({ login }) {
     }
 
     fetchChantiersArtisan();
-  }, []);
+  }, [login]);
 
   function toggleChantier(nochantier) {
     setExpandedChantier((prev) => (prev === nochantier ? null : nochantier));
@@ -114,11 +116,56 @@ export default function ListeChantiersArtisan({ login }) {
                     <tr>
                       <td colSpan={5} data-label="Étapes">
                         <strong>Étapes concernées :</strong>
-                        <ul style={{ marginTop: "10px" }}>
+                        <ul style={{ marginTop: "10px", listStyle: "none", paddingLeft: 0 }}>
                           {(chantier.etapes || []).map((etape) => (
-                            <li key={`${chantier.nochantier}-${etape.noetape}`}>
-                              Étape {etape.noetape} - {(etape.nometape || "").trim()} |{" "}
-                              {etape.reservee ? "Réservée" : "Non réservée"}
+                            <li
+                              key={`${chantier.nochantier}-${etape.noetape}`}
+                              style={{
+                                marginBottom: "12px",
+                                paddingBottom: "12px",
+                                borderBottom: "1px solid #eee",
+                              }}
+                            >
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexWrap: "wrap",
+                                  alignItems: "center",
+                                  gap: "10px",
+                                }}
+                              >
+                                <span>
+                                  Étape {etape.noetape} — {(etape.nometape || "").trim()} |{" "}
+                                  {etape.reservee ? "Réservée" : "Non réservée"}
+                                </span>
+                                {etape.nofacture != null ? (
+                                  <button
+                                    type="button"
+                                    className="but but-facture-voir"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      router.push(`/voir_facture_artisan/${etape.nofacture}`);
+                                    }}
+                                  >
+                                    Voir la facture
+                                  </button>
+                                ) : (
+                                  <button
+                                    type="button"
+                                    className="but but-facture-creer"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      router.push(
+                                        `/generer_facture_artisan?chantier=${encodeURIComponent(
+                                          String(chantier.nochantier)
+                                        )}&etape=${encodeURIComponent(String(etape.noetape))}`
+                                      );
+                                    }}
+                                  >
+                                    Créer la facture
+                                  </button>
+                                )}
+                              </div>
                             </li>
                           ))}
                         </ul>

@@ -25,11 +25,11 @@ model appel {
 
 model artisan {
   noartisan          Int                  @id
-  nomartisan         String               @db.Char(50)
-  prenomartisan      String?              @db.Char(50)
-  adresseartisan     String?              @db.Char(50)
-  cpartisan          String?              @db.Char(5)
-  villeartisan       String?              @db.Char(50)
+  nomartisan         String               @db.VarChar
+  prenomartisan      String?              @db.VarChar
+  adresseartisan     String?              @db.VarChar
+  cpartisan          String?              @db.VarChar
+  villeartisan       String?              @db.VarChar
   login              String?              @unique(map: "login") @db.VarChar
   etape_chantier     etape_chantier[]
   etre_qualifie_pour etre_qualifie_pour[]
@@ -39,9 +39,9 @@ model artisan {
 
 model chantier {
   nochantier      Int              @id
-  adressechantier String           @db.Char(50)
-  cpchantier      String           @db.Char(5)
-  villechantier   String           @db.Char(50)
+  adressechantier String           @db.VarChar
+  cpchantier      String           @db.VarChar
+  villechantier   String           @db.VarChar
   datecreation    DateTime         @default(dbgenerated("CURRENT_DATE")) @db.Date
   nomoe           Int
   noclient        Int
@@ -58,11 +58,11 @@ model chantier {
 
 model client {
   noclient      Int        @id @default(autoincrement())
-  nomclient     String     @db.Char(50)
-  prenomclient  String?    @db.Char(50)
-  adresseclient String     @db.Char(50)
-  cpclient      String     @db.Char(5)
-  villeclient   String     @db.Char(50)
+  nomclient     String     @db.VarChar
+  prenomclient  String?    @db.VarChar
+  adresseclient String     @db.VarChar
+  cpclient      String     @db.VarChar
+  villeclient   String     @db.VarChar
   chantier      chantier[]
 
   @@map("client")
@@ -85,7 +85,7 @@ model construire {
 
 model etape {
   noetape            Int                  @id
-  nometape           String               @db.Char(20)
+  nometape           String               @db.VarChar
   reservable         Boolean              @default(false)
   construire         construire[]
   etape_chantier     etape_chantier[]
@@ -142,8 +142,8 @@ model facture_artisan {
 
 model maitre_oeuvre {
   nomoe     Int        @id
-  nommoe    String     @db.Char(50)
-  prenommoe String?    @db.Char(50)
+  nommoe    String     @db.VarChar
+  prenommoe String?    @db.VarChar
   login     String?
   chantier  chantier[]
 
@@ -152,7 +152,7 @@ model maitre_oeuvre {
 
 model modele {
   nomodele          Int          @id
-  nommodele         String       @db.Char(40)
+  nommodele         String       @db.VarChar
   descriptionmodele String?      @db.VarChar(250)
   chantier          chantier[]
   construire        construire[]

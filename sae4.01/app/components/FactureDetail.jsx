@@ -7,24 +7,61 @@ export default function FactureDetail({ nofacture }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
     async function fetchFacture() {
+      setLoading(true);
+      const num = encodeURIComponent(String(nofacture ?? "").trim());
       try {
-        const res = await fetch(`/api/factures_by_num?nofacture=${nofacture}`);
+        const res = await fetch(`/api/factures_by_num?nofacture=${num}`, {
+          credentials: "include",
+        });
         const model = await res.json();
-        setFacture(model);
-        setLoading(false);
+        if (!cancelled) {
+          setFacture(model);
+        }
       } catch (err) {
         console.error("Erreur lors de la récuperation de la facture", err);
+        if (!cancelled) {
+          setFacture({ error: "Erreur réseau" });
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     }
+    if (nofacture == null || String(nofacture).trim() === "") {
+      setFacture({ error: "Numéro de facture manquant" });
+      setLoading(false);
+      return undefined;
+    }
     fetchFacture();
+    return () => {
+      cancelled = true;
+    };
   }, [nofacture]);
 
   if (loading) return <p>Chargement...</p>;
 
   if (!facture || facture.error) {
-    return <p>Facture introuvable</p>;
+    const msg =
+      facture?.error === "Interdit"
+        ? "Accès refusé à cette facture."
+        : facture?.error === "Non authentifié"
+          ? "Session expirée : reconnectez-vous."
+          : "Facture introuvable.";
+    return (
+      <div className="facture-wrapper">
+        <p style={{ textAlign: "center", padding: "2rem" }}>{msg}</p>
+      </div>
+    );
   }
+
+  const chantier = facture.etape_chantier?.chantier;
+  const adresseBrute = chantier?.adressechantier
+    ? String(chantier.adressechantier).trim()
+    : "";
+  const adresseFormatee = adresseBrute || "—";
 
   const handleDownload = () => {
     window.print();
@@ -41,20 +78,19 @@ export default function FactureDetail({ nofacture }) {
             </p>
             <p>
               <strong>Date :</strong>{" "}
-              {new Date(facture.datefacture).toLocaleDateString("fr-FR")}
+              {facture.datefacture
+                ? new Date(facture.datefacture).toLocaleDateString("fr-FR")
+                : "—"}
             </p>
           </div>
 
           <div className="facture-meta">
             <p>
               <strong>Chantier n°{facture.nochantier} :</strong>{" "}
-              {facture.etape_chantier.chantier.adressechantier.split(" ")[0] +
-                " " +
-                facture.etape_chantier.chantier.adressechantier.split(" ")[1] +
-                " " +
-                facture.etape_chantier.chantier.adressechantier.split(" ")[2]}
-              , {facture.etape_chantier.chantier.cpchantier}{" "}
-              {facture.etape_chantier.chantier.villechantier}
+              {adresseFormatee}
+              {chantier
+                ? `, ${chantier.cpchantier} ${chantier.villechantier}`
+                : ""}
             </p>
             <p>
               <strong>Étape :</strong>{" "}
@@ -89,8 +125,8 @@ export default function FactureDetail({ nofacture }) {
         <div className="facture-reglement">
           <p>
             <strong>Date de règlement :</strong>{" "}
-            {facture.dateReglfacture
-              ? new Date(facture.dateReglfacture).toLocaleDateString("fr-FR")
+            {facture.datereglfacture
+              ? new Date(facture.datereglfacture).toLocaleDateString("fr-FR")
               : "Non réglée"}
           </p>
         </div>

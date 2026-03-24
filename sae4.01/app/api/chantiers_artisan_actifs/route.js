@@ -30,11 +30,14 @@ export async function GET(request) {
         e.nometape,
         ec.reservee,
         ec.datedebut,
-        ec.datefin
+        ec.datefin,
+        f.nofacture
       FROM "Bati_Parti".etape_chantier ec
       INNER JOIN "Bati_Parti".artisan a ON a.noartisan = ec.noartisan
       INNER JOIN "Bati_Parti".chantier c ON c.nochantier = ec.nochantier
       INNER JOIN "Bati_Parti".etape e ON e.noetape = ec.noetape
+      LEFT JOIN "Bati_Parti".facture_artisan f
+        ON f.nochantier = ec.nochantier AND f.noetape = ec.noetape
       WHERE LOWER(TRIM(a.login)) = LOWER(${login})
       ORDER BY c.nochantier ASC, ec.noetape ASC
     `;
@@ -52,12 +55,15 @@ export async function GET(request) {
         });
       }
 
+      const nofacture =
+        row.nofacture != null ? Number(row.nofacture) : null;
       grouped.get(row.nochantier).etapes.push({
         noetape: row.noetape,
         nometape: row.nometape,
         reservee: row.reservee,
         datedebut: row.datedebut,
         datefin: row.datefin,
+        nofacture,
       });
     }
 
