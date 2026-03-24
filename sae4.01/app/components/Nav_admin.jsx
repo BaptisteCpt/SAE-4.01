@@ -9,12 +9,9 @@ import { useRouter } from 'next/navigation'
  * @returns {JSX.Element} La barre de navigation administrateur
  */
 export default function Nav() {
-    const [openMenu, setOpenMenu] = useState(null);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [employeMenuText, setEmployeMenuText] = useState("Employés ▼");
     const [roleDisplay, setRoleDisplay] = useState("Admin");
     const router = useRouter();
-    const dropdownRef = useRef(null);
 
     useEffect(() => {
         const role = localStorage.getItem("role");
@@ -26,20 +23,7 @@ export default function Nav() {
             };
             setRoleDisplay(roleMap[role] || role);
         }
-    }, []);
-
-    useEffect(() => {
-    function handleClickOutside(e) {
-        if (openMenu && dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setOpenMenu(null);
-        setEmployeMenuText("Employés ▼");
-        }
-    }
-
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-    }, [openMenu]);
-      
+    }, []);      
 
     /**
      * Bascule l'affichage du menu mobile
@@ -47,20 +31,7 @@ export default function Nav() {
     function toggleMobileMenu() {
         setMobileMenuOpen(!mobileMenuOpen);
     }
-
-    /**
-     * Bascule l'affichage d'un menu déroulant spécifique
-     * @param {string} menu - Le nom du menu à basculer
-     */
-    function toggleMenu(menu) {
-        if (openMenu === menu) {
-            setOpenMenu(null);
-            if (menu === "employes") setEmployeMenuText("Employés ▼");
-        } else {
-            setOpenMenu(menu);
-            if (menu === "employes") setEmployeMenuText("Employés ▲");
-        }
-    }   
+ 
       
     /**
      * Déconnecte l'utilisateur en vidant le localStorage et redirige vers la page d'accueil
@@ -94,17 +65,7 @@ export default function Nav() {
 
         <a href="/pageAdminChantier">Chantiers</a>
 
-        <div className="menuderoulant" ref={dropdownRef} onClick={() => toggleMenu("employes")}>
-            <span className="nav-item">{employeMenuText}</span>
-            {openMenu === "employes" && (
-                <div className="menuderoulantcontent">
-                    <a href="/pageCommerciale">Commercial</a>
-                    <a href="/pageArtisant">Artisan</a>
-                    <a href="/pageMoe">Maître d'Œuvre</a>
-                    <a href="/pageAdmin">Administrateur</a>
-                </div>
-            )}
-        </div>
+        <a href="/pageListeUtilisateurs">Utilisateurs</a>
 
         <div className="profil-div">
             <div className='profil'>

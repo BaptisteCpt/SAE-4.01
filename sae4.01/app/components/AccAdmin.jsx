@@ -23,8 +23,8 @@ export default function AccAdmin() {
     /**
      * Redirige vers la page de liste des employés
      */
-    function pageEmploye(){
-        router.push('/pageListeEmp')
+    function pageUtilisateurs(){
+        router.push('/pageListeUtilisateurs')
     }
 
     /**
@@ -61,8 +61,8 @@ export default function AccAdmin() {
                     </div>
 
                     <div className="bloc-accueil">
-                        <img src="/img/client.png" className="clients-img" onClick={pageEmploye} alt="Employés"/>
-                        <button className="but" type="button" onClick={pageEmploye}>
+                        <img src="/img/client.png" className="clients-img" onClick={pageUtilisateurs} alt="Employés"/>
+                        <button className="but" type="button" onClick={pageUtilisateurs}>
                             Liste des employés
                         </button>
                     </div>
