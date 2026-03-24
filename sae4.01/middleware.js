@@ -1,11 +1,25 @@
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
-import Swal from "sweetalert2";
 
 const SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
 const PERMISSIONS = {
   "/accueil_admin": ["admin"],
+  "/pageAdminChantier": ["admin"],
+  "/pageAdminModel": ["admin"],
+  "/pageAjoutAdmin": ["admin"],
+  "/pageAjoutArti": ["admin"],
+  "/pageAjoutCom": ["admin"],
+  "/pageAjoutModel": ["admin"],
+  "/pageAjoutMoe": ["admin"],
+  "/pageListeModel": ["admin"],
+  "/pageListeUtilisateurs": ["admin"],
+  "/pageModifAdmin": ["admin"],
+  "/pageModifArti": ["admin"],
+  "/pageModifChantier": ["admin"],
+  "/pageModifCom": ["admin"],
+  "/pageModifModel": ["admin"],
+  "/pageModifMoe": ["admin"],
   "/accueil_commerciale": ["commercial"],
   "/creation_de_chantier": ["commercial"],
   "/page_client": ["commercial"],
@@ -24,7 +38,7 @@ export async function middleware(request) {
   const pathname = request.nextUrl.pathname;
 
   if (!token) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
   try {
@@ -47,13 +61,28 @@ export async function middleware(request) {
 
     return NextResponse.next();
   } catch (err) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
 }
 
 export const config = {
   matcher: [
     "/accueil_admin",
+    "/pageAdminChantier",
+    "/pageAdminModel",
+    "/pageAjoutAdmin",
+    "/pageAjoutArti",
+    "/pageAjoutCom",
+    "/pageAjoutModel",
+    "/pageAjoutMoe",
+    "/pageListeModel",
+    "/pageListeUtilisateurs",
+    "/pageModifAdmin",
+    "/pageModifArti",
+    "/pageModifChantier",
+    "/pageModifCom",
+    "/pageModifModel",
+    "/pageModifMoe",
     "/accueil_commerciale",
     "/creation_de_chantier",
     "/page_client",

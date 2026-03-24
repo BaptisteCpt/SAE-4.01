@@ -53,7 +53,7 @@ export async function POST(request) {
   }
 
   // Générer le JWT et le placer dans un cookie HTTP-only
-  const token = await new SignJWT({ role: user.role, login: user.login })
+  const token = await new SignJWT({ role: user.role, login: user.login, nom: user.nom, prenom: user.prenom })
     .setProtectedHeader({ alg: "HS256" })
     .setExpirationTime("8h")
     .sign(SECRET);

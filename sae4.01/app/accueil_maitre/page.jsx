@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import Nav_maitreO from '../components/Nav_maitreO'
 import AccMaitre from '../components/AccMaitre'
 import Footer from '../components/Footer'
-import { useRouter } from 'next/navigation'
 
 /**
  * Page d'accueil pour les maîtres d'œuvre

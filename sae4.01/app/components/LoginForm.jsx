@@ -44,23 +44,6 @@ export default function LoginForm() {
         return;
       }
 
-<<<<<<< HEAD
-    useEffect(() => { /* ici on evite le warning car next à le temps de charger le composants sans regarder le router.push */
-        if (success) {
-          const role = localStorage.getItem("role");
-          if(role === "admin"){
-            router.push('/accueil_admin');
-          }else if(role === "commercial"){
-            router.push('/accueil_commerciale')
-          }else if(role === "maitre Oeuvre"){
-            router.push('/accueil_maitre')
-          }
-          else if(role === "artisan"){
-            router.push('/accueil_artisan');
-          }
-        }
-      }, [success, router]); /* execute le useEffect à chauqe modif d'une de ces variables */
-=======
       /* Enregistrement du role et du nom prénom de l'utilisateur */
       if (res.ok) {
         setRole(data.role); // on stock le role dans notre variable
@@ -85,7 +68,6 @@ export default function LoginForm() {
     router,
     role,
   ]); /* execute le useEffect à chauqe modif d'une de ces variables */
->>>>>>> e0f1f4e (Renforcement de la securite en cours manque partie admin : Tout dans le middleware.js et lib/auth)
 
   return (
     <>
