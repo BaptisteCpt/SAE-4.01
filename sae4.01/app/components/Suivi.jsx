@@ -215,16 +215,16 @@ export default function Suivi() {
     router.push("/artisan");
   };
 
-    /**
+  /**
    * Redirige vers la page de personnalisation pour un chantier spécifique
    * Sauvegarde le chantier dans le localStorage pour les restaurer sur la page suivante
    * @param {number} chantierid - L'ID du chantier
    */
-    const redirectP = (chantierid) => {
-      // Sauvegarde les informations dans le localStorage pour les passer à la page suivante
-      localStorage.setItem("chantier", chantierid);
-      router.push("/personnalisation");
-    };
+  const redirectP = (chantierid) => {
+    // Sauvegarde les informations dans le localStorage pour les passer à la page suivante
+    localStorage.setItem("chantier", chantierid);
+    router.push("/personnalisation");
+  };
 
   /**
    * Valide et termine le suivi du chantier

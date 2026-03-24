@@ -21,7 +21,7 @@ export default function LoginForm() {
 
   /**
    * Vérifie les identifiants de connexion et authentifie l'utilisateur
-   * Enregistre le rôle et le nom dans le localStorage et redirige selon le rôle
+   * et redirige selon le rôle
    */
   async function check() {
     if (login.length == 0 || mdp.length == 0) {

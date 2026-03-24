@@ -57,10 +57,9 @@ export default function Nav({ login }) {
       }   
       
       /**
-       * Déconnecte l'utilisateur en vidant le localStorage et redirige vers la page d'accueil
+       * Déconnecte l'utilisateur
        */
       async function logout() {
-        localStorage.clear()
         router.push('/');
       }
       

@@ -1,20 +1,7 @@
-"use client";
+import { getSession } from "../lib/auth";
+import Generer from "./generer";
 
-import React from "react";
-import NavArtisan from "../components/Nav_artisan";
-import GenererFactureArtisan from "../components/GenererFactureArtisan";
-import Footer from "../components/Footer";
-
-/**
- * Page de génération de facture artisan.
- * @returns {JSX.Element}
- */
-export default function PageGenererFactureArtisan() {
-  return (
-    <div className="page-wrapper">
-      <NavArtisan />
-      <GenererFactureArtisan />
-      <Footer />
-    </div>
-  );
+export default async function Page() {
+  const session = await getSession();
+  return <Generer login={session.login} />;
 }

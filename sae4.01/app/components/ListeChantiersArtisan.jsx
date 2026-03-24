@@ -7,7 +7,7 @@ import "../css/admin-list.css";
  * Affiche les chantiers où l'artisan connecté est activé.
  * @returns {JSX.Element}
  */
-export default function ListeChantiersArtisan() {
+export default function ListeChantiersArtisan({ login }) {
   const [chantiers, setChantiers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -16,12 +16,6 @@ export default function ListeChantiersArtisan() {
 
   useEffect(() => {
     async function fetchChantiersArtisan() {
-      const login = localStorage.getItem("nom");
-      if (!login) {
-        setError("Impossible d'identifier l'utilisateur connecté.");
-        setIsLoading(false);
-        return;
-      }
 
       try {
         const res = await fetch(

@@ -6,11 +6,12 @@ import Swal from 'sweetalert2';
 import SearchableSelect from './SearchableSelect';
 import "../css/PageListUtilisateurs.css";
 
-export default function PageListUtilisateurs() {
+export default function PageListUtilisateurs({ login }) {
 
     const router = useRouter();
     const [recherche, setRecherche] = useState(""); 
     const [liste, setListe] = useState([]);
+    
     useEffect(() => {
         async function ChargerListe() {
             try {
@@ -122,10 +123,9 @@ export default function PageListUtilisateurs() {
     };
 
     async function Suppr(id, nomComplet, role, uniqueKey, originalLogin) {
-        const monLoginActuel = localStorage.getItem("nom");
         
-        if (role === 'admin' && monLoginActuel && originalLogin) {
-            if (monLoginActuel.toLowerCase() === originalLogin.toLowerCase()) {
+        if (role === 'admin' && login && originalLogin) {
+            if (login.toLowerCase() === originalLogin.toLowerCase()) {
                 Swal.fire({ title: 'Action impossible', text: "Vous ne pouvez pas supprimer votre propre compte !", icon: 'error', confirmButtonText: 'Compris' });
                 return; 
             }

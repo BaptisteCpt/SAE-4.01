@@ -10,7 +10,6 @@ export default function NavArtisan({ login }) {
   const router = useRouter();
 
   function logout() {
-    localStorage.clear();
     router.push("/");
   }
 

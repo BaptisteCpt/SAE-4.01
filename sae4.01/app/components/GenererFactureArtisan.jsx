@@ -9,8 +9,7 @@ import Swal from "sweetalert2";
  * Formulaire de génération de facture artisan.
  * @returns {JSX.Element}
  */
-export default function GenererFactureArtisan() {
-  const [login, setLogin] = useState("");
+export default function GenererFactureArtisan({ login }) {
   const [chantiers, setChantiers] = useState([]);
   const [etapes, setEtapes] = useState([]);
   const [nochantier, setNochantier] = useState("");
@@ -29,11 +28,6 @@ export default function GenererFactureArtisan() {
       confirmButtonText: "OK",
     });
   }
-
-  useEffect(() => {
-    const loginStocke = localStorage.getItem("nom") || "";
-    setLogin(loginStocke);
-  }, []);
 
   useEffect(() => {
     async function fetchChantiers() {
