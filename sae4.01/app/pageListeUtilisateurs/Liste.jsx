@@ -15,7 +15,7 @@ import Footer from "../components/Footer";
 export default function AccCommercial({ login }) {
   return (
     <>
-      <Nav_admin />
+      <Nav_admin login={login} />
       <EmployeForm login={login} />
       <Footer />
     </>

@@ -12,7 +12,7 @@ import Footer from "../components/Footer";
 export default function PageListeChantiersArtisan({ login }) {
   return (
     <div className="page-wrapper">
-      <NavArtisan />
+      <NavArtisan login={login} />
       <ListeChantiersArtisan login={login} />
       <Footer />
     </div>

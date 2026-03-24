@@ -1,20 +1,7 @@
-"use client";
+import { getSession } from "../../lib/auth";
+import PageClient from "./PageClient";
 
-import React, { useEffect, useState } from "react";
-import Nav from "../../components/Nav_maitreO";
-import Footer from "../../components/Footer";
-import FactureDetail from "../../components/FactureDetail";
-import styles from '../../css/facture.css'
-
-export default function Page({ params }) {
-
-  const resolvedParams =  React.use(params);
-
-  return (
-    <>
-      <Nav />
-      <FactureDetail nofacture={resolvedParams.nofacture} />
-      <Footer />
-    </>
-  );
+export default async function Page({ params }) {
+  const session = await getSession();
+  return <PageClient login={session.login} nofacture={params.nofacture} />;
 }

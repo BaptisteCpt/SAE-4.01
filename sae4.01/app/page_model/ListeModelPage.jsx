@@ -13,12 +13,12 @@ import { useRouter } from "next/navigation";
  * Affiche la barre de navigation appropriée selon le rôle de l'utilisateur
  * @returns {JSX.Element} La page de liste des modèles
  */
-export default function page({ role }) {
+export default function page({ role, login }) {
   // Le rôle arrive en prop depuis le serveur
   return (
     <div className="page-wrapper">
-      {role === "maitre Oeuvre" && <Nav_M />}
-      {role === "commercial" && <Nav_commercial />}
+      {role === "maitre Oeuvre" && <Nav_M login={login} />}
+      {role === "commercial" && <Nav_commercial login={login} />}
       <PModel />
       <Footer />
     </div>

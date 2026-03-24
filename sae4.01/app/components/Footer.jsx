@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import "../css/footer.css";
 import { useRouter } from 'next/navigation';

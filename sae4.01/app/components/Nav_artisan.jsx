@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import "../css/navLogin.css";
 import { useRouter } from "next/navigation";

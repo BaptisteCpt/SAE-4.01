@@ -1,9 +1,5 @@
-'use client' 
-import "../css/admin-list.css"; 
-import { useState, useEffect } from 'react' 
-import Nav_admin from '../components/Nav_admin'
-import Modif from "../components/ModifModel"
-import Footer from '../components/Footer'
+import { getSession } from "../lib/auth";
+import PageClient from "./PageClient";
 
 
 /**
@@ -11,13 +7,7 @@ import Footer from '../components/Footer'
  * Vérifie que l'utilisateur est bien un administrateur avant d'afficher la page
  * @returns {JSX.Element} La page de modification de modèle ou null si non autorisé
  */
-export default function AccCommercial() { 
-
-  return (
-    <>
-      <Nav_admin />
-      <Modif/>
-      <Footer/>
-    </>
-  )
+export default async function AccCommercial() { 
+  const session = await getSession();
+  return <PageClient login={session.login} />;
 } 

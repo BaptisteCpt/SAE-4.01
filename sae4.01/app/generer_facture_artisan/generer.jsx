@@ -12,7 +12,7 @@ import Footer from "../components/Footer";
 export default function PageGenererFactureArtisan({ login }) {
   return (
     <div className="page-wrapper">
-      <NavArtisan />
+      <NavArtisan login={login} />
       <GenererFactureArtisan login={login} />
       <Footer />
     </div>
