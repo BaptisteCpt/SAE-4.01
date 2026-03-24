@@ -60,10 +60,7 @@ export default function LoginForm() {
         admin: "/accueil_admin",
         commercial: "/accueil_commerciale",
         "maitre Oeuvre": "/accueil_maitre",
-<<<<<<< HEAD
         artisan: "/accueil_artisan",
-=======
->>>>>>> e0f1f4e2158ad04c0b7cf02ebaeeb0702faf3c5a
       };
       router.push(redirects[role] ?? "/");
     }
