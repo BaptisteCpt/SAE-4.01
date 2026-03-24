@@ -9,16 +9,9 @@ import { useRouter } from "next/navigation";
  * Affiche un menu avec des boutons pour accéder aux différentes sections
  * @returns {JSX.Element} La page d'accueil artisan
  */
-export default function AccArtisan() {
-  const [nom, setNom] = useState("");
+export default function AccArtisan({ nom, prenom }) {
   const router = useRouter();
 
-  useEffect(() => {
-    const nomStocke = localStorage.getItem("nom");
-    if (nomStocke) {
-      setNom(nomStocke);
-    }
-  }, []);
 
   function goListeChantiers() {
     router.push("/liste_chantiers_artisan");
@@ -33,7 +26,7 @@ export default function AccArtisan() {
 
   return (
     <div className="bulle_accueil">
-      <h1>Bienvenue {nom}</h1>
+      <h1>Bienvenue {nom} {prenom}</h1>
       <div className="boutons_accueil">
         <div className="bloc-accueil" id="liste-chantiers">
           <img src="/img/calendrier.png" alt="Liste des chantiers" onClick={goListeChantiers} />

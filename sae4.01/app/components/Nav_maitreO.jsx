@@ -7,30 +7,11 @@ import { useRouter } from 'next/navigation';
  * Affiche le menu de navigation avec les différentes sections accessibles
  * @returns {JSX.Element} La barre de navigation maître d'œuvre
  */
-export default function Nav() {
+export default function Nav({ login }) {
   const [openMenu, setOpenMenu] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [roleDisplay, setRoleDisplay] = useState("Maître d'œuvre");
   const router = useRouter();
   const dropdownRef = useRef(null);
-
-  /**
-   * Récupère le rôle de l'utilisateur depuis le localStorage et l'affiche de manière lisible
-   * Utilise un mapping pour convertir les codes de rôle en libellés français
-   */
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-    if (role) {
-      // Mapping des codes de rôle vers leurs libellés affichés
-      const roleMap = {
-        "admin": "Administrateur",
-        "commercial": "Commercial",
-        "maitre Oeuvre": "Maître d'œuvre"
-      };
-      // Affiche le libellé correspondant ou le code original si non trouvé
-      setRoleDisplay(roleMap[role] || role);
-    }
-  }, []);
 
   useEffect(() => {
   /**
@@ -114,7 +95,7 @@ export default function Nav() {
         <div className="profil-div">
           <div className='profil'>
             <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
-            <input type='text' value={roleDisplay} className='input-role' readOnly/>
+            <input type='text' value={login} className='input-role' readOnly/>
           </div>
           <div className='logout'>
             <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}/>

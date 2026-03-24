@@ -1,21 +1,7 @@
-"use client";
+import { getSession } from "../lib/auth";
+import Accueil from "./accueil";
 
-import React from "react";
-import AccArtisan from "../components/AccArtisan";
-import Footer from "../components/Footer";
-import NavArtisan from "../components/Nav_artisan";
-
-/**
- * Page d'accueil artisan.
- * Affiche le menu principal artisan (front uniquement).
- * @returns {JSX.Element} La page d'accueil artisan
- */
-export default function PageAccueilArtisan() {
-  return (
-    <div className="page-wrapper">
-      <NavArtisan />
-      <AccArtisan />
-      <Footer />
-    </div>
-  );
+export default async function Page() {
+  const session = await getSession();
+  return <Accueil login={session.login} nom={session.nom} prenom={session.prenom} />;
 }

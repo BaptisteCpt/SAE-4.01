@@ -9,17 +9,9 @@ import { useRouter } from 'next/navigation'
  * Affiche un menu avec des boutons pour accéder aux différentes sections
  * @returns {JSX.Element} La page d'accueil commercial
  */
-export default function AccCommercial() { 
-
-    const [nom, setNom] = useState("");
+export default function AccCommercial({ nom, prenom }) { 
     const router = useRouter();
 
-    useEffect(() => {
-        const nomStocke = localStorage.getItem("nom");
-        if (nomStocke) {
-            setNom(nomStocke);
-        }
-    }, []); 
 
     /**
      * Redirige vers la page de liste des modèles
@@ -43,7 +35,7 @@ export default function AccCommercial() {
     }
     return (
     <div className="bulle_accueil">
-            <h1>Bienvenue { nom }</h1> 
+            <h1>Bienvenue {nom} {prenom}</h1> 
         <div className="boutons_accueil">
             <div className="bloc-accueil">
                 <img src="/img/maison-icone.png" onClick={pageModele} />

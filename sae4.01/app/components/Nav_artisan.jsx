@@ -6,22 +6,8 @@ import { useRouter } from "next/navigation";
  * Composant de barre de navigation pour les artisans.
  * @returns {JSX.Element} La barre de navigation artisan
  */
-export default function NavArtisan() {
-  const [roleDisplay, setRoleDisplay] = useState("Artisan");
+export default function NavArtisan({ login }) {
   const router = useRouter();
-
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-    if (role) {
-      const roleMap = {
-        admin: "Administrateur",
-        commercial: "Commercial",
-        "maitre Oeuvre": "Maître d'œuvre",
-        artisan: "Artisan",
-      };
-      setRoleDisplay(roleMap[role] || role);
-    }
-  }, []);
 
   function logout() {
     localStorage.clear();
@@ -46,7 +32,7 @@ export default function NavArtisan() {
         <div className="profil-div">
           <div className="profil">
             <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img" />
-            <input type="text" value={roleDisplay} className="input-role" readOnly />
+            <input type="text" value={login} className="input-role" readOnly />
           </div>
           <div className="logout">
             <img

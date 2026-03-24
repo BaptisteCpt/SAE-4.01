@@ -8,22 +8,9 @@ import { useRouter } from 'next/navigation'
  * Affiche le menu de navigation avec les différentes sections accessibles
  * @returns {JSX.Element} La barre de navigation administrateur
  */
-export default function Nav() {
+export default function Nav({ login }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [roleDisplay, setRoleDisplay] = useState("Admin");
-    const router = useRouter();
-
-    useEffect(() => {
-        const role = localStorage.getItem("role");
-        if (role) {
-            const roleMap = {
-                "admin": "Administrateur",
-                "commercial": "Commercial",
-                "maitre Oeuvre": "Maître d'œuvre"
-            };
-            setRoleDisplay(roleMap[role] || role);
-        }
-    }, []);      
+    const router = useRouter();     
 
     /**
      * Bascule l'affichage du menu mobile
@@ -70,7 +57,7 @@ export default function Nav() {
         <div className="profil-div">
             <div className='profil'>
             <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
-            <input type='text' value={roleDisplay} className='input-role' readOnly/>
+            <input type='text' value={login} className='input-role' readOnly/>
             </div>
             <div className='logout'>
             <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}} style={{cursor: 'pointer'}}/>

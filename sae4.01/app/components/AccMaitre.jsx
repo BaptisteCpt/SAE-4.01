@@ -9,16 +9,9 @@ import { useRouter } from "next/navigation";
  * Affiche un menu avec des boutons pour accéder aux différentes sections
  * @returns {JSX.Element} La page d'accueil maître d'œuvre
  */
-export default function AccMaitre() {
-  const [nom, setNom] = useState("");
+export default function AccMaitre({ nom, prenom }) {
   const router = useRouter();
 
-  useEffect(() => {
-    const nomStocke = localStorage.getItem("nom");
-    if (nomStocke) {
-      setNom(nomStocke);
-    }
-  }, []);
 
   /**
    * Redirige vers la page de liste des modèles
@@ -63,7 +56,7 @@ export default function AccMaitre() {
   }
   return (
     <div className="bulle_accueil">
-      <h1>Bienvenue {nom}</h1>
+      <h1>Bienvenue {nom} {prenom}</h1>
       <div className="boutons_accueil">
         <div className="bloc-accueil">
           <img src="/img/maison-icone.png" onClick={pageModele} />

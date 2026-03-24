@@ -31,6 +31,9 @@ const PERMISSIONS = {
   "/artisan": ["maitre Oeuvre"],
   "/AnalyseEtapes": ["maitre Oeuvre"],
   "/appel": ["maitre Oeuvre"],
+  "/accueil_artisan": ["artisan"],
+  "/generer_facture_artisan": ["artisan"],
+  "/liste_chantier_artisan": ["artisan"],
 };
 
 export async function middleware(request) {
@@ -50,16 +53,23 @@ export async function middleware(request) {
 
     if (regle && !regle[1].includes(payload.role)) {
       const accueilParRole = {
-        "admin":        "/accueil_admin",
-        "commercial":   "/accueil_commerciale",
+        admin: "/accueil_admin",
+        commercial: "/accueil_commerciale",
         "maitre Oeuvre": "/accueil_maitre",
+        artisan: "/accueil_artisan",
       };
-    
+
       const redirect = accueilParRole[payload.role] ?? "/";
       return NextResponse.redirect(new URL(redirect, request.url));
     }
 
-    return NextResponse.next();
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-user-role", payload.role);
+    requestHeaders.set("x-user-login", payload.login);
+    requestHeaders.set("x-user-nom", payload.nom ?? "");
+    requestHeaders.set("x-user-prenom", payload.prenom ?? "");
+
+    return NextResponse.next({ request: { headers: requestHeaders } });
   } catch (err) {
     return NextResponse.redirect(new URL("/", request.url));
   }
@@ -95,5 +105,8 @@ export const config = {
     "/artisan",
     "/AnalyseEtapes",
     "/appel",
+    "/accueil_artisan",
+    "/generer_facture_artisan",
+    "/liste_chantier_artisan",
   ],
 };
