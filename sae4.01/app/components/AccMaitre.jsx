@@ -38,7 +38,7 @@ export default function AccMaitre({ nom, prenom }) {
    * Redirige vers la page d'affectation des artisans
    */
   function pageArti() {
-    router.push("/artisan");
+    router.push("/affectation");
   }
 
   /**

@@ -1,5 +1,5 @@
 import { getSession } from "../lib/auth";
-import PageClient from "./PageClient";
+import Affectation from "./affectation";
 
 /**
  * Page d'affectation des artisans aux étapes
@@ -8,5 +8,5 @@ import PageClient from "./PageClient";
  */
 export default async function page() {
   const session = await getSession();
-  return <PageClient login={session.login} />;
+  return <Affectation login={session.login} />;
 }

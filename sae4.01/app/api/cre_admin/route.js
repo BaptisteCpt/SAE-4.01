@@ -48,7 +48,7 @@ export async function POST(request) {
         // Stocke le mot de passe hashé au lieu du mot de passe en clair (sécurité)
         mot_de_passe: hashedMdp, 
         role: "admin", // Définit le rôle comme administrateur
-        nom: nom,
+        nom: nom.toUpperCase(),
         prenom: prenom,
       },
     });

@@ -37,7 +37,7 @@ export async function POST(request) {
     const NouvelArtisan = await prisma.artisan.create({
       data: {
         noartisan: nextId,
-        nomartisan: nom,
+        nomartisan: nom.toUpperCase(),
         prenomartisan: prenom,
         adresseartisan: adresse,
         cpartisan: cp,

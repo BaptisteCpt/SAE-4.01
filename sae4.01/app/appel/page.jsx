@@ -1,5 +1,5 @@
 import { getSession } from "../lib/auth";
-import PageClient from "./PageClient";
+import PageClient from "./appel";
 
 /**
  * Page de gestion des appels de fonds

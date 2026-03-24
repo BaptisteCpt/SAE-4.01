@@ -1,5 +1,5 @@
 import { getSession } from "../lib/auth";
-import PageClient from "./PageClient";
+import PageClient from "./analyse";
 
 /**
  * Page de gestion des factures des artisans

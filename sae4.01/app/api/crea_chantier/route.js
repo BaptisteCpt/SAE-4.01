@@ -32,7 +32,7 @@ export async function POST(request) {
         nochantier: nextId,
         adressechantier: adresse_du_chantier,
         cpchantier: code_postal_chantier, 
-        villechantier: villechantier,
+        villechantier: villechantier.toUpperCase(),
         // Convertit la date string en objet Date pour le stockage
         datecreation: new Date(date), 
         // Convertit les IDs en nombres pour les relations avec les autres tables

@@ -28,12 +28,12 @@ const PERMISSIONS = {
   "/suivi": ["maitre Oeuvre"],
   "/personnalisation": ["maitre Oeuvre"],
   "/facture": ["maitre Oeuvre"],
-  "/artisan": ["maitre Oeuvre"],
+  "/affectation": ["maitre Oeuvre"],
   "/AnalyseEtapes": ["maitre Oeuvre"],
   "/appel": ["maitre Oeuvre"],
   "/accueil_artisan": ["artisan"],
   "/generer_facture_artisan": ["artisan"],
-  "/liste_chantier_artisan": ["artisan"],
+  "/liste_chantiers_artisan": ["artisan"],
 };
 
 export async function middleware(request) {
@@ -95,6 +95,7 @@ export const config = {
     "/pageModifMoe",
     "/accueil_commerciale",
     "/creation_de_chantier",
+    "/creation_de_chantier/:path+",
     "/page_client",
     "/page_model",
     "/accueil_maitre",
@@ -102,11 +103,11 @@ export const config = {
     "/personnalisation",
     "/facture",
     "/facture/:path+",
-    "/artisan",
+    "/affectation",
     "/AnalyseEtapes",
     "/appel",
     "/accueil_artisan",
     "/generer_facture_artisan",
-    "/liste_chantier_artisan",
+    "/liste_chantiers_artisan",
   ],
 };

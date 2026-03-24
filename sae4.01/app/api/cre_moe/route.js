@@ -34,7 +34,7 @@ export async function POST(request) {
     const nouvMoe = await prisma.maitre_oeuvre.create({
       data: {
         nomoe: nextId,
-        nommoe: nom,
+        nommoe: nom.toUpperCase(),
         prenommoe: prenom,
         login: loginMoe, // Stocke le login pour référence
         

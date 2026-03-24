@@ -22,7 +22,7 @@ export async function POST(request) {
     // Utilise findFirst pour trouver le premier client correspondant
     const present = await prisma.client.findFirst({
       where: {
-        nomclient: nom,
+        nomclient: nom.toUpperCase(),
         prenomclient: prenom, 
       },
     });

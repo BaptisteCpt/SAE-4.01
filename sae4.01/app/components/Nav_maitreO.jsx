@@ -83,7 +83,7 @@ export default function Nav({ login }) {
             <div className="menuderoulantcontent">
               <a href="/suivi">Suivi</a>
               <a href="/personnalisation">Personnalisation</a>
-              <a href="/artisan">Artisan</a>
+              <a href="/affectation">Affectation Artisan</a>
               <a href="/AnalyseEtapes">Analyse Des Etapes</a>
             </div>
           )}
