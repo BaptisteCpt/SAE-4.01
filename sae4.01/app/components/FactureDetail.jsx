@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import "../css/facture.css";
 
 export default function FactureDetail({ nofacture }) {
   const [facture, setFacture] = useState(null);
@@ -41,7 +42,13 @@ export default function FactureDetail({ nofacture }) {
     };
   }, [nofacture]);
 
-  if (loading) return <p>Chargement...</p>;
+  if (loading) {
+    return (
+      <div className="facture-wrapper">
+        <p style={{ textAlign: "center", padding: "2rem" }}>Chargement...</p>
+      </div>
+    );
+  }
 
   if (!facture || facture.error) {
     const msg =

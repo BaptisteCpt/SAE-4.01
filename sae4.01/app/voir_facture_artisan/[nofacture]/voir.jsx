@@ -3,7 +3,6 @@
 import NavArtisan from "../../components/Nav_artisan";
 import Footer from "../../components/Footer";
 import FactureDetail from "../../components/FactureDetail";
-import "../../css/facture.css";
 
 /**
  * Consultation d'une facture artisan (hors route /facture réservée au maître d'œuvre).

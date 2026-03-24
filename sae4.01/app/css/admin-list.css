@@ -70,55 +70,55 @@ body {
     box-shadow: 0 1px 3px rgba(243, 156, 18, 0.3);
 }
 
-/* Boutons dans les tableaux */
-table .but {
+/* Boutons dans les tableaux (listes admin / artisan) */
+.table-container table .but {
     padding: 8px 16px;
     font-size: 0.9rem;
     margin: 0 4px;
     min-width: 90px;
 }
 
-table .but:first-of-type {
+.table-container table .but:first-of-type {
     background-color: #3498db;
     box-shadow: 0 2px 6px rgba(52, 152, 219, 0.3);
 }
 
-table .but:first-of-type:hover {
+.table-container table .but:first-of-type:hover {
     background-color: #2980b9;
     box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
 }
 
-table .but:last-of-type {
+.table-container table .but:last-of-type {
     background-color: #e74c3c;
     box-shadow: 0 2px 6px rgba(231, 76, 60, 0.3);
 }
 
-table .but:last-of-type:hover {
+.table-container table .but:last-of-type:hover {
     background-color: #c0392b;
     box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
 }
 
 /* Liste chantiers artisan : facture existante = vert, à créer = rouge */
-table .but.but-facture-voir {
+.table-container table .but.but-facture-voir {
     background-color: #27ae60;
     color: #ffffff;
     border: none;
     box-shadow: 0 2px 6px rgba(39, 174, 96, 0.35);
 }
 
-table .but.but-facture-voir:hover {
+.table-container table .but.but-facture-voir:hover {
     background-color: #219a52;
     box-shadow: 0 4px 12px rgba(39, 174, 96, 0.45);
 }
 
-table .but.but-facture-creer {
+.table-container table .but.but-facture-creer {
     background-color: #e74c3c;
     color: #ffffff;
     border: none;
     box-shadow: 0 2px 6px rgba(231, 76, 60, 0.35);
 }
 
-table .but.but-facture-creer:hover {
+.table-container table .but.but-facture-creer:hover {
     background-color: #c0392b;
     box-shadow: 0 4px 12px rgba(231, 76, 60, 0.45);
 }
@@ -134,7 +134,9 @@ table .but.but-facture-creer:hover {
     background-color: #fff;
 }
 
-table {
+/* Tout le tableau listes admin : limité à .table-container pour ne pas casser
+   d'autres tableaux (ex. facture artisan après navigation client). */
+.table-container table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
@@ -142,14 +144,14 @@ table {
     background-color: #fff;
 }
 
-thead {
+.table-container thead {
     background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
     position: sticky;
     top: 0;
     z-index: 10;
 }
 
-th {
+.table-container th {
     padding: 18px 20px;
     text-align: left;
     color: #ffffff;
@@ -161,15 +163,15 @@ th {
     white-space: nowrap;
 }
 
-th:first-child {
+.table-container th:first-child {
     border-top-left-radius: 12px;
 }
 
-th:last-child {
+.table-container th:last-child {
     border-top-right-radius: 12px;
 }
 
-td {
+.table-container td {
     padding: 16px 20px;
     border-bottom: 1px solid #e9ecef;
     color: #2c3e50;
@@ -178,55 +180,57 @@ td {
     transition: background-color 0.2s ease;
 }
 
-tbody tr {
+.table-container tbody tr {
     transition: all 0.2s ease;
 }
 
-tbody tr:nth-child(even) {
+.table-container tbody tr:nth-child(even) {
     background-color: #f8f9fa; 
 }
 
-tbody tr:nth-child(odd) {
+.table-container tbody tr:nth-child(odd) {
     background-color: #ffffff;
 }
 
-tbody tr:hover {
+.table-container tbody tr:hover {
     background-color: #fff8e1;
     transform: scale(1.01);
     box-shadow: 0 2px 8px rgba(243, 156, 18, 0.15);
 }
 
-tbody tr:last-child td:first-child {
+.table-container tbody tr:last-child td:first-child {
     border-bottom-left-radius: 12px;
 }
 
-tbody tr:last-child td:last-child {
+.table-container tbody tr:last-child td:last-child {
     border-bottom-right-radius: 12px;
 }
 
-tbody tr:last-child td {
+.table-container tbody tr:last-child td {
     border-bottom: none;
 }
 
-th, td {
+.table-container th,
+.table-container td {
     border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-th:last-child, td:last-child {
+.table-container th:last-child,
+.table-container td:last-child {
     border-right: none;
 }
 
-thead th {
+.table-container thead th {
     border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-td ul {
+.table-container td ul {
     list-style-type: disc;
     padding-left: 20px;
     margin: 0;
 }
 
-td ul li {
+.table-container td ul li {
     margin-bottom: 4px;
 }
 
@@ -608,22 +612,27 @@ select:focus {
         gap: 10px;
     }
 
-    /* Transformation du tableau en cards sur mobile */
+    /* Transformation du tableau en cards sur mobile (uniquement listes admin) */
     .table-container {
         overflow-x: visible;
     }
 
-    table, thead, tbody, th, td, tr {
+    .table-container table,
+    .table-container thead,
+    .table-container tbody,
+    .table-container th,
+    .table-container td,
+    .table-container tr {
         display: block;
     }
 
-    thead tr {
+    .table-container thead tr {
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
 
-    tr {
+    .table-container tr {
         border: 1px solid #ddd;
         border-radius: 8px;
         margin-bottom: 15px;
@@ -633,12 +642,12 @@ select:focus {
         transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    tr:hover {
+    .table-container tr:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
-    td {
+    .table-container td {
         border: none;
         border-bottom: 1px solid #eee;
         position: relative;
@@ -650,11 +659,11 @@ select:focus {
         word-wrap: break-word;
     }
 
-    td:last-child {
+    .table-container td:last-child {
         border-bottom: none;
     }
 
-    td:before {
+    .table-container td:before {
         content: attr(data-label);
         position: absolute;
         left: 10px;
@@ -667,14 +676,14 @@ select:focus {
     }
 
     /* Style spécial pour les boutons dans les cards */
-    td:last-child {
+    .table-container td:last-child {
         padding-left: 10px;
         display: flex;
         flex-direction: column;
         gap: 8px;
     }
 
-    td:last-child:before {
+    .table-container td:last-child:before {
         content: attr(data-label);
         position: static;
         width: auto;
@@ -683,8 +692,7 @@ select:focus {
         color: #2c3e50;
     }
 
-    /* Amélioration pour les tableaux avec beaucoup de colonnes */
-    tr {
+    .table-container tr {
         min-height: auto;
     }
 }
@@ -700,21 +708,20 @@ select:focus {
         font-size: 1.3rem;
     }
 
-    td {
+    .table-container td {
         padding-left: 45%;
         font-size: 0.9rem;
     }
 
-    td:before {
+    .table-container td:before {
         font-size: 0.85rem;
     }
 
-    /* Amélioration pour les tableaux avec beaucoup de colonnes (comme liste des chantiers) */
-    td:last-child {
+    .table-container td:last-child {
         padding-left: 10px;
     }
 
-    td:last-child:before {
+    .table-container td:last-child:before {
         margin-bottom: 8px;
     }
 

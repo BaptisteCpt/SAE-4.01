@@ -1,16 +1,15 @@
-html,
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100%;
-  background: #f5f5f5;
-}
+/* Ne pas redéfinir html/body ici : en navigation client, ce fichier peut s'appliquer
+   après globals.css et retirer display:flex / couleurs du body → tableau mal calculé. */
 
 .facture-wrapper {
   min-height: 85vh;
   padding: 40px 20px 60px;
   background: #f5f5f5;
   box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  /* Zone claire lisible même si le body est en thème sombre */
+  color: #111;
 }
 
 .facture {
@@ -21,6 +20,8 @@ body {
   margin: 0 auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
 }
 
 .facture-header {
@@ -31,17 +32,44 @@ body {
   flex-wrap: wrap;
 }
 
+/* Priorité sur h1 global (ex. accueil.css en blanc) */
+.facture h1 {
+  color: #000000;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.75rem;
+  text-align: left;
+}
+
 .facture-table {
   width: 100%;
+  max-width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   margin-bottom: 30px;
+  /* Priorité sur d’éventuelles règles globales (ex. listes admin en mode « cards ») */
+  display: table !important;
+}
+
+.facture-table thead {
+  display: table-header-group !important;
+}
+
+.facture-table tbody {
+  display: table-row-group !important;
+}
+
+.facture-table tr {
+  display: table-row !important;
 }
 
 .facture-table th,
 .facture-table td {
+  display: table-cell !important;
   border: 1px solid #ddd;
   padding: 12px;
   text-align: left;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .facture-table th {
