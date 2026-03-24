@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";
+<<<<<<< HEAD
+=======
+import Swal from "sweetalert2";
+>>>>>>> e0f1f4e2158ad04c0b7cf02ebaeeb0702faf3c5a
 
 const SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
 const PERMISSIONS = {
   "/accueil_admin": ["admin"],
+<<<<<<< HEAD
   "/pageAdminChantier": ["admin"],
   "/pageAdminModel": ["admin"],
   "/pageAjoutAdmin": ["admin"],
@@ -20,6 +25,8 @@ const PERMISSIONS = {
   "/pageModifCom": ["admin"],
   "/pageModifModel": ["admin"],
   "/pageModifMoe": ["admin"],
+=======
+>>>>>>> e0f1f4e2158ad04c0b7cf02ebaeeb0702faf3c5a
   "/accueil_commerciale": ["commercial"],
   "/creation_de_chantier": ["commercial"],
   "/page_client": ["commercial"],
