@@ -1,5 +1,19 @@
 # Bâti'Parti - SAÉ 4.01
 
+# Table des matières
+
+- [Description du projet](#description)
+- [Information Technique](#information-technique)
+- [Fonctionnalités](#fonctionnalités)
+    - [1. Gestion Commerciale](#1.-gestion-commerciale)
+    - [2. Personnalisation du Chantier](#2.-personnalisation-du-chantier)
+    - [3. Suivi de Chantier](#3.-suivi-de-chantier)
+    - [4. Facturation](#4.-facturation)
+- [Installation et Démarrage en Local](#installation-et-démarrage-en-local)
+- [Installation et Déployement sur vercel](#installation-et-déployement-sur-vercel)
+- [Auteurs](#auteurs)
+
+
 ## Description
 
 Application web de gestion de chantiers développée pour l'entreprise de construction de maisons individuelles **Bâti'Parti**.
