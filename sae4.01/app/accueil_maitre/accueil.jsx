@@ -14,7 +14,7 @@ export default function PageMaitreOeuvre({ login, nom, prenom }) {
   return (
     <div className="page-wrapper">
       <Nav_maitreO login={login} />
-      <AccMaitre nom={nom} prenom={prenom} />
+      <AccMaitre login={login} nom={nom} prenom={prenom} />
       <Footer />
     </div>
   )
