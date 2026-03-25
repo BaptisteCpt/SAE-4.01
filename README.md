@@ -95,9 +95,13 @@ Il est disponible en production à cette URL : [sae.baptiste-coupat.fr](https://
 
 ##  Installation et Déployement sur vercel
 
-1.  **Fork le dépôt.**
+1.  Modifier l'api ```sendMail``` en remplaçant :
+`http://localhost:3000/` par `https://votredomaine/`
 
-2.  **Créer un compte sur [neon](https://neon.com/) :**
+2. **Fork le dépôt.**
+
+
+3.  **Créer un compte sur [neon](https://neon.com/) :**
     
     Faire ensuite : 
     - New Project
@@ -110,7 +114,7 @@ Il est disponible en production à cette URL : [sae.baptiste-coupat.fr](https://
     psql "URL_De_Neon" < jeu_de_donnees.sql
     ```
 
-3.  **Déployer sur vercel :**
+4.  **Déployer sur vercel :**
 
     - Aller sur [vercel.com](https://vercel.com) et se créer un compte avec GitHub ou GitLab.
     - Cliquer sur Add New Project puis importer le dépot du projet.
@@ -127,7 +131,7 @@ Il est disponible en production à cette URL : [sae.baptiste-coupat.fr](https://
     - Cliquer sur **Deploy** → Vercel build et va donner une URL du style `sae-xxx.vercel.app`
 
 
-4.  **Ajouter un domaine personnel sur Vercel :**
+5.  **Ajouter un domaine personnel sur Vercel :**
     
     - Aller sur l'onglet **Domains** puis cliquer sur **Add**, ensuite écrire le domaine que vous possedez
     - Vercel va donner un enregistrement DNS à créer sur le site qui gère votre domaine (dans notre cas [infomaniak](infomaniak.com))
@@ -139,12 +143,12 @@ Il est disponible en production à cette URL : [sae.baptiste-coupat.fr](https://
 
     ```
 
-5.  **C'est fait :**
+6.  **C'est fait :**
 
     Ouvrez l'URL de votre domaine ou bien celle donné par vercel pour voir l'application.
 
 
-6.  **Pour se login**
+7.  **Pour se login**
 
     - En Commercial :
         - login: coupatb
