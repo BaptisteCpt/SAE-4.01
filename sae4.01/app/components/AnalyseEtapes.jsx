@@ -126,10 +126,15 @@ export default function ArtisanForm() {
                       </h3>
 
                       <div className="facture-content">
-                        <p className="no-data">Pas de facture pour cette étape.</p>
+                        <p className="no-data">
+                          Pas de facture pour cette étape.
+                        </p>
                       </div>
 
-                      <button className="facture-button disabled-button" disabled>
+                      <button
+                        className="facture-button disabled-button"
+                        disabled
+                      >
                         Aucune facture
                       </button>
                     </div>
@@ -170,8 +175,29 @@ export default function ArtisanForm() {
                     </h3>
 
                     <div className="facture-content">
+                      <h5>Infos de la facture n°{fac.nofacture} : </h5>
                       <p>
-                        💰 Écart prix : {ecartPrix.toFixed(2)} € ({margePourcent}%)
+                        💰 Prix de départ :{" "}
+                        {etapechantier.montanttheoriquefacture} €
+                      </p>
+                      <p>
+                        💰 Réduction / Supplément :{" "}
+                        {etapechantier.reducsuppl > 0 ? etapechantier.reducsuppl +"€" : "Pas de réduction ou supplément"}
+                      </p>
+                      <p>
+                        📅 Démarrage théorique :{" "}
+                        {debutTheo.toLocaleDateString("FR-fr", {
+                          weekday: "long",
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </p>
+                      <p>🧑🏻‍🔧 artisan : {etapechantier.artisan.nomartisan} {etapechantier.artisan.prenomartisan}</p>
+                      <h5>Anomalies repéré : </h5>
+                      <p>
+                        💰 Écart prix : {ecartPrix.toFixed(2)} € (
+                        {margePourcent}%)
                       </p>
                       <p>
                         📅 Retard démarrage :{" "}
@@ -180,7 +206,9 @@ export default function ArtisanForm() {
                           : `${retardDebut} jours`}
                       </p>
                       <p>🕓 Durée réelle : {dureeReelle} jours</p>
-                      <p>📊 Résultat : {ecartPrix >= 0 ? "Surcoût" : "Économie"}</p>
+                      <p>
+                        📊 Résultat : {ecartPrix == 0 ? "pas d'écart de prix" : ecartPrix > 0 ? "Surcoût" : "Économie"}
+                      </p>
                     </div>
 
                     <button
