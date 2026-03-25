@@ -32,7 +32,7 @@ Ce projet a été réalisé dans le cadre de la **SAÉ 4.01 : Développement d'u
     * **50%** après la couverture.
     * **100%** à la fin des travaux.
 
-##  Installation et Démarrage
+##  Installation et Démarrage en Local
 
 1.  **Cloner le dépôt.**
 
@@ -41,9 +41,14 @@ Ce projet a été réalisé dans le cadre de la **SAÉ 4.01 : Développement d'u
     npm install
     ```
 3.  **Configuration BDD :**
-    Renseignez vos identifiants de base de données dans le .env.exemple
 
-4.  **Importer les données de votre base :**
+    À l'aide du fichier ```jeu_de_donnees.sql```, importez les données dans votre base de données en exécutant la commande suivante :
+    ```bash
+    psql nom_base < jeu_de_donnees.sql
+    ```
+    Renseignez vos identifiants de base de données dans le ```.env.exemple``` et renommer le en ```.env```
+
+4.  **Importer les données depuis votre base de données :**
     ```bash
     npx prisma db pull
     npx prisma generate
@@ -58,17 +63,83 @@ Ce projet a été réalisé dans le cadre de la **SAÉ 4.01 : Développement d'u
 
 
 6.  **Pour se login**
-    En Commercial :
-        login: coupatb
-        mdp: coupatb
+
+    - En Commercial :
+        - login: coupatb
+        - mdp: coupatb
     
-    En Maitre d'Oeuvre :
-        login: blancm
-        mdp: blancm
+    - En Maitre d'Oeuvre :
+        - login: blancm
+        - mdp: blancm
     
-    En Administrateur :
-        login: admin
-        mdp: admin
+    - En Administrateur :
+        - login: admin
+        - mdp: admin
+
+##  Installation et Déployement sur vercel
+
+1.  **Fork le dépôt.**
+
+2.  **Créer un compte sur [neon](https://neon.com/) :**
+    
+    Faire ensuite : 
+    - New Project
+    - Copier ensuite la string qui s'affiche (penser à faire afficher le mot de passe)
+    - qui ressemble à :
+
+     - ```postgresql://user:password@ep-xxx.eu-west-1.aws.neon.tech/dbname?sslmode=require```
+    - exécuter ensuite sur un terminal : 
+    ```bash
+    psql "URL_De_Neon" < jeu_de_donnees.sql
+    ```
+
+3.  **Déployer sur vercel :**
+
+    - Aller sur [vercel.com](https://vercel.com) et se créer un compte avec GitHub ou GitLab.
+    - Cliquer sur Add New Project puis importer le dépot du projet.
+    - Dans **Environment Variables**, ajouter un à un:
+        ```
+        DATABASE_URL = Votre URL Neon
+        JWT_SECRET   = 3d1c8286e341ee472d3a0c1d7f7fa23e9eb12e08395bb64a92f29fa19a009a1f
+        SECURE_COOKIE = true
+        ```
+    - Dans les options de **Build**, modifier le champ ```Build Command``` et mettre : 
+    ```
+    npx prisma generate && npm run build
+    ```
+    - Cliquer sur **Deploy** → Vercel build et va donner une URL du style `sae-xxx.vercel.app`
+
+
+4.  **Ajouter un domaine personnel sur Vercel :**
+    
+    - Aller sur l'onglet **Domains** puis cliquer sur **Add**, ensuite écrire le domaine que vous possedez
+    - Vercel va donner un enregistrement DNS à créer sur le site qui gère votre domaine (dans notre cas [infomaniak](infomaniak.com))
+    - Exemple : 
+    ```
+    Type  : CNAME
+    Nom   : sae
+    Valeur: cname.vercel-dns.com
+
+    ```
+
+5.  **C'est fait :**
+
+    Ouvrez l'URL de votre domaine ou bien celle donné par vercel pour voir l'application.
+
+
+6.  **Pour se login**
+
+    - En Commercial :
+        - login: coupatb
+        - mdp: coupatb
+    
+    - En Maitre d'Oeuvre :
+        - login: blancm
+        - mdp: blancm
+    
+    - En Administrateur :
+        - login: admin
+        - mdp: admin
 
 ##  Auteurs
 * Doisy Noa (doisyn)
