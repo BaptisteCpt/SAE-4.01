@@ -74,6 +74,11 @@ export default function FactureDetail({ nofacture }) {
     window.print();
   };
 
+  let montantHT = Number(facture.montantfacture);
+  const montantTTC = montantHT;
+  const tva = montantHT * 0.2;
+  montantHT = montantHT - tva;
+
   return (
     <div className="facture-wrapper">
       <div className="facture">
@@ -112,7 +117,9 @@ export default function FactureDetail({ nofacture }) {
               <th>Description</th>
               <th>Nb jours</th>
               <th>Numéro étape</th>
-              <th>Montant (€)</th>
+              <th>Montant HT (€)</th>
+              <th>TVA 20% (€)</th>
+              <th>Montant TTC (€)</th>
             </tr>
           </thead>
           <tbody>
@@ -120,13 +127,15 @@ export default function FactureDetail({ nofacture }) {
               <td>Étape {facture.etape_chantier?.etape?.nometape?.trim()}</td>
               <td>{facture.nbjourstravail}</td>
               <td>{facture.noetape ?? "-"}</td>
-              <td>{Number(facture.montantfacture).toFixed(2)}</td>
+              <td>{montantHT.toFixed(2)}</td>
+              <td>{tva.toFixed(2)}</td>
+              <td>{montantTTC.toFixed(2)}</td>
             </tr>
           </tbody>
         </table>
 
         <div className="facture-total">
-          <h2>Total TTC : {Number(facture.montantfacture).toFixed(2)} €</h2>
+          <h2>Total TTC : {montantTTC.toFixed(2)} €</h2>
         </div>
 
         <div className="facture-reglement">
@@ -144,6 +153,6 @@ export default function FactureDetail({ nofacture }) {
           Télécharger la facture (PDF)
         </button>
       </div>
-    </div> 
+    </div>
   );
 }
