@@ -6,11 +6,14 @@ Application web de gestion de chantiers développée pour l'entreprise de constr
 
 Ce projet a été réalisé dans le cadre de la **SAÉ 4.01 : Développement d'une application**. Il permet de centralisé le suivi complet d'une construction.
 
+Il est disponible en production à cette URL : [sae.baptiste-coupat.fr](sae.baptiste-coupat.fr)
+
 ## Information Technique
 * **Framework :** Next.js (React)
 * **Langage :** JavaScript
 * **Base de données :** PostgreSQL
 * **Environnement :** Node.js
+* **Déployée sur :** Vercel
 
 ## Fonctionnalités Clés
 
