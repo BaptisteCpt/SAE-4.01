@@ -127,7 +127,7 @@ export default function Nav({ login }) {
         <div className="profil-div">
             <div className='profil'>
             <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img" onClick={()=>{goToProfil()}}/>
-            <input type='text' value={login} className='input-role' readOnly disabled="true"/>
+            <input type='text' value={login} className='input-role' readOnly disabled={true}/>
             </div>
             <div className='logout'>
             <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}}
