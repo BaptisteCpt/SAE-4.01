@@ -97,7 +97,7 @@ export async function GET(request) {
     
     // 5. Tri par ordre alphabétique sur le nom de l'artisan
     resultats.sort((a, b) => a.nom.localeCompare(b.nom));
-
+    console.log(resultats);
     return NextResponse.json(resultats);
 
   } catch (error) {

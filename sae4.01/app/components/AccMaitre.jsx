@@ -105,7 +105,7 @@ export default function AccMaitre({ login, nom, prenom }) {
 
   return (
     <div className="bulle_accueil">
-      <h1>Bienvenue {nom}</h1>
+      <h1>Bienvenue {nom} {prenom}</h1>
       <div className="boutons_accueil">
         <div className="bloc-accueil">
           <img src="/img/maison-icone.png" onClick={pageModele} alt="Modèles" />
