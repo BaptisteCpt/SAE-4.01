@@ -49,6 +49,20 @@ Il est disponible en production à cette URL : [sae.baptiste-coupat.fr](https://
     * **50%** après la couverture.
     * **100%** à la fin des travaux.
 
+### 5. Gestion Artisan
+* Nouveau rôle artisan
+* Possibilité d’accéder à leur étapes affectées d’un chantier et de générer une facture 
+
+
+### 6. Génération d'une Facture
+* Création d'une nouvelle facture par l'artisan.
+* Sélection du Chantier de l'étape et renseignement du montant et du nombre de jours travaillés
+
+### 7. Exportation CSV
+* Exportation de la liste des chantiers par artisan au format CSV avec :
+    * Toutes les informations relatives à un chantier.
+    * Quelques information financières.
+
 ##  Installation et Démarrage en Local
 
 1.  **Cloner le dépôt.**
@@ -92,6 +106,10 @@ Il est disponible en production à cette URL : [sae.baptiste-coupat.fr](https://
     - En Administrateur :
         - login: admin
         - mdp: admin
+
+    - En Artisan :
+        - login : champg
+        - mdp : champg
 
 ##  Installation et Déployement sur vercel
 
@@ -161,6 +179,10 @@ Il est disponible en production à cette URL : [sae.baptiste-coupat.fr](https://
     - En Administrateur :
         - login: admin
         - mdp: admin
+
+    - En Artisan :
+        - login : champg
+        - mdp : champg
 
 ##  Auteurs
 * Doisy Noa (doisyn)
