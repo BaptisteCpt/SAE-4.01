@@ -17,6 +17,9 @@ jest.mock("../../context/ChantierContext.jsx", () => ({
       nom: "",
       prenom: "",
       noclient: 1,
+      adresse: "",
+      ville: "",
+      code_postal: "",
       adresse_du_chantier: "",
       villeChantier: "",
       code_postal_chantier: "",
@@ -29,9 +32,8 @@ jest.mock("../../context/ChantierContext.jsx", () => ({
 
 
 
-import Page from '../creation_de_chantier/page.jsx'
-// import Page2 from '../creation_de_chantier/crea_chantier/page.jsx'
-import Page2 from '../components/ChantierForm.jsx';
+import ClientForm from '../components/ClientForm.jsx';
+import ChantierForm from '../components/ChantierForm.jsx';
 
 beforeEach(() => {
   pushMock.mockClear();
@@ -60,7 +62,7 @@ beforeEach(() => {
 
 describe('Page de création de client', () => {
     test("affiche un message d'erreur si champs vide", async () => {
-        render(<Page />);
+        render(<ClientForm />);
 
         fireEvent.change(screen.getByPlaceholderText(/^Nom.../i), { target: { value: "" }});
         fireEvent.change(screen.getByPlaceholderText(/Prénom.../i), { target: { value: "" }});
@@ -76,7 +78,7 @@ describe('Page de création de client', () => {
 
 describe('Page de création du chantier', () => {
     test("affiche un message d'erreur si champs vide", async () => {
-        render(<Page2 />);
+        render(<ChantierForm />);
 
 
         const adresseInput = await screen.findByPlaceholderText(/Adresse.../i);

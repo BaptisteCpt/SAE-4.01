@@ -103,10 +103,8 @@ describe('Page de connexion', () => {
         Promise.resolve({
           ok: true,
           json: async () => ({
-            user: {
-              role: "admin",
-              login: "tajeri"
-            }
+            role: "admin",
+            success: true
           })
         })
       );
