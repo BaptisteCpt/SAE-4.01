@@ -16,7 +16,7 @@ export async function POST(req) {
       where: { mail: email },
       data: { resettoken: resetToken }
     });
-    const resetUrl = `http://localhost:3000/reinitialisermdp?token=${resetToken}`;
+    const resetUrl = `https://sae.baptiste-coupat.fr/reinitialisermdp?token=${resetToken}`;
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
