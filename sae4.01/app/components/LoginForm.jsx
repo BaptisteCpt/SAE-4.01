@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
+import "../css/login.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import "../css/login.css";
 
 /**
  * Composant de formulaire de connexion
@@ -122,6 +122,11 @@ export default function LoginForm() {
               >
                 Connexion
               </button>
+
+              <p>
+                <a href="/mot_de_passe_oublie">Mot de passe oublié ?</a>
+              </p>
+
               {error && <div className="error-message">{error}</div>}
             </form>
           </div>

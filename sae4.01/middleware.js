@@ -34,6 +34,7 @@ const PERMISSIONS = {
   "/accueil_artisan": ["artisan"],
   "/generer_facture_artisan": ["artisan"],
   "/liste_chantiers_artisan": ["artisan"],
+  "/profilpage": ["admin", "commercial", "maitre Oeuvre", "artisan"],
 };
 
 export async function middleware(request) {
@@ -109,5 +110,6 @@ export const config = {
     "/accueil_artisan",
     "/generer_facture_artisan",
     "/liste_chantiers_artisan",
+    "/profilpage",
   ],
 };

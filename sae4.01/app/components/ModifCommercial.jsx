@@ -14,11 +14,12 @@ export default function ModifCommercial() {
     const searchParams = useSearchParams();
     const idCom = searchParams.get('id');
     const [login, setLogin] = useState("");
+    const [mail, setMail] = useState("");
     const [mdp, setMdp] = useState("");
 
     useEffect(() => {
         if (!idCom) {
-            router.push('/pageListeEmp');
+            router.push('/pageListeUtilisateurs');
             return;
         }
         /**
@@ -34,10 +35,11 @@ export default function ModifCommercial() {
 
                 if (res.ok) {
                     const data = await res.json();
-                    setLogin(data || "");
+                    setLogin(data.login || "");
+                    setMail(data.mail || "");
                 } else {
                     Swal.fire('Erreur', 'Commercial introuvable', 'error');
-                    router.push('/pageListeEmp');
+                    router.push('/pageListeUtilisateurs');
                 }
             } catch (err) {
                 console.error(err);
@@ -66,13 +68,14 @@ export default function ModifCommercial() {
                 body: JSON.stringify({
                     id: idCom,
                     login: login,
+                    mail: mail,
                     mot_de_passe: mdp
                 })
             });
 
             if (res.ok) {
                 await Swal.fire('Succès', 'Commercial mis à jour', 'success');
-                router.push('/pageListeEmp');
+                router.push('/pageListeUtilisateurs');
             } else {
                 const info = await res.json();
                 Swal.fire('Erreur', info.error || "Échec de la mise à jour", 'error');
@@ -92,6 +95,9 @@ export default function ModifCommercial() {
                     
                     <label>Mot de passe :</label>
                     <input type="text" placeholder='Veuillez entrez un nouveau mot de passe...' onChange={(e) => setMdp(e.target.value)} />
+
+                    <label>Mail :</label>
+                    <input type="text" value={mail} onChange={(e) => setMail(e.target.value)} placeholder='Mail...' />
                     
                     <div className="form-buttons">
                         <button type="button" className="but" onClick={validerModif}>Enregistrer</button>

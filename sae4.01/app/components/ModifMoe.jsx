@@ -8,12 +8,14 @@ export default function ModifMoe() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const idMoe = searchParams.get('id');
+    
     const [nom, setNom] = useState("");
     const [prenom, setPrenom] = useState("");
+    const [mail, setMail] = useState("");
 
     useEffect(() => {
         if (!idMoe) {
-            router.push('/pageListeMoe');
+            router.push('/pageListeUtilisateurs'); // Ajuste la route si besoin
             return;
         }
         async function charger() {
@@ -28,9 +30,10 @@ export default function ModifMoe() {
                     const data = await res.json();
                     setNom(data.nommoe || "");
                     setPrenom(data.prenommoe || "");
+                    setMail(data.mail || ""); // On récupère bien le mail maintenant !
                 } else {
                     Swal.fire('Erreur', "Maître d'œuvre introuvable", 'error');
-                    router.push('/pageListeEmp');
+                    router.push('/pageListeUtilisateurs');
                 }
             } catch (err) {
                 console.error(err);
@@ -42,8 +45,10 @@ export default function ModifMoe() {
 
     async function validerModif(e) {
         e.preventDefault();
-        if (!nom || !prenom) {
-            Swal.fire('Attention', 'Tous les champs sont requis', 'warning');
+        
+        // On vérifie que les 3 champs sont remplis
+        if (!nom || !prenom || !mail) {
+            Swal.fire('Attention', 'Tous les champs (y compris le mail) sont requis', 'warning');
             return;
         }
 
@@ -54,13 +59,14 @@ export default function ModifMoe() {
                 body: JSON.stringify({
                     id: idMoe,
                     nom: nom,
-                    prenom: prenom
+                    prenom: prenom,
+                    mail: mail // On envoie le mail à la place du mdp
                 })
             });
 
             if (res.ok) {
                 await Swal.fire('Succès', "Maître d'œuvre mis à jour", 'success');
-                router.push('/pageListeEmp');
+                router.push('/pageListeUtilisateurs');
             } else {
                 const info = await res.json();
                 Swal.fire('Erreur', info.error || "Échec de la mise à jour", 'error');
@@ -71,22 +77,23 @@ export default function ModifMoe() {
     }
 
     return (
-        <>
-            <div className="bulle">
-                <h1>Modifier le Maître d'Œuvre N°{idMoe}</h1>
-                <form>
-                    <label>Nom :</label>
-                    <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} />
-                    
-                    <label>Prénom :</label>
-                    <input type="text" value={prenom} onChange={(e) => setPrenom(e.target.value)} />
-                    
-                    <div className="form-buttons">
-                        <button type="button" className="but" onClick={validerModif}>Enregistrer</button>
-                        <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
-                    </div>
-                </form>
-            </div>
-        </>
+        <div className="bulle">
+            <h1>Modifier le Maître d'Œuvre N°{idMoe}</h1>
+            <form>
+                <label>Nom :</label>
+                <input type="text" value={nom} onChange={(e) => setNom(e.target.value)} />
+                
+                <label>Prénom :</label>
+                <input type="text" value={prenom} onChange={(e) => setPrenom(e.target.value)} />
+
+                <label>Email :</label>
+                <input type="text" value={mail} onChange={(e) => setMail(e.target.value)} placeholder='Adresse email...' />
+                
+                <div className="form-buttons">
+                    <button type="button" className="but" onClick={validerModif}>Enregistrer</button>
+                    <button type="button" className="but" onClick={() => router.back()}>Annuler</button>
+                </div>
+            </form>
+        </div>
     )
 }
