@@ -1,0 +1,119 @@
+.profil-page {
+  min-height: 100vh;
+  background: #2c3e50;
+  padding: 40px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.bulle_login {
+  width: 100%;
+  max-width: 620px;
+  background: #ffffff;
+  color: #1f2937;
+  border-radius: 14px;
+  padding: 28px 24px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+.bulle_login h1,
+.bulle_login h2 {
+  color: #1f2937;
+  text-align: center;
+  margin: 0 0 16px 0;
+}
+
+.bulle_login h1 {
+  font-size: 1.9rem;
+}
+
+.bulle_login h2 {
+  font-size: 1.3rem;
+}
+
+.bulle_login form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.bulle_login input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cfd8e3;
+  border-radius: 8px;
+  font-size: 0.98rem;
+  color: #1f2937;
+  background: #ffffff;
+}
+
+.bulle_login input:focus {
+  outline: none;
+  border-color: #ff9100;
+  box-shadow: 0 0 0 3px rgba(255, 145, 0, 0.16);
+}
+
+.bulle_login button {
+  border: none;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #ff9100;
+  color: #ffffff;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.bulle_login button:hover {
+  background: #e68200;
+}
+
+.bulle_login button:active {
+  transform: scale(0.99);
+}
+
+.bulle_login .btn-secondary {
+  background: #6b7280;
+  margin-top: 10px;
+}
+
+.bulle_login .btn-secondary:hover {
+  background: #4b5563;
+}
+
+.profil-infos {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+
+.profil-infos p {
+  margin: 6px 0;
+  line-height: 1.4;
+}
+
+.profil-loading {
+  color: #ffffff;
+  text-align: center;
+  margin-top: 40px;
+}
+
+@media (max-width: 640px) {
+  .profil-page {
+    padding: 18px 10px;
+  }
+
+  .bulle_login {
+    padding: 20px 14px;
+    border-radius: 10px;
+  }
+
+  .bulle_login h1 {
+    font-size: 1.5rem;
+  }
+}

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Swal from 'sweetalert2';
-import "../css/login.css";
+import "../css/profil.css";
 
 export default function ProfilUser({ login }) {
     const router = useRouter();
@@ -89,13 +89,13 @@ export default function ProfilUser({ login }) {
         }
     }
 
-    if (!user) return <div style={{ textAlign: "center", marginTop: "50px" }}>Chargement du profil...</div>;
+    if (!user) return <div className="profil-loading">Chargement du profil...</div>;
 
     return (
         <div className="bulle_login">
             <h1>Mon Profil</h1>
-            
-            <div>
+
+            <div className="profil-infos">
                 <p><strong>Nom :</strong> {user.nom}</p>
                 <p><strong>Prénom :</strong> {user.prenom}</p>
                 <p><strong>Identifiant :</strong> {user.login}</p>
@@ -130,7 +130,7 @@ export default function ProfilUser({ login }) {
                 <button type="submit">Valider la modification</button>
             </form>
             
-            <button type="button" onClick={() => router.back()} style={{ marginTop: "15px" }}>
+            <button type="button" className="btn-secondary" onClick={() => router.back()}>
                 Retour
             </button>
         </div>

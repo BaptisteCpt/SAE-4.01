@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation"; 
 import Swal from 'sweetalert2';
-import "../css/login.css";
+import "../css/profil.css";
 
 export default function ResetPassWord() {
     const [password, setPassword] = useState("");
@@ -75,7 +75,7 @@ export default function ResetPassWord() {
     } 
     
     return (
-        <div className="bulle_login">
+        <div>
             <h2>Nouveau mot de passe</h2>
             <form onSubmit={handleSubmit}>
                 <input

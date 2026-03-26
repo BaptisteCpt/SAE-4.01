@@ -3,7 +3,7 @@ import "../css/profil.css";
 
 export default function ProfilPage({ login }) {
     return (
-        <main>
+        <main className="profil-page">
             <ProfilUser login={login}/>
         </main>
     );

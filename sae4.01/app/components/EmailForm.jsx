@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from 'sweetalert2';
-import "../css/login.css";
+import "../css/profil.css";
 
 export default function EmailForm() {
     const [email, setEmail] = useState("");
@@ -50,7 +50,7 @@ export default function EmailForm() {
     } 
     
     return (
-        <div className="bulle_login">
+        <div>
             <h2>Entrez votre email</h2> 
             <form onSubmit={handleSubmit}>
                 <input
@@ -62,7 +62,7 @@ export default function EmailForm() {
                 />
                 <button type="submit">Envoyer</button>
             </form>
-            <button type="button" onClick={() => router.push('/')} style={{ marginTop: "10px" }}>
+            <button type="button" className="btn-secondary" onClick={() => router.push('/')}>
                 Retour
             </button>
         </div>
