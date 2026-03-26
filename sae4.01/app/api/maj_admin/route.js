@@ -9,9 +9,9 @@ import bcrypt from "bcrypt";
  */
 export async function PUT(request) {
   try {
-    const { id, login, mot_de_passe } = await request.json();
+    const { id, login, mot_de_passe, mail } = await request.json();
 
-    if (!id || !login || !mot_de_passe) {
+    if (!id || !login || !mot_de_passe || !mail) {
       return NextResponse.json({ error: "Tous les champs sont requis." }, { status: 400 });
     }
 
@@ -36,7 +36,8 @@ export async function PUT(request) {
       where: { id: Number(id) },
       data: {
         login: login,
-        mot_de_passe: hashedMdp
+        mot_de_passe: hashedMdp,
+        mail: mail
       }
     });
 

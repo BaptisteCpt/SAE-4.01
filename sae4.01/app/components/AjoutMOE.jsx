@@ -13,6 +13,7 @@ export default function AjoutMoe() {
 
     const [nom, setNom] = useState('')
     const [prenom, setPrenom] = useState('')
+    const [mail, setMail] = useState('')
     const [error, setError] = useState('')
     
     const router = useRouter()
@@ -43,6 +44,7 @@ export default function AjoutMoe() {
                 body: JSON.stringify({ 
                     nom: nom, 
                     prenom: prenom,
+                    mail: mail
                 }),
             });
 
@@ -86,7 +88,10 @@ export default function AjoutMoe() {
                     
                     <label>Prénom :</label>
                     <input type="text" className="prenom" placeholder="Prénom..." value={prenom} onChange={(e) => setPrenom(e.target.value)} />
-                    
+
+                    <label>Mail :</label>
+                    <input type="text" className="mail" placeholder="Mail..." value={mail} onChange={(e) => setMail(e.target.value)} />
+
                     <div className="form-buttons">
                         <button className="but" type="button" onClick={validerForm}>Valider</button>
                         <button className="but" type="button" onClick={() => router.back()}>Annuler</button>

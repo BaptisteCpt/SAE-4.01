@@ -13,6 +13,7 @@ export default function AjoutCommerciale() {
 
     const [nomCom, setNom] = useState('')
     const [prenom, setPrenom] = useState('')
+    const [mail, setMail] = useState('')
     
     const router = useRouter()
     
@@ -40,7 +41,8 @@ export default function AjoutCommerciale() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     nom: nomCom, 
-                    prenom: prenom 
+                    prenom: prenom,
+                    mail: mail
                 }),
             });
 
@@ -85,6 +87,9 @@ export default function AjoutCommerciale() {
                     <label>Prénom :</label>
                     <input type="text" className="prenom" placeholder="Prénom..." value={prenom} onChange={(e) => setPrenom(e.target.value)} />
                     
+                    <label>Mail :</label>
+                    <input type="text" className="mail" placeholder="Mail..." value={mail} onChange={(e) => setMail(e.target.value)} />
+
                     <div className="form-buttons">
                         <button className="but" type="button" onClick={validerForm}>Valider</button>
                         <button className="but" type="button" onClick={() => router.back()}>Annuler</button>

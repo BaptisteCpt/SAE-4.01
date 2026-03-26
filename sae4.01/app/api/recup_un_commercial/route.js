@@ -25,7 +25,7 @@ export async function POST(request) {
     }
 
     // On renvoie les infos (attention sécurité : on renvoie le mot de passe car demandé pour modif)
-    return NextResponse.json(commercial.login);
+    return NextResponse.json({ login: commercial.login, mail: commercial.mail });
 
   } catch (error) {
     console.error("Erreur récupération:", error);

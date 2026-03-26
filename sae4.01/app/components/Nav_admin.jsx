@@ -35,6 +35,10 @@ export default function Nav({ login }) {
     function goAccAdmin() {
         router.push('/accueil_admin');
     }
+
+      function goToProfil() {
+    router.push('/profilpage');
+  }
       
     return (
     <nav className="Nav">
@@ -57,11 +61,12 @@ export default function Nav({ login }) {
 
         <div className="profil-div">
             <div className='profil'>
-            <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img"/>
-            <input type='text' value={login} className='input-role' readOnly/>
+            <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img" onClick={()=>{goToProfil()}}/>
+            <input type='text' value={login} className='input-role' readOnly disabled="true"/>
             </div>
             <div className='logout'>
-            <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}} style={{cursor: 'pointer'}}/>
+            <img src="/img/Logout.png" alt="Bâti'Parti" className="logout-img" onClick={()=>{logout()}} style={{cursor: 'pointer'}}
+            href="/profilpage"/>
             </div>
         </div>
       </div>

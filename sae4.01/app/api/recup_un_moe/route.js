@@ -1,30 +1,34 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../lib/prisma';
 
-/**
- * Récupère les informations d'un maître d'œuvre spécifique par son numéro
- * @param {Request} request - La requête HTTP contenant l'ID du maître d'œuvre
- * @returns {Promise<NextResponse>} Réponse JSON avec les informations du maître d'œuvre ou un message d'erreur
- */
 export async function POST(request) {
   try {
     const { id } = await request.json();
 
-    if (!id) {
-      return NextResponse.json({ error: "ID manquant" }, { status: 400 });
-    }
+    if (!id) return NextResponse.json({ error: "ID manquant" }, { status: 400 });
 
+    // 1. On récupère le MOE
     const moe = await prisma.maitre_oeuvre.findUnique({
-      where: {
-        nomoe: Number(id),
-      },
+      where: { nomoe: Number(id) },
     });
 
-    if (!moe) {
-      return NextResponse.json({ error: "Maitre d'oeuvre non trouvé" }, { status: 404 });
+    if (!moe) return NextResponse.json({ error: "Maitre d'oeuvre non trouvé" }, { status: 404 });
+
+    // 2. On récupère son Email dans la table User via son login
+    let mailUser = "";
+    if (moe.login) {
+        const user = await prisma.user.findUnique({
+            where: { login: moe.login },
+            select: { mail: true } // On ne prend que le mail
+        });
+        if (user && user.mail) mailUser = user.mail;
     }
 
-    return NextResponse.json(moe);
+    // 3. On renvoie un objet combiné au composant React
+    return NextResponse.json({
+        ...moe,
+        mail: mailUser
+    });
 
   } catch (error) {
     console.error("Erreur récupération MOE:", error);

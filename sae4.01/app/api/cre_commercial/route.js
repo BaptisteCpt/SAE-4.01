@@ -11,10 +11,10 @@ import bcrypt from "bcrypt";
 export async function POST(request) {
   try {
     const corps = await request.json();
-    const { nom, prenom } = corps;
+    const { nom, prenom, mail } = corps;
 
-    if (!nom || !prenom) {
-       return NextResponse.json({ error: "Nom et Prénom sont requis." });
+    if (!nom || !prenom || !mail) {
+       return NextResponse.json({ error: "Nom, Prénom et Mail sont requis." });
     }
 
     // Génère un login automatique : première lettre du prénom + nom complet, tout en minuscules
@@ -50,6 +50,7 @@ export async function POST(request) {
         role: "commercial", // Définit le rôle comme commercial
         nom: nom.toUpperCase(),
         prenom: prenom,
+        mail : mail
       },
     });
 

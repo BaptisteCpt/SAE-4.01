@@ -25,7 +25,8 @@ export async function POST(request) {
     }
 
     const nom = admin.login;
-    return NextResponse.json(nom);
+    const mail = admin.mail;
+    return NextResponse.json({ nom, mail });
 
   } catch (error) {
     console.error("Erreur récupération Admin:", error);

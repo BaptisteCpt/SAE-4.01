@@ -161,12 +161,14 @@ model modele {
 }
 
 model User {
-  id           Int    @id @default(autoincrement())
-  login        String @unique
+  id           Int     @id @default(autoincrement())
+  login        String  @unique
   mot_de_passe String
   role         String
   nom          String
   prenom       String
+  mail         String? @unique(map: "user_unique") @db.VarChar
+  resettoken   String? @db.VarChar
 
   @@schema("Bati_Parti")
 }

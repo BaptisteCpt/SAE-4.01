@@ -15,10 +15,11 @@ export default function ModifAdmin() {
     const idAdmin = searchParams.get('id');
     const [login, setLogin] = useState("");
     const [mdp, setMdp] = useState("");
+    const [mail, setMail] = useState("");
 
     useEffect(() => {
         if (!idAdmin) {
-            router.push('/pageListeEmp');
+            router.push('/pageListeUtilisateurs');
             return;
         }
         /**
@@ -34,10 +35,11 @@ export default function ModifAdmin() {
 
                 if (res.ok) {
                     const data = await res.json();
-                    setLogin(data || "");
+                    setLogin(data.nom || "");
+                    setMail(data.mail || "");
                 } else {
                     Swal.fire('Erreur', 'Administrateur introuvable', 'error');
-                    router.push('/pageListeEmp');
+                    router.push('/pageListeUtilisateurs');
                 }
             } catch (err) {
                 console.error(err);
@@ -66,13 +68,14 @@ export default function ModifAdmin() {
                 body: JSON.stringify({
                     id: idAdmin,
                     login: login,
-                    mot_de_passe: mdp
+                    mot_de_passe: mdp,
+                    mail: mail
                 })
             });
 
             if (res.ok) {
                 await Swal.fire('Succès', 'Administrateur mis à jour', 'success');
-                router.push('/pageListeEmp');
+                router.push('/pageListeUtilisateurs');
             } else {
                 const info = await res.json();
                 Swal.fire('Erreur', info.error || "Échec de la mise à jour", 'error');
@@ -92,6 +95,9 @@ export default function ModifAdmin() {
                     
                     <label>Mot de passe :</label>
                     <input type="text" placeholder='Veuillez entrez un nouveau mot de passe...' onChange={(e) => setMdp(e.target.value)} />
+
+                    <label>Mail :</label>
+                    <input type="text" placeholder='Veuillez entrez un nouveau mail...' onChange={(e) => setMail(e.target.value)} value={mail}/>
                     
                     <div className="form-buttons">
                         <button type="button" className="but" onClick={validerModif}>Enregistrer</button>

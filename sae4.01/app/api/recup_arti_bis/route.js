@@ -1,21 +1,33 @@
 import { NextResponse } from "next/server";
 import prisma from "../../lib/prisma";
 
-/**
- * Récupère la liste de tous les artisans avec leurs qualifications (étapes)
- * Les artisans sont triés par numéro croissant
- * @returns {Promise<NextResponse>} Réponse JSON contenant la liste des artisans avec leurs qualifications ou un message d'erreur
- */
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
+    // 1. Récupérer tous les artisans
     const artisans = await prisma.artisan.findMany({
       orderBy: { noartisan: 'asc' },
-      include: {
-        etre_qualifie_pour: true 
-      }
+      include: { etre_qualifie_pour: true }
     });
-    return NextResponse.json(artisans);
+
+    // 2. Récupérer tous les utilisateurs "artisan" pour avoir leurs mails
+    const users = await prisma.user.findMany({
+        where: { role: 'artisan' },
+        select: { login: true, mail: true }
+    });
+
+    // 3. Combiner les deux (associer le mail au bon artisan)
+    const artisansAvecMail = artisans.map(artisan => {
+        const userAssocie = users.find(u => u.login === artisan.login);
+        return {
+            ...artisan,
+            mail: userAssocie ? userAssocie.mail : ""
+        };
+    });
+
+    return NextResponse.json(artisansAvecMail);
   } catch (err) {
-    return NextResponse.json({ error: "Erreur serveur" });
+    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }

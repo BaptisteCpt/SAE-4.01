@@ -19,6 +19,10 @@ export default function NavArtisan({ login }) {
     router.push("/accueil_artisan");
   }
 
+    function goToProfil() {
+    router.push('/profilpage');
+  }
+
   return (
     <nav className="Nav">
       <div className="logo-div" onClick={goAccueilArtisan} style={{ cursor: "pointer" }}>
@@ -32,8 +36,8 @@ export default function NavArtisan({ login }) {
 
         <div className="profil-div">
           <div className="profil">
-            <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img" />
-            <input type="text" value={login} className="input-role" readOnly />
+            <img src="/img/photo_profil.png" alt="Bâti'Parti" className="profil-img" onClick={()=>{goToProfil()}} />
+            <input type="text" value={login} className="input-role" readOnly disabled="true" />
           </div>
           <div className="logout">
             <img
@@ -42,6 +46,7 @@ export default function NavArtisan({ login }) {
               className="logout-img"
               onClick={logout}
               style={{ cursor: "pointer" }}
+              href="/profilpage"
             />
           </div>
         </div>

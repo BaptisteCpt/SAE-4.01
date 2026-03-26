@@ -13,6 +13,7 @@ export default function AjoutAdmin() {
 
     const [nom, setNom] = useState('')
     const [prenom, setPrenom] = useState('')
+    const [mail, setMail] = useState('')
     
     const router = useRouter()
     
@@ -40,7 +41,8 @@ export default function AjoutAdmin() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 
                     nom: nom, 
-                    prenom: prenom 
+                    prenom: prenom,
+                    mail: mail
                 }),
             });
 
@@ -84,7 +86,10 @@ export default function AjoutAdmin() {
                     
                     <label>Prénom :</label>
                     <input type="text" className="prenom" placeholder="Prénom..." value={prenom} onChange={(e) => setPrenom(e.target.value)} />
-                    
+
+                    <label>Mail :</label>
+                    <input type="text" className="mail" placeholder="Mail..." value={mail} onChange={(e) => setMail(e.target.value)} />
+
                     <div className="form-buttons">
                         <button className="but" type="button" onClick={validerForm}>Valider</button>
                         <button className="but" type="button" onClick={() => router.back()}>Annuler</button>
