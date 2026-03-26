@@ -1,6 +1,7 @@
 "use client";
 
 import Reset from "../components/ResetPassWord";
+import { Suspense } from 'react';
 import "../css/profil.css";
 
 export default function ReinitialiserMdp() {

@@ -34,6 +34,7 @@ const PERMISSIONS = {
   "/accueil_artisan": ["artisan"],
   "/generer_facture_artisan": ["artisan"],
   "/liste_chantiers_artisan": ["artisan"],
+  "/voir_facture": ["artisan"],
   "/profilpage": ["admin", "commercial", "maitre Oeuvre", "artisan"],
 };
 
@@ -111,5 +112,7 @@ export const config = {
     "/generer_facture_artisan",
     "/liste_chantiers_artisan",
     "/profilpage",
+    "/voir_facture",
+    "/voir_facture/:path+",
   ],
 };
